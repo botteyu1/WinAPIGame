@@ -1,20 +1,7 @@
-#include <GameEnginePlatform/GameEngineWindow.h>
 #include <iostream>
+#include <GameEngineCore/GameEngineCore.h>
+#include <GameEngineContents/ContentCore.h>
 
-void TestStart(HINSTANCE _Inst)
-{
-    GameEngineWindow::MainWindow.Open("MainWindow", _Inst);
-}
-
-void TestEnd()
-{
-
-}
-
-void TestUpdate()
-{
-
-}
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -22,7 +9,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ LPWSTR    lpCmdLine,
     _In_ int       nCmdShow)
 {
-    // CallBack 방식이라고 합니다.
-    GameEngineWindow::MessageLoop(hInstance, TestStart, TestUpdate, TestEnd);
+  
+    GameEngineCore::EngineStart<ContentCore>("MyWindow", hInstance);
     return 0;
+
 }
