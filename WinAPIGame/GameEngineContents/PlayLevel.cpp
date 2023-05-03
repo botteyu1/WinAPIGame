@@ -1,5 +1,6 @@
 #include "PlayLevel.h"
 #include "Player.h"
+#include <GameEngineCore/GameEngineCore.h>
 
 PlayLevel::PlayLevel()
 {
@@ -25,7 +26,7 @@ void PlayLevel::Start()
 }
 
 
-void PlayLevel::Update()
+void PlayLevel::Update(float _Delta)
 {
 }
 void PlayLevel::Render()

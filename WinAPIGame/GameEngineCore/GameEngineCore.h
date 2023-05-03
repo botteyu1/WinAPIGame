@@ -35,7 +35,7 @@ public:
 	template<typename LevelType>
 	static void CreateLevel(const std::string& _Name)
 	{
-		std::string Upper = GameEngineString::ToUpperReturn(_Name) + "의 이름을 가진 GameEngineLevel은 이미 존재합니다.";
+		std::string Upper = GameEngineString::ToUpperReturn(_Name);
 
 		// 이미 내부에 TitleLevel이 존재한다.
 		if (AllLevel.end() != AllLevel.find(Upper))

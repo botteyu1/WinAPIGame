@@ -4,6 +4,7 @@
 
 HINSTANCE GameEngineWindow::Instance = nullptr;
 GameEngineWindow GameEngineWindow::MainWindow;
+bool GameEngineWindow::IsWindowUpdate = true;
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -61,7 +62,7 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wPara
     }
     break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+        IsWindowUpdate = false;
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
@@ -111,16 +112,32 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
     }
 
     MSG msg;
-    while (GetMessage(&msg, nullptr, 0, 0))
+
+    while (IsWindowUpdate)
     {
+       
+        // PeekMessage는 윈도우 메세지가 없으면 0이 리턴되고 그냥 리턴합니다.
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            if (nullptr != _Update)
+            {
+                _Update();
+            }
+
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+            continue;
+        }
+
+        // 윈도우 메세지가 없는 시간을 데드타임이라고 합니다.
+        // 게임은 데드타임에 돌아가는게 보통이다.
         if (nullptr != _Update)
         {
             _Update();
         }
 
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
     }
+
 
     if (nullptr != _End)
     {

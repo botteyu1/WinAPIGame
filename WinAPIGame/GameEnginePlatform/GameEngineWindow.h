@@ -27,9 +27,16 @@ public:
 		return Hdc;
 	}
 
+	static void WindowLoopOff()
+	{
+		IsWindowUpdate = false;
+	}
+
+
 protected:
 
 private:
+	static bool IsWindowUpdate;
 	static HINSTANCE Instance;
 	std::string Title = "";
 	HWND hWnd = nullptr;
