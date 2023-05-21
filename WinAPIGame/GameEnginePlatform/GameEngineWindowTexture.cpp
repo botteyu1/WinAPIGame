@@ -10,8 +10,7 @@
 
 #pragma comment(lib, "msimg32.lib")
 
-ULONG_PTR gdiplusToken;
-Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+
 
 GameEngineWindowTexture::GameEngineWindowTexture()
 {
@@ -31,8 +30,6 @@ void GameEngineWindowTexture::ResLoad(const std::string& _Path)
 	// LPCSTR == const char*
 
 	HANDLE ImageHandle = LoadImageA(nullptr, _Path.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 	if (nullptr == ImageHandle)
 	{
@@ -57,6 +54,8 @@ void GameEngineWindowTexture::ResLoad(const std::string& _Path)
 
 	ScaleCheck();
 }
+
+
 
 void GameEngineWindowTexture::ResCreate(const float4& _Scale)
 {
@@ -133,28 +132,25 @@ void GameEngineWindowTexture::BitCopy(
 void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale
 	, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor/* = RGB(255, 0, 255)*/)
 {
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 	HDC CopyImageDC = _CopyTexture->GetImageDC();
-
-	Gdiplus::Image* image = Gdiplus::Image::FromFile(L"image.png");
-	Gdiplus::Graphics g(ImageDC);
-
-	g.DrawImage(image, 100, 100, 100, 100);
-		
+	HDC BackBufferImageDC = BackBuffer->GetImageDC();
+	
 	//// 특정 DC에 연결된 색상을
 	//// 특정 DC에 고속복사하는 함수입니다. 
-	//TransparentBlt(ImageDC,
-	//	_Pos.iX() - _Scale.ihX(),
-	//	_Pos.iY() - _Scale.ihY(),
-	//	_Scale.iX(),
-	//	_Scale.iY(),
-	//	CopyImageDC,
-	//	_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
-	//	_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
-	//	_OtherScale.iX(), // 그부분부터 사이즈  x
-	//	_OtherScale.iY(), // 그부분부터 사이즈  y
-	//	_TransColor
-	//);
+	TransparentBlt(BackBufferImageDC,
+		_Pos.iX() - _Scale.ihX(),
+		_Pos.iY() - _Scale.ihY(),
+		_Scale.iX(),
+		_Scale.iY(),
+		CopyImageDC,
+		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+		_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
+		_OtherScale.iX(), // 그부분부터 사이즈  x
+		_OtherScale.iY(), // 그부분부터 사이즈  y
+		_TransColor
+	);
 }
 
 //void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale

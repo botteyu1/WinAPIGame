@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <GameEngineBase/GameEngineMath.h>
 
+#include <gdiplus.h>
+
 // Ό³Έν :
 class GameEngineWindowTexture
 {
@@ -37,16 +39,17 @@ public:
 	void BitCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos);
 	void BitCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale);
 
-	void TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor = RGB(255, 0, 255));
+	virtual void TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor = RGB(255, 0, 255));
 
 protected:
 
 private:
-	HBITMAP BitMap;
-	HBITMAP OldBitMap;
-	HDC ImageDC;
+	HBITMAP BitMap = nullptr;
+	HBITMAP OldBitMap = nullptr;
+	HDC ImageDC = nullptr;
 
-	BITMAP Info;
+	BITMAP Info = { 0,0,0 };
+	
 
 	void ScaleCheck();
 };

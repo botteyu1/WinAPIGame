@@ -24,6 +24,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineWindow.cpp" />
+    <ClCompile Include="GameEngineWindowPNG.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineWindowTexture.cpp">
       <SubType>
       </SubType>
@@ -35,6 +39,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h" />
+    <ClInclude Include="GameEngineWindowPNG.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineWindowTexture.h">
       <SubType>
       </SubType>

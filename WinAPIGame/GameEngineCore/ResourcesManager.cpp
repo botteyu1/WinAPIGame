@@ -1,5 +1,6 @@
 #include "ResourcesManager.h"
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
+#include <GameEnginePlatform/GameEngineWindowPNG.h>
 #include <GameEngineBase/GameEngineString.h>
 #include "GameEngineSprite.h"
 #include <GameEngineBase/GameEngineDebug.h>
@@ -67,12 +68,29 @@ GameEngineWindowTexture* ResourcesManager::TextureLoad(const std::string& _Name,
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
 	// 동적 바인딩이라고 합니다.
+	
+	// 확장자 추출
+	std::string Ext;
+	for (int i = _Path.size() - 1; i >= 0; --i)
+	{
+		if (_Path[i] == '.')
+		{
+			break;
+		}
+		Ext.push_back(_Path[i]);
+	}
+	// 확장자 png인지 확인 후 맞으면 png로
+	if (Ext == "gnp")
+	{
+		GameEngineWindowPNG* LoadPNG = new GameEngineWindowPNG();
+		LoadPNG->ResLoadPng(_Path);
+		AllTexture.insert(std::make_pair(UpperName, LoadPNG));
+		return LoadPNG;
+	}
+
 	GameEngineWindowTexture* LoadTexture = new GameEngineWindowTexture();
-
 	LoadTexture->ResLoad(_Path);
-
 	AllTexture.insert(std::make_pair(UpperName, LoadTexture));
-
 	return LoadTexture;
 }
 
