@@ -2,9 +2,16 @@
 #include <Windows.h>
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineWindow.h"
+#include <gdiplus.h>
+
+#pragma comment(lib, "Gdiplus.lib")
+
+
 
 #pragma comment(lib, "msimg32.lib")
 
+ULONG_PTR gdiplusToken;
+Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 
 GameEngineWindowTexture::GameEngineWindowTexture()
 {
@@ -24,6 +31,8 @@ void GameEngineWindowTexture::ResLoad(const std::string& _Path)
 	// LPCSTR == const char*
 
 	HANDLE ImageHandle = LoadImageA(nullptr, _Path.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 	if (nullptr == ImageHandle)
 	{
@@ -121,23 +130,89 @@ void GameEngineWindowTexture::BitCopy(
 
 }
 
-void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, int _TransColor/* = RGB(255, 0, 255)*/)
+void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale
+	, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor/* = RGB(255, 0, 255)*/)
 {
+	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 	HDC CopyImageDC = _CopyTexture->GetImageDC();
 
-	//// 특정 DC에 연결된 색상을
-	//// 특정 DC에 고속복사하는 함수입니다.
-	TransparentBlt(ImageDC,
-		_Pos.iX() - _Scale.ihX(),
-		_Pos.iY() - _Scale.ihY(),
-		_Scale.iX(),
-		_Scale.iY(),
-		CopyImageDC,
-		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
-		_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
-		_OtherScale.iX(), // 그부분부터 사이즈  x
-		_OtherScale.iY(), // 그부분부터 사이즈  y
-		_TransColor
-	);
+	Gdiplus::Image* image = Gdiplus::Image::FromFile(L"image.png");
+	Gdiplus::Graphics g(ImageDC);
 
+	g.DrawImage(image, 100, 100, 100, 100);
+		
+	//// 특정 DC에 연결된 색상을
+	//// 특정 DC에 고속복사하는 함수입니다. 
+	//TransparentBlt(ImageDC,
+	//	_Pos.iX() - _Scale.ihX(),
+	//	_Pos.iY() - _Scale.ihY(),
+	//	_Scale.iX(),
+	//	_Scale.iY(),
+	//	CopyImageDC,
+	//	_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+	//	_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
+	//	_OtherScale.iX(), // 그부분부터 사이즈  x
+	//	_OtherScale.iY(), // 그부분부터 사이즈  y
+	//	_TransColor
+	//);
 }
+
+//void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale
+//	, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor/* = RGB(255, 0, 255)*/)
+//{
+//	HDC CopyImageDC = _CopyTexture->GetImageDC();
+//
+//	if (true == _FlipCheck)
+//	{
+//		HDC reverseDC = CreateCompatibleDC(ImageDC);
+//		HBITMAP buffer = CreateCompatibleBitmap(CopyImageDC, _OtherScale.iX(), _OtherScale.iY());
+//		HGDIOBJ oldObj = SelectObject(reverseDC, buffer);
+//
+//		StretchBlt(reverseDC
+//			, _OtherScale.iX()	// x
+//			, 0	// y
+//			, -(_OtherScale.iX() + 1)
+//			, _OtherScale.iY()
+//			, CopyImageDC
+//			, _OtherPos.iX() // 카피하려는 이미지의 왼쪽위 x
+//			, _OtherPos.iY() // 카피하려는 이미지의 왼쪽위 y
+//			, _OtherScale.iX() // 그부분부터 사이즈  x
+//			, _OtherScale.iY() // 그부분부터 사이즈  y	// height int atlas
+//			, SRCCOPY
+//		);
+//
+//		TransparentBlt(ImageDC,
+//			_Pos.iX() - _Scale.ihX(),
+//			_Pos.iY() - _Scale.ihY(),
+//			_Scale.iX(),
+//			_Scale.iY(),
+//			reverseDC,
+//			0, // 카피하려는 이미지의 왼쪽위 x
+//			0, // 카피하려는 이미지의 왼쪽위 y
+//			_OtherScale.iX(), // 그부분부터 사이즈  x
+//			_OtherScale.iY(), // 그부분부터 사이즈  y
+//			_TransColor
+//		);
+//
+//		DeleteObject(buffer);
+//		DeleteObject(oldObj);
+//		DeleteObject(reverseDC);
+//	}
+//	
+//
+//	// 특정 DC에 연결된 색상을
+//	// 특정 DC에 고속복사하는 함수입니다.
+//	TransparentBlt(ImageDC,
+//		_Pos.iX() - _Scale.ihX(),
+//		_Pos.iY() - _Scale.ihY(),
+//		_Scale.iX(),
+//		_Scale.iY(),
+//		CopyImageDC,
+//		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+//		_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
+//		_OtherScale.iX(), // 그부분부터 사이즈  x
+//		_OtherScale.iY(), // 그부분부터 사이즈  y
+//		_TransColor
+//	);
+//
+//}

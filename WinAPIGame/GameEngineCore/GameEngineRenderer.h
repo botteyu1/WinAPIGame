@@ -61,6 +61,11 @@ public:
 
 	bool IsDeath() override;
 
+	void Flip()
+	{
+		FlipCheck = !FlipCheck;
+	}
+
 protected:
 
 private:
@@ -69,13 +74,13 @@ private:
 	GameEngineSprite* Sprite = nullptr;
 
 	float ScaleRatio = 1.0f;
-
+	bool FlipCheck = false;
 	bool ScaleCheck = false;
 
-	float4 RenderPos;
+	float4 RenderPos; //객체와 렌더사이의 거리값
 	float4 RenderScale;
 
-	float4 CopyPos;
+	float4 CopyPos; // 이미지의 위치값
 	float4 CopyScale;
 
 	void Render(class GameEngineCamera* _Camera, float _DeltaTime);
