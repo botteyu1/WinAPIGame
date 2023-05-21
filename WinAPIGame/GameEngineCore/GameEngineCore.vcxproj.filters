@@ -17,11 +17,11 @@
     <ClInclude Include="GameEngineCamera.h">
       <Filter>Object\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderer.h">
-      <Filter>Object\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineSprite.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderer.h">
+      <Filter>Object\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

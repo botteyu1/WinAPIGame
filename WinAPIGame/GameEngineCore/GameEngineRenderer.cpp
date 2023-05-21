@@ -108,10 +108,8 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 		MsgBoxAssert("이미지를 세팅하지 않은 랜더러 입니다.");
 	}
 
-	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
-
-	Texture->TransCopy(Texture, Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale, FlipCheck);
-	
+	//백버퍼가 아닌 자신의 함수로 그린다.
+	Texture->TransCopy( Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale, FlipCheck);
 
 }
 

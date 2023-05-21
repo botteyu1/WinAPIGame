@@ -71,7 +71,7 @@ GameEngineWindowTexture* ResourcesManager::TextureLoad(const std::string& _Name,
 	
 	// 확장자 추출
 	std::string Ext;
-	for (int i = _Path.size() - 1; i >= 0; --i)
+	for (size_t i = _Path.size() - 1; i >= 0; --i)
 	{
 		if (_Path[i] == '.')
 		{

@@ -1,5 +1,8 @@
 #pragma once
 #include "GameEngineWindowTexture.h"
+#include <gdiplus.h>
+
+#pragma comment(lib, "Gdiplus.lib")
 
 // Ό³Έν :
 class GameEngineWindowPNG : public GameEngineWindowTexture
@@ -17,7 +20,12 @@ public:
 
 	void ResLoadPng(const std::string& _Path);
 
-	void TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor = RGB(255, 0, 255));
+	float4 GetScale() override;
+	
+
+	void TransCopy( const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor = RGB(255, 0, 255)) override;
+
+
 
 protected:
 

@@ -3,11 +3,11 @@
 #include <Windows.h>
 #include <GameEngineBase/GameEngineMath.h>
 
-#include <gdiplus.h>
 
 // Ό³Έν :
 class GameEngineWindowTexture
 {
+	friend class GameEngineWindowPNG;
 public:
 	// constrcuter destructer
 	GameEngineWindowTexture();
@@ -34,12 +34,12 @@ public:
 		return ImageDC;
 	}
 
-	float4 GetScale();
+	virtual float4 GetScale();
 
 	void BitCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos);
 	void BitCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale);
 
-	virtual void TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor = RGB(255, 0, 255));
+	virtual void TransCopy( const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor = RGB(255, 0, 255));
 
 protected:
 
