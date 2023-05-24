@@ -63,7 +63,8 @@ public:
 	}
 
 protected:
-
+	virtual void LevelStart() {}
+	virtual void LevelEnd() {}
 private:
 	GameEngineLevel* Level;
 
@@ -71,7 +72,7 @@ private:
 
 	std::list<GameEngineRenderer*> AllRenderer;
 
-	void PushMainCameraRenderer(GameEngineRenderer*);
+	
 
 	void ActorRelease();
 };

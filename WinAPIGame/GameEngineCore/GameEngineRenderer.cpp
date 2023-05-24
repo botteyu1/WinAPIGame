@@ -97,19 +97,19 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
 
-		if (false == ScaleCheck)
+		if (true/*false == ScaleCheck*/)
 		{
 			SetRenderScale(SpriteInfo.RenderScale * ScaleRatio);
 		}
 	}
-
+	//앞 애니메이션에서 크기가 저장되면 다음 애니메이션도 그대로 재생되는 문제 있음.
 	if (nullptr == Texture)
 	{
 		MsgBoxAssert("이미지를 세팅하지 않은 랜더러 입니다.");
 	}
 
 	//백버퍼가 아닌 자신의 함수로 그린다.
-	Texture->TransCopy( Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale, FlipCheck);
+	Texture->TransCopy( Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
 
 }
 
@@ -131,6 +131,7 @@ GameEngineRenderer::Animation* GameEngineRenderer::FindAnimation(const std::stri
 
 	return &FindIter->second;
 }
+
 
 void GameEngineRenderer::CreateAnimation(
 	const std::string& _AniamtionName,

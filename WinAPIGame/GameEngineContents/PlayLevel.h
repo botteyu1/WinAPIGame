@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include "TileMap.h"
 
 // Ό³Έν :
 class PlayLevel : public GameEngineLevel
@@ -15,6 +16,9 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
+
+	
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -25,6 +29,10 @@ private:
 	void Render() override;
 	void Release() override;
 
+	class BackGround* BackGroundPtr = nullptr;
 	class Player* LevelPlayer = nullptr;
+	
+
+	void BatchActor();
 };
 

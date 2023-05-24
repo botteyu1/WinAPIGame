@@ -11,6 +11,7 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include "Bullet.h"
 #include <GameEnginePlatform/GameEngineInput.h>
+Player* Player::MainPlayer = nullptr;
 
 Player::Player()
 {
@@ -23,27 +24,17 @@ Player::~Player()
 
 void Player::Start()
 {
-	if (false == ResourcesManager::GetInst().IsLoadTexture("Test.Bmp"))
 	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("ContentsResources");
-
-		GameEnginePath FolderPath = FilePath;
-
-		FilePath.MoveChild("ContentsResources\\Texture\\Player\\");
-
-		// ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Left_Player.bmp"));
-
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_Player.bmp"), 5, 17);
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_Player.bmp"), 5, 17);
-
+		GameEnginePath FolderPath;
+		FolderPath.SetCurrentPath();
+		FolderPath.MoveParentToExistsChild("ContentsResources");
 
 		FolderPath.MoveChild("ContentsResources\\Texture\\");
-		ResourcesManager::GetInst().CreateSpriteFolder("FolderPlayer", FolderPath.PlusFilePath("FolderPlayer"));
-
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Test.bmp"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
+		//로드하면서 스프라이트를 생성한다
+		ResourcesManager::GetInst().CreateSpriteFolder("player_idle", FolderPath.PlusFilePath("player_idle"));
+		ResourcesManager::GetInst().CreateSpriteFolder("player_run", FolderPath.PlusFilePath("player_run"));
+		ResourcesManager::GetInst().CreateSpriteFolder("player_attack", FolderPath.PlusFilePath("player_attack"));
+		ResourcesManager::GetInst().CreateSpriteFolder("player_success", FolderPath.PlusFilePath("player_success"));
 	}
 
 	{
@@ -51,36 +42,31 @@ void Player::Start()
 		// MainRenderer->SetRenderScale({ 200, 200 });
 		// MainRenderer->SetSprite("Left_Player.bmp");
 
+		//애니메이션은 로드된 스프라이트를 가지고 만든다.
+		MainRenderer->CreateAnimation("player_idle", "player_idle", 0, 11, 0.07f, true);
+			
+		MainRenderer->CreateAnimation("player_run", "player_run", 0, 5, 0.06f, false);
+		MainRenderer->CreateAnimation("player_attack", "player_attack", 0, 12, 0.06f, false);
+		MainRenderer->CreateAnimation("player_success", "player_success", 0, 12, 0.06f, false);
 
-		MainRenderer->CreateAnimation("Left_Idle", "Left_Player.bmp", 0, 2, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Idle", "Right_Player.bmp", 0, 2, 0.1f, true);
-
-		MainRenderer->CreateAnimation("Left_Run", "Left_Player.bmp", 3, 6, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Run", "Right_Player.bmp", 3, 6, 0.1f, true);
-
-		MainRenderer->ChangeAnimation("Left_Idle");
+		MainRenderer->ChangeAnimation("player_idle");
+		//MainRenderer->Flip();
 		MainRenderer->SetRenderScaleToTexture();
 	}
 
-	{
-		GameEngineRenderer* Ptr = CreateRenderer("HPBar.bmp", RenderOrder::Play);
-		Ptr->SetRenderPos({ 0, -100 });
-		Ptr->SetRenderScale({ 200, 40 });
-		Ptr->SetTexture("HPBar.bmp");
-	}
 
-	// State = PlayerState::Idle;
 
-	ChanageState(PlayerState::Idle);
-	Dir = PlayerDir::Right;
-	// GetLevel()->GetMainCamera()->SetPos({ -WinScale.hX(), -WinScale.hY() });
+	ChanageState(0.0f,PlayerState::Idle);
+	Dir = float4::RIGHT;
+
 }
 
 void Player::Update(float _Delta)
 {
+	
 	StateUpdate(_Delta);
 
-	// Gravity();
+	
 }
 
 void Player::StateUpdate(float _Delta)
@@ -97,7 +83,7 @@ void Player::StateUpdate(float _Delta)
 
 }
 
-void Player::ChanageState(PlayerState _State)
+void Player::ChanageState(float _Delta, PlayerState _State)
 {
 	if (_State != State)
 	{
@@ -107,7 +93,7 @@ void Player::ChanageState(PlayerState _State)
 			IdleStart();
 			break;
 		case PlayerState::Run:
-			RunStart();
+			RunStart( _Delta);
 			break;
 		default:
 			break;
@@ -125,79 +111,51 @@ void Player::DirCheck()
 	// D를 누른상태로 A를눌렀을때의 방향전환은 가능하지만
 	// A를 누른상태로 D를 눌렀을때에는 A의 처리가 먼저 이루어져서 방향전환이 되지않기때문에 문제가 발생했다.
 
-	// 방향을 결정하는 키들이 모두 프리라면 그상태 그대로 유지. 아래의 D가 프리일때 Left가 되는 것을 방지.
-	if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
-	{
-		return;
-	}
+	//// 방향을 결정하는 키들이 모두 프리라면 그상태 그대로 유지. 아래의 D가 프리일때 Left가 되는 것을 방지.
+	//if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
+	//{
+	//	return;
+	//}
 
 	// A가 눌렸거나 D가 프리이라면 Left로 방향전환 인데 가만히있어도 Left를 바라보는 현상이 생김.
-	if (true == GameEngineInput::IsDown('A') || true == GameEngineInput::IsFree('D'))
+	if (true == GameEngineInput::IsDown('A') )
 	{
-		Dir = PlayerDir::Left;
-		ChangeAnimationState(CurState);
+		Dir = float4::LEFT;
+		MainRenderer->FlipON();
+	
 		return;
 	}
 
 	// D가 눌렸거나 A가 프리이면 Right로 방향 전환.
-	if (true == GameEngineInput::IsDown('D') || true == GameEngineInput::IsFree('A'))
+	if (true == GameEngineInput::IsDown('D'))
 	{
-		Dir = PlayerDir::Right;
-		ChangeAnimationState(CurState);
+		Dir = float4::RIGHT;
+		MainRenderer->FlipOFF();
+		
 		return;
 	}
-
-
-	// 원래 있던 코드.
-	/*PlayerDir CheckDir = PlayerDir::Left;
-
-	if (true == GameEngineInput::IsDown('A'))
+	if (true == GameEngineInput::IsDown('W'))
 	{
-		CheckDir = PlayerDir::Left;
+		Dir = float4::UP;
+		
+		return;
 	}
-	else if (true == GameEngineInput::IsDown('D'))
+	if (true == GameEngineInput::IsDown('S'))
 	{
-		CheckDir = PlayerDir::Right;
+		Dir = float4::DOWN;
+		
+		return;
 	}
+	return;
 
-	bool ChangeDir = false;
 
-	if (CheckDir != PlayerDir::Max)
-	{
-		Dir = CheckDir;
-		ChangeDir = true;
-	}
-
-	if (CheckDir != PlayerDir::Max && true == ChangeDir)
-	{
-		ChangeAnimationState(CurState);
-	}*/
 
 }
 
-void Player::ChangeAnimationState(const std::string& _StateName)
+
+
+
+void Player::LevelStart()
 {
-	// "Idle"
-	// _StateName
-
-	std::string AnimationName;
-
-	switch (Dir)
-	{
-	case PlayerDir::Right:
-		AnimationName = "Right_";
-		break;
-	case PlayerDir::Left:
-		AnimationName = "Left_";
-		break;
-	default:
-		break;
-	}
-
-	AnimationName += _StateName;
-
-	CurState = _StateName;
-
-	MainRenderer->ChangeAnimation(AnimationName);
+	MainPlayer = this;
 }
-

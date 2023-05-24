@@ -17,6 +17,11 @@ bool ResourcesManager::IsLoadTexture(const std::string& _Name)
 {
 	return FindTexture(_Name) != nullptr;
 }
+bool ResourcesManager::IsLoadSprite(const std::string& _Name)
+{
+	return FindSprite(_Name) != nullptr;
+}
+
 
 ResourcesManager::ResourcesManager()
 {
@@ -71,19 +76,19 @@ GameEngineWindowTexture* ResourcesManager::TextureLoad(const std::string& _Name,
 	
 	// 확장자 추출
 	std::string Ext;
-	for (size_t i = _Path.size() - 1; i >= 0; --i)
+	for (int i = UpperName.size() - 1; i >= 0; --i)
 	{
-		if (_Path[i] == '.')
+		if (UpperName[i] == '.')
 		{
 			break;
 		}
-		Ext.push_back(_Path[i]);
+		Ext.push_back(UpperName[i]);
 	}
 	// 확장자 png인지 확인 후 맞으면 png로
-	if (Ext == "gnp")
+	if (Ext ==  "GNP")
 	{
 		GameEngineWindowPNG* LoadPNG = new GameEngineWindowPNG();
-		LoadPNG->ResLoadPng(_Path);
+		LoadPNG->ResLoad(_Path);
 		AllTexture.insert(std::make_pair(UpperName, LoadPNG));
 		return LoadPNG;
 	}

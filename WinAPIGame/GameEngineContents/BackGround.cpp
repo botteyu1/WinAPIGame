@@ -16,7 +16,7 @@ BackGround::~BackGround()
 
 void BackGround::Start()
 {
-	SetPos({ 0, 0 });
+	//SetPos({ 0, 0 });
 }
 
 
@@ -85,6 +85,8 @@ void BackGround::Init(const std::string& _FileName)
 		// SetScale(Scale * 5.0f);
 
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
+		float4 Scale = Render->GetRenderScale().Half();
+		Render->SetRenderPos(Scale);
 		//Render->SetRenderPos
 		//Render->SetRenderScale(Scale);
 	}

@@ -126,14 +126,14 @@ void GameEngineWindowTexture::BitCopy(
 
 
 void GameEngineWindowTexture::TransCopy(const float4& _Pos, const float4& _Scale
-	, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor/* = RGB(255, 0, 255)*/)
+	, const float4& _OtherPos, const float4& _OtherScale, int _TransColor/* = RGB(255, 0, 255)*/, bool _FlipCheck)
 {
 
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 	HDC BackBufferImageDC = BackBuffer->GetImageDC();
 	
 	
-	if (true /*== _FlipCheck*/)
+	if (true == _FlipCheck)
 	{
 		HDC reverseDC = CreateCompatibleDC(BackBufferImageDC);
 		HBITMAP buffer = CreateCompatibleBitmap(ImageDC, _OtherScale.iX(), _OtherScale.iY());
@@ -190,4 +190,27 @@ void GameEngineWindowTexture::TransCopy(const float4& _Pos, const float4& _Scale
 
 }
 
+unsigned int GameEngineWindowTexture::GetColor(unsigned int _DefaultColor, float4 _Pos)
+{
+	if (0 > _Pos.iX())
+	{
+		return _DefaultColor;
+	}
 
+	if (0 > _Pos.iY())
+	{
+		return _DefaultColor;
+	}
+
+	if (GetScale().iX() <= _Pos.iX())
+	{
+		return _DefaultColor;
+	}
+
+	if (GetScale().iX() <= _Pos.iY())
+	{
+		return _DefaultColor;
+	}
+
+	return GetPixel(ImageDC, _Pos.iX(), _Pos.iY());
+}

@@ -13,7 +13,7 @@ GameEngineWindowPNG::~GameEngineWindowPNG()
 {
 }
 
-void GameEngineWindowPNG::ResLoadPng(const std::string& _Path) 
+void GameEngineWindowPNG::ResLoad(const std::string& _Path) 
 {
 
 	ULONG_PTR gdiplusToken;
@@ -36,7 +36,7 @@ float4 GameEngineWindowPNG::GetScale()
 }
 
 void GameEngineWindowPNG::TransCopy(const float4& _Pos, 
-	const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, bool _FlipCheck, int _TransColor)
+	const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, int _TransColor /*= RGB(255, 0, 255)*/, bool _FlipCheck/* = false*/)
 {
 	ULONG_PTR gdiplusToken;
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
@@ -45,7 +45,7 @@ void GameEngineWindowPNG::TransCopy(const float4& _Pos,
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 	HDC BackBufferImageDC = BackBuffer->GetImageDC();
 
-	if (true)
+	if (true == _FlipCheck)
 	{
 		Gdiplus::Graphics g(BackBufferImageDC);
 		g.DrawImage(Image,

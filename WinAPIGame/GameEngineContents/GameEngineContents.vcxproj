@@ -176,11 +176,31 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Undead.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TileMapData.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -206,6 +226,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Undead.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -215,6 +243,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TileMapData.cpp">
       <SubType>
       </SubType>
     </ClCompile>

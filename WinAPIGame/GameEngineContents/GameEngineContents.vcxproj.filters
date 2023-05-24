@@ -23,6 +23,21 @@
     <ClInclude Include="Bullet.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapData.h">
+      <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Global\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Undead.h">
+      <Filter>Global\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TitleLevel.cpp">
@@ -47,6 +62,21 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapData.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Global\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Undead.cpp">
+      <Filter>Global\Obstacle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -54,6 +84,12 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{590be175-b4d0-4d2d-a311-b31490de1797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tile">
+      <UniqueIdentifier>{0ad7d969-97a4-4ed3-bee5-2b40cee5d4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Obstacle">
+      <UniqueIdentifier>{43b8bc90-79bc-4958-b39e-3b00d9c66e75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

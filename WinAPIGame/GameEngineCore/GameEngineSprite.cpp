@@ -48,7 +48,7 @@ void GameEngineSprite::CreateSpriteFolder(const std::string& _Path)
 {
 	GameEngineDirectory Dir = _Path;
 
-	std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".Bmp" });
+	std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".Bmp",".Png"});
 
 	AllSprite.resize(Files.size());
 

@@ -9,6 +9,9 @@ enum class UpdateOrder
 enum class RenderOrder
 {
 	BackGround,
+	Obstacle,
 	Play,
 	PlayUI,
 };
+
+#define TILESIZE 100.0f

@@ -33,8 +33,6 @@ public:
 	{
 		RenderPos = _Value;
 	}
-
-
 	void SetRenderScale(const float4& _Value)
 	{
 		RenderScale = _Value;
@@ -56,6 +54,15 @@ public:
 		ScaleRatio = _Scale;
 	}
 
+	float4 GetRenderPos()
+	{
+		return RenderPos;
+	}
+
+	float4 GetRenderScale()
+	{
+		return RenderScale;
+	}
 
 	void SetRenderScaleToTexture();
 
@@ -64,6 +71,14 @@ public:
 	void Flip()
 	{
 		FlipCheck = !FlipCheck;
+	}
+	void FlipON()
+	{
+		FlipCheck = true;
+	}
+	void FlipOFF()
+	{
+		FlipCheck = false;
 	}
 
 protected:
@@ -100,6 +115,22 @@ private:
 
 public:
 	Animation* FindAnimation(const std::string& _AniamtionName);
+
+	bool IsAnimationEnd()
+	{
+		if (CurAnimation->CurFrame == CurAnimation->EndFrame)
+		{
+			if (true == CurAnimation->Loop)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/// <summary>
 	/// 애니메이션 생성함수
