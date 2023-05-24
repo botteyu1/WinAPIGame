@@ -41,14 +41,14 @@ float4 TileMap::GetTilePos(int _X, int _Y)
 
 void TileMap::SetTileType( float4 _Pos, TTYPE _Type)
 {
-
-	if (TileMapVector.size() < _Pos.iX() * _Pos.iY())
+	int Pos = (TileMapSize.iX() * _Pos.iY()) + _Pos.iX();
+	if (TileMapVector.size() < Pos)
 	{
 		MsgBoxAssert("지정한 위치값이 타일값을 초과했습니다.");
 		return;
 	}
 
-	TileMapVector[_Pos.iX() * _Pos.iY()] = _Type;
+	TileMapVector[Pos] = _Type;
 }
 
 

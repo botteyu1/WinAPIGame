@@ -106,31 +106,19 @@ void Player::ChanageState(float _Delta, PlayerState _State)
 
 void Player::DirCheck()
 {
-
-	// 코드들이 순차적으로 실행되기 때문에 
-	// D를 누른상태로 A를눌렀을때의 방향전환은 가능하지만
-	// A를 누른상태로 D를 눌렀을때에는 A의 처리가 먼저 이루어져서 방향전환이 되지않기때문에 문제가 발생했다.
-
-	//// 방향을 결정하는 키들이 모두 프리라면 그상태 그대로 유지. 아래의 D가 프리일때 Left가 되는 것을 방지.
-	//if (true == GameEngineInput::IsFree('A') && true == GameEngineInput::IsFree('D'))
-	//{
-	//	return;
-	//}
-
-	// A가 눌렸거나 D가 프리이라면 Left로 방향전환 인데 가만히있어도 Left를 바라보는 현상이 생김.
 	if (true == GameEngineInput::IsDown('A') )
 	{
 		Dir = float4::LEFT;
-		MainRenderer->FlipON();
+		MainRenderer->FlipON();//왼쪽이면 플립
 	
 		return;
 	}
 
-	// D가 눌렸거나 A가 프리이면 Right로 방향 전환.
+	
 	if (true == GameEngineInput::IsDown('D'))
 	{
 		Dir = float4::RIGHT;
-		MainRenderer->FlipOFF();
+		MainRenderer->FlipOFF(); //오른쪽이면 플립 풀기
 		
 		return;
 	}

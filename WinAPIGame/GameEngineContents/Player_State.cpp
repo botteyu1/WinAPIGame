@@ -10,7 +10,7 @@ void Player::IdleStart()
 {
 	
 
-	// MainRenderer->ChangeAnimation("Right_Idle");
+	// MainRenderer->ChangeAnimation("Right_Idle");ㅁ
 }
 
 void Player::RunStart(float _Delta)
@@ -18,8 +18,16 @@ void Player::RunStart(float _Delta)
 	RunPixelCount = 0.0f;
 	MainRenderer->ChangeAnimation("player_run");
 
-	//TileMap::GetLevelTileMap()->SetTileType(PlayerTilePos,TTYPE::PL);
-	
+	//기존 플레이어 타일 위치 길로 다시 바꾸기
+	float4 PlayerTilePos = GetPlayerTilePos();
+	TileMap::GetLevelTileMap()->SetTileType(PlayerTilePos,TTYPE::NO);
+
+	//이동할 타일 위치 플레이어로 바꾸기
+	PlayerTilePos += Dir;
+	TileMap::GetLevelTileMap()->SetTileType(PlayerTilePos, TTYPE::PL);
+
+	// 플레이어 타일 위치 업데이트
+	TilePos = PlayerTilePos;
 
 	RunUpdate(_Delta);
 }
@@ -46,7 +54,6 @@ void Player::IdleUpdate(float _Delta)
 		switch (NextTile)
 		{
 		case TTYPE::NO:
-			
 			ChanageState(_Delta, PlayerState::Run);
 			break;
 		case TTYPE::WA:
@@ -55,7 +62,7 @@ void Player::IdleUpdate(float _Delta)
 			ChanageState(_Delta, PlayerState::Success);
 			break;
 		case TTYPE::UN:
-			ChanageState(_Delta, PlayerState::Attack);
+			ChanageState(_Delta, PlayerState::Run);
 			break;
 		case TTYPE::SP:
 			break;

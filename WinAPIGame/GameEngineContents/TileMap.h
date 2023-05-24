@@ -47,7 +47,7 @@ public:
 protected:
 
 private:
-
+	//타입을 주소까지 저장하게 페어로 변경
 	std::vector<TTYPE> TileMapVector; // 타일을 벡터로 저장
 	float4 TileMapPos = float4(0.0f, 0.0f, 0.0f, 0.0f); // 타일맵 좌표 0,0이 화면상에 배치될 위치
 	float4 TileMapSize = float4(0.0f, 0.0f, 0.0f, 0.0f); // 타일맵의 총 크기
