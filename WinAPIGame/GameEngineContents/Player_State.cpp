@@ -32,6 +32,22 @@ void Player::RunStart(float _Delta)
 	RunUpdate(_Delta);
 }
 
+void Player::AttackStart(float _Delta)
+{
+	float4 PlayerTilePos = GetPlayerTilePos() + Dir;
+	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(PlayerTilePos.iX(), PlayerTilePos.iY());
+	switch (NextTile)
+	{
+	case TTYPE::UN:
+		ChanageState(_Delta, PlayerState::Attack);
+		break;
+	case TTYPE::RO:
+		break;
+	default:
+		break;
+	}
+}
+
 void Player::IdleUpdate(float _Delta)
 {
 
@@ -62,7 +78,7 @@ void Player::IdleUpdate(float _Delta)
 			ChanageState(_Delta, PlayerState::Success);
 			break;
 		case TTYPE::UN:
-			ChanageState(_Delta, PlayerState::Run);
+			ChanageState(_Delta, PlayerState::Attack);
 			break;
 		case TTYPE::SP:
 			break;
@@ -106,7 +122,8 @@ void Player::RunUpdate(float _Delta)
 	}
 
 	AddPos(MovePos);
-	//GetLevel()->GetMainCamera()->AddPos(MovePos);
+}
 
-
+void Player::AttackUpdate(float _Delta)
+{
 }
