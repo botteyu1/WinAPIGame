@@ -1,7 +1,7 @@
 #pragma once
-
+#include "Obstacle.h"
 // Ό³Έν :
-class NPC
+class NPC : public Obstacle
 {
 public:
 	// constrcuter destructer

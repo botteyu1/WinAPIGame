@@ -79,6 +79,8 @@ void Player::StateUpdate(float _Delta)
 		return RunUpdate(_Delta);
 	case PlayerState::Attack:
 		return AttackUpdate(_Delta);
+	case PlayerState::Success:
+		return AttackUpdate(_Delta);
 	default:
 		break;
 	}
@@ -97,6 +99,8 @@ void Player::ChanageState(float _Delta, PlayerState _State)
 			RunStart( _Delta);
 			break;	
 		case PlayerState::Attack:
+			AttackStart( _Delta);
+		case PlayerState::Success:
 			AttackStart( _Delta);
 			break;
 		default:
