@@ -48,7 +48,9 @@ public:
 	}
 
 protected:
-	void StateUpdate(float _Delta);
+	
+
+
 
 	void IdleStart();
 	void RunStart(float _Delta);
@@ -60,14 +62,14 @@ protected:
 	void AttackUpdate(float _Delta);
 
 	void ChanageState(float _Delta,PlayerState State);
-
+	void StateUpdate(float _Delta);
 	PlayerState State = PlayerState::Max;
 	float4 Dir = float4::ZERO;
 	
 	float4 TilePos = float4::ZERO; //플레이어 타일위치
 
 	
-	float RunPixelCount = 0.0f;
+	float PixelCount = 0.0f;
 
 	void DirCheck();
 

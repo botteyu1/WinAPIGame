@@ -5,6 +5,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "Undead.h"
+#include "Rock.h"
 #include <vector>
 
 // Contents
@@ -32,8 +33,8 @@ void PlayLevel::Start()
 		TTYPE::WA, TTYPE::WA, TTYPE::NO, TTYPE::NO, TTYPE::UN, TTYPE::NO, TTYPE::NO, TTYPE::WA, TTYPE::WA,
 		TTYPE::WA, TTYPE::WA, TTYPE::NO, TTYPE::UN, TTYPE::NO, TTYPE::UN, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 		TTYPE::WA, TTYPE::NO, TTYPE::NO, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,
-		TTYPE::WA, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::WA, TTYPE::WA,
-		TTYPE::WA, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::WA,
+		TTYPE::WA, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::WA, TTYPE::WA,
+		TTYPE::WA, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::WA,
 		TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,	TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 	};
 
@@ -46,15 +47,15 @@ void PlayLevel::BatchActor()
 {
 	TileMap* LevelTileMap = TileMap::GetLevelTileMap();
 	float4 Size = LevelTileMap->GetTileMapSize();
-	std::vector<Obstacle*>& AllObstacle = Obstacle::GetAllObstacle();
+	//std::vector<Obstacle*>& AllObstacle = Obstacle::GetAllObstacle();
 	Obstacle* Obstacle;
 	float TileSize = 100.0f;
 	for (int Y = 0; Y < Size.iY(); Y++)
 	{
 		for (int X = 0; X < Size.iX(); X++)
 		{
-			TTYPE TileType = LevelTileMap->GetTileType(X, Y);
-			switch (TileType)
+			std::pair<TTYPE, GameEngineActor*>& TilePair = LevelTileMap->GetTilePair(X, Y);
+			switch (TilePair.first)
 			{
 			case TTYPE::NO:
 				break;
@@ -64,17 +65,21 @@ void PlayLevel::BatchActor()
 				LevelPlayer = CreateActor<Player>();
 				LevelPlayer->SetPos(LevelTileMap->GetTilePos(X, Y));
 				LevelPlayer->SetPlayerTilePos(X,Y);
+				TilePair.second = LevelPlayer;
 				break;
 			case TTYPE::NP:
 				break;
 			case TTYPE::UN:
 				Obstacle = CreateActor<Undead>();
-				Obstacle->Init(LevelTileMap->GetTilePos(X, Y));
-				AllObstacle.push_back(Obstacle);
+				Obstacle->Init(LevelTileMap->GetTilePos(X, Y),X,Y);
+				TilePair.second = Obstacle;
 				break;
 			case TTYPE::SP:
 				break;
 			case TTYPE::RO:
+				Obstacle = CreateActor<Rock>();
+				Obstacle->Init(LevelTileMap->GetTilePos(X, Y), X, Y);
+				TilePair.second = Obstacle;
 				break;
 			case TTYPE::LO:
 				break;

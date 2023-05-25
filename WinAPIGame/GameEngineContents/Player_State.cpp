@@ -6,25 +6,28 @@
 #include "PlayLevel.h"
 #include "ContentsEnum.h"
 
+#include "Undead.h"
+#include "Rock.h"
+
 void Player::IdleStart()
 {
 	
 
-	// MainRenderer->ChangeAnimation("Right_Idle");ㅁ
+	// MainRenderer->ChangeAnimation("Right_Idle");
 }
 
 void Player::RunStart(float _Delta)
 {
-	RunPixelCount = 0.0f;
+	PixelCount = 0.0f;
 	MainRenderer->ChangeAnimation("player_run");
 
 	//기존 플레이어 타일 위치 길로 다시 바꾸기
 	float4 PlayerTilePos = GetPlayerTilePos();
-	TileMap::GetLevelTileMap()->SetTileType(PlayerTilePos,TTYPE::NO);
+	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, PlayerTilePos);
 
 	//이동할 타일 위치 플레이어로 바꾸기
 	PlayerTilePos += Dir;
-	TileMap::GetLevelTileMap()->SetTileType(PlayerTilePos, TTYPE::PL);
+	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::PL ,this, PlayerTilePos);
 
 	// 플레이어 타일 위치 업데이트
 	TilePos = PlayerTilePos;
@@ -34,18 +37,28 @@ void Player::RunStart(float _Delta)
 
 void Player::AttackStart(float _Delta)
 {
+	PixelCount = 0.0f;
+	MainRenderer->ChangeAnimation("player_Attack");
+
+	//공격하는 위치 타일 정보 가져오기
 	float4 PlayerTilePos = GetPlayerTilePos() + Dir;
 	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(PlayerTilePos.iX(), PlayerTilePos.iY());
+	GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(PlayerTilePos.iX(), PlayerTilePos.iY());
+
+	// 타입에 맞는 적 처리
 	switch (NextTile)
 	{
 	case TTYPE::UN:
-		ChanageState(_Delta, PlayerState::Attack);
+		static_cast<Undead*>(Obstacle)->TryMove(Dir);
 		break;
 	case TTYPE::RO:
+		static_cast<Rock*>(Obstacle)->TryMove(Dir);
 		break;
 	default:
 		break;
 	}
+
+	AttackUpdate(_Delta);
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -78,11 +91,10 @@ void Player::IdleUpdate(float _Delta)
 			ChanageState(_Delta, PlayerState::Success);
 			break;
 		case TTYPE::UN:
+		case TTYPE::RO:
 			ChanageState(_Delta, PlayerState::Attack);
 			break;
 		case TTYPE::SP:
-			break;
-		case TTYPE::RO:
 			break;
 		case TTYPE::LO:
 			break;
@@ -107,16 +119,16 @@ void Player::RunUpdate(float _Delta)
 	float Speed = 1000.0f * _Delta;
 
 	//더한 후 픽셀을 벗어나면 타일사이즈로에 맞게  돌리고 그에맞게 스피드도 돌린다.
-	RunPixelCount += Speed;
-	if (RunPixelCount >= TILESIZE)
+	PixelCount += Speed;
+	if (PixelCount >= TILESIZE)
 	{
-		Speed -= (RunPixelCount - TILESIZE);
+		Speed -= (PixelCount - TILESIZE);
 	}
 
 	float4 MovePos = Dir * Speed;
 	
 
-	if (RunPixelCount >= 100.0f)
+	if (PixelCount >= TILESIZE)
 	{
 		ChanageState( _Delta,PlayerState::Idle);
 	}
@@ -126,4 +138,10 @@ void Player::RunUpdate(float _Delta)
 
 void Player::AttackUpdate(float _Delta)
 {
+	PixelCount += 1000.0f * _Delta;
+
+	if (PixelCount >= TILESIZE)
+	{
+		ChanageState(_Delta, PlayerState::Idle);
+	}
 }

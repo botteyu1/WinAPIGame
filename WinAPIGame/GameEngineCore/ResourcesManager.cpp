@@ -73,6 +73,8 @@ GameEngineWindowTexture* ResourcesManager::TextureLoad(const std::string& _Name,
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
 	// 동적 바인딩이라고 합니다.
+
+
 	
 	// 확장자 추출
 	std::string Ext;

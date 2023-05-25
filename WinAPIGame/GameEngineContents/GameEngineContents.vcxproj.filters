@@ -38,6 +38,9 @@
     <ClInclude Include="Undead.h">
       <Filter>Global\Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Global\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TitleLevel.cpp">
@@ -75,6 +78,9 @@
       <Filter>Global\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="Undead.cpp">
+      <Filter>Global\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
       <Filter>Global\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
