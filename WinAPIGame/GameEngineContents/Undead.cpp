@@ -37,7 +37,7 @@ void Undead::Start()
 	MainRenderer->CreateAnimation("undead_move", "undead_move", 0, 5, 0.05f, false);
 	MainRenderer->ChangeAnimation("undead_idle");
 
-	ChanageState(0.0f, ObstacleState::Idle);
+	ChanageState(ObstacleState::Idle);
 }
 
 
@@ -50,7 +50,7 @@ void Undead::TryMove(float4 _Dir)
 	switch (NextTile)
 	{
 	case TTYPE::NO:
-		ChanageState(0.0f, ObstacleState::Move);
+		ChanageState( ObstacleState::Move);
 		break;
 	case TTYPE::WA:
 	case TTYPE::PL:
@@ -59,7 +59,7 @@ void Undead::TryMove(float4 _Dir)
 	case TTYPE::RO:
 	case TTYPE::LO:
 	case TTYPE::KE:
-		ChanageState(0.0f, ObstacleState::Death);
+		ChanageState( ObstacleState::Death);
 		break;
 	case TTYPE::SP:
 		break;
@@ -75,7 +75,7 @@ void Undead::IdleStart()
 
 }
 
-void Undead::MoveStart(float _Delta)
+void Undead::MoveStart()
 {
 	PixelCount = 0.0f;
 	MainRenderer->ChangeAnimation("undead_move");
@@ -91,10 +91,10 @@ void Undead::MoveStart(float _Delta)
 	// 위치 업데이트
 	TilePos = nextTilePos;
 	
-	MoveUpdate(_Delta);
+	
 }
 
-void Undead::DeathStart(float _Delta)
+void Undead::DeathStart()
 {
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
 	Death();
@@ -112,8 +112,8 @@ void Undead::MoveUpdate(float _Delta)
 {
 	//애니메이션에 맞게 100픽셀 이동
 
-	//인자하나 만들어서 100픽셀 계산해서 이동후 완료하면 아이들로 전호나
-	float Speed = 1000.0f * _Delta;
+	//인자하나 만들어서 100픽셀 계산해서 이동후 완료하면 아이들로 전환
+	float Speed = TILESIZE * 10 * _Delta;
 
 	//더한 후 픽셀을 벗어나면 타일사이즈로에 맞게  돌리고 그에맞게 스피드도 돌린다.
 	PixelCount += Speed;
@@ -127,7 +127,7 @@ void Undead::MoveUpdate(float _Delta)
 
 	if (PixelCount >= TILESIZE)
 	{
-		ChanageState(_Delta, ObstacleState::Idle);
+		ChanageState(ObstacleState::Idle);
 	}
 
 	AddPos(MovePos);

@@ -7,6 +7,7 @@ enum class ObstacleState
 	Idle,
 	Move,
 	Death,
+	Attack,
 	Max, // 일반적으로 사용하지 않는 값.
 };
 
@@ -49,18 +50,20 @@ protected:
 	float4 Dir = float4::ZERO;
 	float PixelCount = 0.0f; 
 
-	void ChanageState(float _Delta, ObstacleState _State);
+	void ChanageState(ObstacleState _State);
 	void StateUpdate(float _Delta);
 	ObstacleState State = ObstacleState::Max;
 
 	virtual void IdleStart() {}
-	virtual void MoveStart(float _Delta) {}
-	virtual void DeathStart(float _Delta) {}
+	virtual void MoveStart() {}
+	virtual void DeathStart() {}
+	virtual void AttackStart() {}
 
 	// 클래스로 만들어도 되고.
 	virtual void IdleUpdate(float _Delta) {}
 	virtual void MoveUpdate(float _Delta) {}
 	virtual void DeathUpdate(float _Delta) {}
+	virtual void AttackUpdate(float _Delta) {}
 
 	
 

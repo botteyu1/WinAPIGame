@@ -27,8 +27,8 @@ public:
 protected:
 
 	void IdleStart()  override ; 
-	void MoveStart(float _Delta)  override;
-	void DeathStart(float _Delta)  override;
+	void MoveStart()  override;
+	void DeathStart()  override;
 
 	void IdleUpdate(float _Delta)  override;
 	void MoveUpdate(float _Delta)  override;

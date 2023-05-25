@@ -24,7 +24,7 @@ void Obstacle::Update(float _Delta)
 	StateUpdate(_Delta);
 }
 
-void Obstacle::ChanageState(float _Delta, ObstacleState _State)
+void Obstacle::ChanageState(ObstacleState _State)
 {
 
 	if (_State != State)
@@ -35,10 +35,13 @@ void Obstacle::ChanageState(float _Delta, ObstacleState _State)
 			IdleStart();
 			break;
 		case ObstacleState::Move:
-			MoveStart(_Delta);
+			MoveStart();
 			break;
 		case ObstacleState::Death:
-			DeathStart(_Delta);
+			DeathStart();
+			break;
+		case ObstacleState::Attack:
+			AttackStart();
 			break;
 		case ObstacleState::Max:
 			break;
@@ -62,6 +65,9 @@ void Obstacle::StateUpdate(float _Delta)
 		break;
 	case ObstacleState::Death:
 		DeathUpdate(_Delta);
+		break;
+	case ObstacleState::Attack:
+		AttackUpdate(_Delta);
 		break;
 	case ObstacleState::Max:
 		break;

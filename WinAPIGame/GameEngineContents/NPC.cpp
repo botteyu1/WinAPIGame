@@ -29,6 +29,6 @@ void NPC::Start()
 	MainRenderer->CreateAnimation("pandemonica", "pandemonica", 0, 11, 0.07f, true);
 	MainRenderer->ChangeAnimation("pandemonica");
 
-	ChanageState(0.0f, ObstacleState::Idle);
+	ChanageState(ObstacleState::Idle);
 }
 

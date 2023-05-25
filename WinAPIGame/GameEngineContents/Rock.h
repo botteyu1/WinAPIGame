@@ -20,7 +20,7 @@ public:
 
 
 protected:
-	void MoveStart(float _Delta) override;
+	void MoveStart() override;
 
 	void MoveUpdate(float _Delta)  override;
 

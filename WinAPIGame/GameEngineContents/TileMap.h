@@ -2,28 +2,32 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <vector>
 #include "Obstacle.h"
-
+class Obstacle;
 
 enum class TTYPE
 {
-	NO,//NE, // 0
-	WA,//LL, // 1
-	PL,//ayer, //2
-	NP,//C, // 3
-	UN,//dead,// 4 
-	SP,//ike, // 5
-	RO,//ck,// 6
-	LO,//ckBox,// 7
-	KE,//Y,// 8
+	NO,//NE,
+	WA,//LL,
+	PL,//ayer
+	NP,//C,
+	UN,//dead,
+	SP,//ike always,
+	SN,//pike on,
+	SF,// pike off,
+	RO,//ck
+	LO,//ckBox
+	KE,//Y
 	EN,//D
 };
 // 설명 :
 class TileMap	
 {
 	static TileMap LevelTileMap;
+	
 
 public:
 	static TileMap*  GetLevelTileMap()  { return &LevelTileMap; }
+	
 	// constrcuter destructer
 	TileMap();
 	~TileMap();
@@ -37,11 +41,15 @@ public:
 
 	TTYPE GetTileType(int _X, int _Y);
 	float4 GetTilePos(int _X, int _Y);
+	
 	GameEngineActor* GetTileActor(int _X, int _Y);
 	std::pair<TTYPE, GameEngineActor*>& GetTilePair(int _X, int _Y);
+	
+	
 
 	float4 GetTileMapPos() { return TileMapPos; }
 	float4 GetTileMapSize() { return TileMapSize; }
+
 
 	void SetTileType(TTYPE _Type ,float4 _Pos);
 	void SetTileActor(GameEngineActor* _Actor, int _X, int _Y);
@@ -55,14 +63,16 @@ public:
 	void SetTileMapPos(float4 _Pos) { TileMapPos = _Pos; }
 	void SetTileMapSize(float4 _Size) { TileMapSize = _Size; }
 
-	
 
+	Obstacle* GetTileTrap(int _X, int _Y);
+	std::pair<TTYPE, Obstacle*>& GetTileTrapPair(int _X, int _Y);
 protected:
 
 private:
 	//타입을 주소까지 저장하게 페어로 변경
 	
 	std::vector<std::pair<TTYPE, GameEngineActor*>> TileMapVector; // 타일을 벡터로 저장
+	std::vector<std::pair<TTYPE, Obstacle*>> TrapMapVector; // 스파이크을 벡터로 저장
 	float4 TileMapPos = float4(0.0f, 0.0f, 0.0f, 0.0f); // 타일맵 좌표 0,0이 화면상에 배치될 위치
 	float4 TileMapSize = float4(0.0f, 0.0f, 0.0f, 0.0f); // 타일맵의 총 크기
 	

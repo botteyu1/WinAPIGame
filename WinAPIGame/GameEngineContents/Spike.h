@@ -2,7 +2,8 @@
 #include "Obstacle.h"
 class Spike :
     public Obstacle
-{
+{    
+	
 public:
 	// constrcuter destructer
 	Spike();
@@ -17,7 +18,14 @@ public:
 	void Start() override;
 
 protected:
+	void IdleStart() override;
+	void AttackStart() override;
+
+	void IdleUpdate(float _delta) override;
+	void AttackUpdate(float _delta) override;
 
 private:
+
+	
 };
 

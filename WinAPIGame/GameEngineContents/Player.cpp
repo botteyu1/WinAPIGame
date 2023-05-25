@@ -54,14 +54,14 @@ void Player::Start()
 
 
 
-	ChanageState(0.0f,PlayerState::Idle);
+	ChanageState(PlayerState::Idle);
 	Dir = float4::RIGHT;
 
 }
 
 void Player::Update(float _Delta)
 {
-	
+	Moved = false; // 이동 초기화
 	StateUpdate(_Delta);
 
 	
@@ -84,7 +84,7 @@ void Player::StateUpdate(float _Delta)
 	}
 }
 
-void Player::ChanageState(float _Delta, PlayerState _State)
+void Player::ChanageState(PlayerState _State)
 {
 	if (_State != State)
 	{
@@ -94,13 +94,13 @@ void Player::ChanageState(float _Delta, PlayerState _State)
 			IdleStart();
 			break;
 		case PlayerState::Run:
-			RunStart( _Delta);
+			RunStart();
 			break;	
 		case PlayerState::Attack:
-			AttackStart( _Delta);
+			AttackStart();
 			break;
 		case PlayerState::Success:
-			SuccessStart( _Delta);
+			SuccessStart();
 			break;
 		default:
 			break;
@@ -153,4 +153,10 @@ void Player::DirCheck()
 void Player::LevelStart()
 {
 	MainPlayer = this;
+}
+
+void Player::HPDown()
+{
+	HP--;
+	Moved = true;
 }

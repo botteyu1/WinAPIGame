@@ -9,6 +9,8 @@
 #include "Undead.h"
 #include "Rock.h"
 
+
+
 void Player::IdleStart()
 {
 	
@@ -16,9 +18,9 @@ void Player::IdleStart()
 	// MainRenderer->ChangeAnimation("Right_Idle");
 }
 
-void Player::RunStart(float _Delta)
+void Player::RunStart()
 {
-	PixelCount = 0.0f;
+	MotionTime = 0.0f;
 	MainRenderer->ChangeAnimation("player_run");
 
 	//기존 플레이어 타일 위치 길로 다시 바꾸기
@@ -32,12 +34,12 @@ void Player::RunStart(float _Delta)
 	// 플레이어 타일 위치 업데이트
 	TilePos = PlayerTilePos;
 
-	RunUpdate(_Delta);
+	
 }
 
-void Player::AttackStart(float _Delta)
+void Player::AttackStart()
 {
-	PixelCount = 0.0f;
+	MotionTime = 0.0f;
 	MainRenderer->ChangeAnimation("player_Attack");
 
 	//공격하는 위치 타일 정보 가져오기
@@ -58,15 +60,13 @@ void Player::AttackStart(float _Delta)
 		break;
 	}
 
-	AttackUpdate(_Delta);
+	
 }
 
-void Player::SuccessStart(float _Delta)
+void Player::SuccessStart()
 {
-	PixelCount = 0.0f;
+	MotionTime = 0.0f;
 	MainRenderer->ChangeAnimation("player_success");
-
-	SuccessUpdate(_Delta);
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -91,16 +91,18 @@ void Player::IdleUpdate(float _Delta)
 		switch (NextTile)
 		{
 		case TTYPE::NO:
-			ChanageState(_Delta, PlayerState::Run);
+			HPDown();
+			ChanageState(PlayerState::Run);
 			break;
 		case TTYPE::WA:
 			break;
 		case TTYPE::NP:
-			ChanageState(_Delta, PlayerState::Success);
+			ChanageState(PlayerState::Success);
 			break;
 		case TTYPE::UN:
 		case TTYPE::RO:
-			ChanageState(_Delta, PlayerState::Attack);
+			HPDown();
+			ChanageState(PlayerState::Attack);
 			break;
 		case TTYPE::SP:
 			break;
@@ -124,21 +126,21 @@ void Player::RunUpdate(float _Delta)
 	//애니메이션에 맞게 100픽셀 이동
 	
 	//인자하나 만들어서 100픽셀 계산해서 이동후 완료하면 아이들로 전호나
-	float Speed = 1000.0f * _Delta;
+	float Speed = TILESIZE * 10 * _Delta;
 
 	//더한 후 픽셀을 벗어나면 타일사이즈로에 맞게  돌리고 그에맞게 스피드도 돌린다.
-	PixelCount += Speed;
-	if (PixelCount >= TILESIZE)
+	MotionTime += Speed;
+	if (MotionTime >= TILESIZE)
 	{
-		Speed -= (PixelCount - TILESIZE);
+		Speed -= (MotionTime - TILESIZE);
 	}
 
 	float4 MovePos = Dir * Speed;
 	
 
-	if (PixelCount >= TILESIZE)
+	if (MotionTime >= TILESIZE)
 	{
-		ChanageState( _Delta,PlayerState::Idle);
+		ChanageState(PlayerState::Idle);
 	}
 
 	AddPos(MovePos);
@@ -147,20 +149,20 @@ void Player::RunUpdate(float _Delta)
 //모션딜레이
 void Player::AttackUpdate(float _Delta)
 {
-	PixelCount += 1000.0f * _Delta;
+	MotionTime += 1000.0f * _Delta;
 
-	if (PixelCount >= TILESIZE)
+	if (MotionTime >= TILESIZE)
 	{
-		ChanageState(_Delta, PlayerState::Idle);
+		ChanageState(PlayerState::Idle);
 	}
 }
 
 void Player::SuccessUpdate(float _Delta)
 {
-	PixelCount += 1000.0f * _Delta;
+	MotionTime += 1000.0f * _Delta;
 
-	if (PixelCount >= TILESIZE)
+	if (MotionTime >= TILESIZE)
 	{
-		ChanageState(_Delta, PlayerState::Idle);
+		ChanageState(PlayerState::Idle);
 	}
 }

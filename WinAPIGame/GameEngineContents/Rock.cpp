@@ -43,7 +43,7 @@ void Rock::Start()
 	{
 		RockNum = 1;
 	}
-	ChanageState(0.0f, ObstacleState::Idle);
+	ChanageState(ObstacleState::Idle);
 }
 
 
@@ -55,7 +55,7 @@ void Rock::TryMove(float4 _Dir)
 	switch (NextTile)
 	{
 	case TTYPE::NO:
-		ChanageState(0.0f, ObstacleState::Move);
+		ChanageState(ObstacleState::Move);
 		break;
 	case TTYPE::WA:
 	case TTYPE::PL:
@@ -75,7 +75,7 @@ void Rock::TryMove(float4 _Dir)
 }
 
 
-void Rock::MoveStart(float _Delta)
+void Rock::MoveStart()
 {
 	PixelCount = 0.0f;
 
@@ -89,8 +89,6 @@ void Rock::MoveStart(float _Delta)
 
 	// 위치 업데이트
 	TilePos = nextTilePos;
-
-	MoveUpdate(_Delta);
 }
 
 
@@ -114,7 +112,7 @@ void Rock::MoveUpdate(float _Delta)
 
 	if (PixelCount >= TILESIZE)
 	{
-		ChanageState(_Delta, ObstacleState::Idle);
+		ChanageState(ObstacleState::Idle);
 	}
 
 }
