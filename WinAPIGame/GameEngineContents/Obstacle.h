@@ -30,7 +30,7 @@ public:
 	Obstacle(Obstacle&& _Other) noexcept = delete;
 	Obstacle& operator=(const Obstacle& _Other) = delete;
 	Obstacle& operator=(Obstacle&& _Other) noexcept = delete;
-	void Init(float4 _Pos, int _TileX, int _TileY);
+	virtual void Init(float4 _TilePos, int _Custom = 0);
 
 	void Update(float _Delta) override;
 

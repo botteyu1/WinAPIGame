@@ -50,13 +50,14 @@ void PlayLevel::BatchActor()
 	TileMap* LevelTileMap = TileMap::GetLevelTileMap();
 	float4 Size = LevelTileMap->GetTileMapSize();
 	//std::vector<Obstacle*>& AllObstacle = Obstacle::GetAllObstacle();
-	Obstacle* Obstacle;
+	Obstacle* ObstacleObj;
 	float TileSize = 100.0f;
 	for (int Y = 0; Y < Size.iY(); Y++)
 	{
 		for (int X = 0; X < Size.iX(); X++)
 		{
 			std::pair<TTYPE, GameEngineActor*>& TilePair = LevelTileMap->GetTilePair(X, Y);
+			float4 Pos = {static_cast<float>(X), static_cast<float>(Y), 0.0f, 0.0f};
 			switch (TilePair.first)
 			{
 			case TTYPE::NO:
@@ -70,24 +71,19 @@ void PlayLevel::BatchActor()
 				TilePair.second = LevelPlayer;
 				break;
 			case TTYPE::NP:
-				Obstacle = CreateActor<NPC>();
-				Obstacle->Init(LevelTileMap->GetTilePos(X, Y), X, Y);
-				TilePair.second = Obstacle;
+				ObstacleObj = CreateActor<NPC>();
+				ObstacleObj->Init(Pos);
+				TilePair.second = ObstacleObj;
 				break;
 			case TTYPE::UN:
-				Obstacle = CreateActor<Undead>();
-				Obstacle->Init(LevelTileMap->GetTilePos(X, Y),X,Y);
-				TilePair.second = Obstacle;
-				break;
-			case TTYPE::SP:
-				Obstacle = CreateActor<Spike>();
-				Obstacle->Init(LevelTileMap->GetTilePos(X, Y), X, Y);
-				TilePair.second = Obstacle;
+				ObstacleObj = CreateActor<Undead>();
+				ObstacleObj->Init(Pos);
+				TilePair.second = ObstacleObj;
 				break;
 			case TTYPE::RO:
-				Obstacle = CreateActor<Rock>();
-				Obstacle->Init(LevelTileMap->GetTilePos(X, Y), X, Y);
-				TilePair.second = Obstacle;
+				ObstacleObj = CreateActor<Rock>();
+				ObstacleObj->Init(Pos);
+				TilePair.second = ObstacleObj;
 				break;
 			case TTYPE::LO:
 				break;
@@ -99,7 +95,27 @@ void PlayLevel::BatchActor()
 				break;
 			}
 			
-
+			std::pair<TTYPE, Obstacle*>& TrapPair = LevelTileMap->GetTileTrapPair(X, Y);
+			switch (TrapPair.first)
+			{
+			case TTYPE::SP:
+				ObstacleObj = CreateActor<Spike>();
+				ObstacleObj->Init(Pos, 0);
+				TrapPair.second = ObstacleObj;
+				break;
+			case TTYPE::SN:
+				ObstacleObj = CreateActor<Spike>();
+				ObstacleObj->Init(Pos, 1);
+				TrapPair.second = ObstacleObj;
+				break;
+			case TTYPE::SF:
+				ObstacleObj = CreateActor<Spike>();
+				ObstacleObj->Init(Pos, 2);
+				TrapPair.second = ObstacleObj;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 

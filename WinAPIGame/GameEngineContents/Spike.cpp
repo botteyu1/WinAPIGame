@@ -34,10 +34,13 @@ void Spike::Start()
 
 	ChanageState(ObstacleState::Attack);
 }
+void Spike::Init(float4 _TilePos, int _Custom)
+{
+	Obstacle::Init(_TilePos, _Custom);
+}
 // 공격안하는 대기상황
 void Spike::IdleStart()
 {
-	
 	MainRenderer->ChangeAnimation("spike_off");
 }
 

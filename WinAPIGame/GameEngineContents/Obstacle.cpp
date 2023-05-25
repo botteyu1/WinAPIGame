@@ -1,5 +1,5 @@
 #include "Obstacle.h"
-
+#include "TileMap.h"
 
 
 //std::vector<Obstacle*> Obstacle::AllObstacle;
@@ -13,10 +13,15 @@ Obstacle::~Obstacle()
 {
 }
 
-void Obstacle::Init(float4 _Pos, int _TileX, int _TileY)
+
+
+void Obstacle::Init(float4 _TilePos, int _Custom)
 {
-	SetPos(_Pos);
-	SetTilePos(_TileX, _TileY);
+	int X =_TilePos.iX();
+	int Y =_TilePos.iY();
+
+	SetPos(TileMap::GetLevelTileMap()->GetTilePos(X, Y));
+	SetTilePos(X, Y);
 }
 
 void Obstacle::Update(float _Delta)

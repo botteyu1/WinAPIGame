@@ -56,11 +56,16 @@ void Player::Start()
 
 	ChanageState(PlayerState::Idle);
 	Dir = float4::RIGHT;
+	HP = 10;
 
 }
 
 void Player::Update(float _Delta)
 {
+	if (HP == 0)
+	{
+		int a = 0;
+	}
 	Moved = false; // 이동 초기화
 	StateUpdate(_Delta);
 
