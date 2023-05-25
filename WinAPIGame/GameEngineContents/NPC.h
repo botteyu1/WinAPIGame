@@ -14,6 +14,8 @@ public:
 	NPC& operator=(const NPC& _Other) = delete;
 	NPC& operator=(NPC&& _Other) noexcept = delete;
 
+	void Start() override;
+
 protected:
 
 private:

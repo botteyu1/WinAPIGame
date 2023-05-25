@@ -44,6 +44,9 @@
     <ClInclude Include="NPC.h">
       <Filter>Global\Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="Spike.h">
+      <Filter>Global\Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TitleLevel.cpp">
@@ -87,6 +90,9 @@
       <Filter>Global\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="NPC.cpp">
+      <Filter>Global\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Spike.cpp">
       <Filter>Global\Obstacle</Filter>
     </ClCompile>
   </ItemGroup>

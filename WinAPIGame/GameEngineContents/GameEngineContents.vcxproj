@@ -184,6 +184,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Spike.h" />
     <ClInclude Include="Undead.h">
       <SubType>
       </SubType>
@@ -242,6 +243,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Spike.cpp" />
     <ClCompile Include="Undead.cpp">
       <SubType>
       </SubType>

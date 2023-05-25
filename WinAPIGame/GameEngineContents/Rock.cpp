@@ -39,6 +39,10 @@ void Rock::Start()
 	MainRenderer->SetTexture(RockName);
 
 	RockNum++;
+	if (RockNum > 8)
+	{
+		RockNum = 1;
+	}
 	ChanageState(0.0f, ObstacleState::Idle);
 }
 

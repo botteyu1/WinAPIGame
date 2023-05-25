@@ -39,15 +39,13 @@ void Player::Start()
 
 	{
 		MainRenderer = CreateRenderer(RenderOrder::Play);
-		// MainRenderer->SetRenderScale({ 200, 200 });
-		// MainRenderer->SetSprite("Left_Player.bmp");
 
-		//애니메이션은 로드된 스프라이트를 가지고 만든다.
+		//애니메이션은 로드된 스프라이트를 가지고 만든다.3
 		MainRenderer->CreateAnimation("player_idle", "player_idle", 0, 11, 0.07f, true);
 			
 		MainRenderer->CreateAnimation("player_run", "player_run", 0, 5, 0.06f, false);
 		MainRenderer->CreateAnimation("player_attack", "player_attack", 0, 12, 0.06f, false);
-		MainRenderer->CreateAnimation("player_success", "player_success", 0, 12, 0.06f, false);
+		MainRenderer->CreateAnimation("player_success", "player_success", 0, 18, 0.1f, false);
 
 		MainRenderer->ChangeAnimation("player_idle");
 		//MainRenderer->Flip();
@@ -80,7 +78,7 @@ void Player::StateUpdate(float _Delta)
 	case PlayerState::Attack:
 		return AttackUpdate(_Delta);
 	case PlayerState::Success:
-		return AttackUpdate(_Delta);
+		return SuccessUpdate(_Delta);
 	default:
 		break;
 	}
@@ -100,8 +98,9 @@ void Player::ChanageState(float _Delta, PlayerState _State)
 			break;	
 		case PlayerState::Attack:
 			AttackStart( _Delta);
+			break;
 		case PlayerState::Success:
-			AttackStart( _Delta);
+			SuccessStart( _Delta);
 			break;
 		default:
 			break;

@@ -48,18 +48,17 @@ public:
 	}
 
 protected:
-	
-
-
 
 	void IdleStart();
 	void RunStart(float _Delta);
 	void AttackStart(float _Delta);
+	void SuccessStart(float _Delta);
 
 	// 클래스로 만들어도 되고.
 	void IdleUpdate(float _Delta);
 	void RunUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
+	void SuccessUpdate(float _Delta);
 
 	void ChanageState(float _Delta,PlayerState State);
 	void StateUpdate(float _Delta);

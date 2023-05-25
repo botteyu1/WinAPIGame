@@ -6,6 +6,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include "Undead.h"
 #include "Rock.h"
+#include "NPC.h"
 #include <vector>
 
 // Contents
@@ -34,7 +35,7 @@ void PlayLevel::Start()
 		TTYPE::WA, TTYPE::WA, TTYPE::NO, TTYPE::UN, TTYPE::NO, TTYPE::UN, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 		TTYPE::WA, TTYPE::NO, TTYPE::NO, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 		TTYPE::WA, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::WA, TTYPE::WA,
-		TTYPE::WA, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::NO, TTYPE::NO, TTYPE::WA,
+		TTYPE::WA, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::RO, TTYPE::NO, TTYPE::NO, TTYPE::NP, TTYPE::WA,
 		TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,	TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 	};
 
@@ -68,6 +69,9 @@ void PlayLevel::BatchActor()
 				TilePair.second = LevelPlayer;
 				break;
 			case TTYPE::NP:
+				Obstacle = CreateActor<NPC>();
+				Obstacle->Init(LevelTileMap->GetTilePos(X, Y), X, Y);
+				TilePair.second = Obstacle;
 				break;
 			case TTYPE::UN:
 				Obstacle = CreateActor<Undead>();

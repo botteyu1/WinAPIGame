@@ -1,6 +1,7 @@
 #include "Obstacle.h"
 
 
+
 //std::vector<Obstacle*> Obstacle::AllObstacle;
 
 
@@ -16,7 +17,6 @@ void Obstacle::Init(float4 _Pos, int _TileX, int _TileY)
 {
 	SetPos(_Pos);
 	SetTilePos(_TileX, _TileY);
-	
 }
 
 void Obstacle::Update(float _Delta)

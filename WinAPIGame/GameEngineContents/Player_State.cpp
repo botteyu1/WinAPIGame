@@ -61,6 +61,14 @@ void Player::AttackStart(float _Delta)
 	AttackUpdate(_Delta);
 }
 
+void Player::SuccessStart(float _Delta)
+{
+	PixelCount = 0.0f;
+	MainRenderer->ChangeAnimation("player_success");
+
+	SuccessUpdate(_Delta);
+}
+
 void Player::IdleUpdate(float _Delta)
 {
 
@@ -136,7 +144,18 @@ void Player::RunUpdate(float _Delta)
 	AddPos(MovePos);
 }
 
+//¸ð¼Çµô·¹ÀÌ
 void Player::AttackUpdate(float _Delta)
+{
+	PixelCount += 1000.0f * _Delta;
+
+	if (PixelCount >= TILESIZE)
+	{
+		ChanageState(_Delta, PlayerState::Idle);
+	}
+}
+
+void Player::SuccessUpdate(float _Delta)
 {
 	PixelCount += 1000.0f * _Delta;
 
