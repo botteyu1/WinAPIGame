@@ -63,6 +63,5 @@ void GameEngineWindowPNG::TransCopy(const float4& _Pos,
 			_Scale.iX(),
 			_Scale.iY());
 	}
-	
 }
 

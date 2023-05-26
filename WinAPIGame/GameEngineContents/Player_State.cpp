@@ -8,6 +8,8 @@
 
 #include "Undead.h"
 #include "Rock.h"
+#include "Key.h"
+#include "LockBox.h"
 
 
 
@@ -23,18 +25,32 @@ void Player::RunStart()
 	MotionTime = 0.0f;
 	MainRenderer->ChangeAnimation("player_run");
 
-	//기존 플레이어 타일 위치 길로 다시 바꾸기
-	float4 PlayerTilePos = GetPlayerTilePos();
-	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, PlayerTilePos);
+	
+	float4 nextTilePos = GetPlayerTilePos() + Dir;
+	std::pair<TTYPE, GameEngineActor*>& NextTilePair = TileMap::GetLevelTileMap()->GetTilePair(nextTilePos);
+	TTYPE NextTile = NextTilePair.first;
+	GameEngineActor* Obstacle = NextTilePair.second;
 
+	// 이동할 때 키나 상자인경우 사망처리
+	switch (NextTile)
+	{
+	case TTYPE::KE:
+		KeyCheck = true;
+		static_cast<Key*>(Obstacle)->Obtained();
+		break;
+	case TTYPE::LO:
+		static_cast<LockBox*>(Obstacle)->Obtained();
+		break;
+	default:
+		break;
+	}
+	//기존 플레이어 타일 위치 이동되는 타일로 바꾸기
+	TileMap::GetLevelTileMap()->SetTilePair(NextTilePair.first, NextTilePair.second, TilePos);
 	//이동할 타일 위치 플레이어로 바꾸기
-	PlayerTilePos += Dir;
-	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::PL ,this, PlayerTilePos);
+	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::PL ,this, nextTilePos);
 
 	// 플레이어 타일 위치 업데이트
-	TilePos = PlayerTilePos;
-
-	
+	TilePos = nextTilePos;
 }
 
 void Player::AttackStart()
@@ -43,9 +59,9 @@ void Player::AttackStart()
 	MainRenderer->ChangeAnimation("player_Attack");
 
 	//공격하는 위치 타일 정보 가져오기
-	float4 PlayerTilePos = GetPlayerTilePos() + Dir;
-	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(PlayerTilePos.iX(), PlayerTilePos.iY());
-	GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(PlayerTilePos.iX(), PlayerTilePos.iY());
+	float4 nextTilePos = GetPlayerTilePos() + Dir;
+	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(nextTilePos.iX(), nextTilePos.iY());
+	GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(nextTilePos.iX(), nextTilePos.iY());
 
 	// 타입에 맞는 적 처리
 	switch (NextTile)
@@ -59,8 +75,6 @@ void Player::AttackStart()
 	default:
 		break;
 	}
-
-	
 }
 
 void Player::SuccessStart()
@@ -91,7 +105,8 @@ void Player::IdleUpdate(float _Delta)
 		switch (NextTile)
 		{
 		case TTYPE::NO:
-			HPDown();
+		case TTYPE::KE:
+			Move();
 			ChanageState(PlayerState::Run);
 			break;
 		case TTYPE::WA:
@@ -101,14 +116,17 @@ void Player::IdleUpdate(float _Delta)
 			break;
 		case TTYPE::UN:
 		case TTYPE::RO:
-			HPDown();
+			Move();
 			ChanageState(PlayerState::Attack);
 			break;
-		case TTYPE::SP:
-			break;
 		case TTYPE::LO:
+			if (KeyCheck == true)
+			{
+				Move();
+				ChanageState(PlayerState::Run);
+			}
 			break;
-		case TTYPE::KE:
+		case TTYPE::SP:
 			break;
 		case TTYPE::EN:
 			break;
@@ -140,6 +158,7 @@ void Player::RunUpdate(float _Delta)
 
 	if (MotionTime >= TILESIZE)
 	{
+		TrapChek();
 		ChanageState(PlayerState::Idle);
 	}
 

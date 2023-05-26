@@ -11,6 +11,8 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include "Bullet.h"
 #include <GameEnginePlatform/GameEngineInput.h>
+#include "Obstacle.h"
+#include "TileMap.h"
 Player* Player::MainPlayer = nullptr;
 
 Player::Player()
@@ -116,6 +118,15 @@ void Player::ChanageState(PlayerState _State)
 }
 
 
+void Player::TrapChek()
+{
+	Obstacle* NextTrapTile = TileMap::GetLevelTileMap()->GetTileTrapActor(TilePos.iX(), TilePos.iY()); //트랩있는지 활성화시 사망
+	if (NextTrapTile != nullptr and NextTrapTile->GetState() == ObstacleState::Attack)
+	{
+		HP--;
+	}
+}
+
 void Player::DirCheck()
 {
 	if (true == GameEngineInput::IsDown('A') )
@@ -126,7 +137,6 @@ void Player::DirCheck()
 		return;
 	}
 
-	
 	if (true == GameEngineInput::IsDown('D'))
 	{
 		Dir = float4::RIGHT;
@@ -160,7 +170,7 @@ void Player::LevelStart()
 	MainPlayer = this;
 }
 
-void Player::HPDown()
+void Player::Move()
 {
 	HP--;
 	Moved = true;

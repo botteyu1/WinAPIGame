@@ -46,11 +46,16 @@ void Undead::TryMove(float4 _Dir)
 {
 	Dir = _Dir;
 	float4 nextTilePos = GetTilePos() + Dir;
-	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(nextTilePos.iX(), nextTilePos.iY());
+	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(nextTilePos.iX(), nextTilePos.iY()); 
+	
 	switch (NextTile)
 	{
 	case TTYPE::NO:
-		ChanageState( ObstacleState::Move);
+	case TTYPE::SP:
+		
+		
+		ChanageState(ObstacleState::Move);
+		
 		break;
 	case TTYPE::WA:
 	case TTYPE::PL:
@@ -61,8 +66,7 @@ void Undead::TryMove(float4 _Dir)
 	case TTYPE::KE:
 		ChanageState( ObstacleState::Death);
 		break;
-	case TTYPE::SP:
-		break;
+
 	case TTYPE::EN:
 		break;
 	default:
@@ -81,11 +85,13 @@ void Undead::MoveStart()
 	MainRenderer->ChangeAnimation("undead_move");
 
 	//기존  타일 위치 길로 다시 바꾸기
-	float4 nextTilePos = GetTilePos();
-	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, nextTilePos);
 
-	//이동할 타일 위치 바꾸기
-	nextTilePos += Dir;
+	float4 nextTilePos = GetTilePos() += Dir;
+
+	std::pair<TTYPE, GameEngineActor*>& NextTilePair = TileMap::GetLevelTileMap()->GetTilePair(nextTilePos);
+	TileMap::GetLevelTileMap()->SetTilePair(NextTilePair.first, NextTilePair.second, TilePos);
+
+	//이동할 타일 위치 바꾸기 
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::UN, this, nextTilePos);
 
 	// 위치 업데이트
@@ -96,8 +102,7 @@ void Undead::MoveStart()
 
 void Undead::DeathStart()
 {
-	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
-	Death();
+	
 }
 
 void Undead::IdleUpdate(float _Delta)
@@ -105,6 +110,13 @@ void Undead::IdleUpdate(float _Delta)
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		MainRenderer->ChangeAnimation("undead_Idle");
+	}
+
+
+	Obstacle* NextTrapTile = TileMap::GetLevelTileMap()->GetTileTrapActor(TilePos.iX(), TilePos.iY()); //트랩있는지 활성화시 사망
+	if (NextTrapTile != nullptr and NextTrapTile->GetState() == ObstacleState::Attack)
+	{
+		ChanageState(ObstacleState::Death); 
 	}
 }
 
@@ -135,5 +147,7 @@ void Undead::MoveUpdate(float _Delta)
 
 void Undead::DeathUpdate(float _Delta)
 {
+	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
+	Death();
 }
 

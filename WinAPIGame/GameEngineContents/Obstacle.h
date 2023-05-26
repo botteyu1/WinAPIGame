@@ -43,6 +43,10 @@ public:
 	{
 		TilePos = { static_cast<float>(_X),static_cast<float>(_Y) };
 	}
+	ObstacleState GetState()
+	{
+		return State;
+	}
 
 protected:
 	GameEngineRenderer* MainRenderer = nullptr;

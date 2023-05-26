@@ -12,7 +12,7 @@ enum class TTYPE
 	NP,//C,
 	UN,//dead,
 	SP,//ike always,
-	SN,//pike on,
+	SO,//pike on,
 	SF,// pike off,
 	RO,//ck
 	LO,//ckBox
@@ -44,6 +44,10 @@ public:
 	
 	GameEngineActor* GetTileActor(int _X, int _Y);
 	std::pair<TTYPE, GameEngineActor*>& GetTilePair(int _X, int _Y);
+	std::pair<TTYPE, GameEngineActor*>& GetTilePair(float4 _Pos)
+	{
+		return GetTilePair(_Pos.iX(), _Pos.iY());
+	}
 	
 	
 
@@ -64,7 +68,8 @@ public:
 	void SetTileMapSize(float4 _Size) { TileMapSize = _Size; }
 
 
-	Obstacle* GetTileTrap(int _X, int _Y);
+	Obstacle* GetTileTrapActor(int _X, int _Y);
+	TTYPE GetTileTrapType(int _X, int _Y);
 	std::pair<TTYPE, Obstacle*>& GetTileTrapPair(int _X, int _Y);
 protected:
 

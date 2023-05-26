@@ -176,6 +176,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Key.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LockBox.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="NPC.h">
       <SubType>
       </SubType>
@@ -232,6 +240,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EndingLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LockBox.cpp">
       <SubType>
       </SubType>
     </ClCompile>

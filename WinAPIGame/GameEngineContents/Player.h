@@ -57,7 +57,7 @@ public:
 		return HP;
 	}
 	
-	void HPDown();
+	void Move();
 
 	bool IsMoved()
 	{
@@ -85,6 +85,8 @@ protected:
 	int HP = 0; // 이동횟수 체력
 	bool Moved = false; // 이번 프레임에 이동했는지 확인
 
+	void TrapChek();
+
 	
 	float MotionTime = 0.0f; // 100 = 0.1초 모션이동시간 연속키입력딜레이
 
@@ -96,6 +98,8 @@ private:
 	void LevelStart() override;
 	void Start() override;
 	void Update(float _Delta) override;
+
+	bool KeyCheck = false;
 	
 };
 

@@ -32,11 +32,27 @@ void Spike::Start()
 	MainRenderer->CreateAnimation("spike_off", "spike_off", 0, 3, 0.05f, false);
 	MainRenderer->ChangeAnimation("spike_on");
 
-	ChanageState(ObstacleState::Attack);
+	
 }
 void Spike::Init(float4 _TilePos, int _Custom)
 {
 	Obstacle::Init(_TilePos, _Custom);
+
+	if (_Custom == 0)
+	{
+		AlwayAttack = true;
+		ChanageState(ObstacleState::Attack);
+	}
+	else if (_Custom == 1)
+	{
+		AlwayAttack = false;
+		ChanageState(ObstacleState::Attack);
+	}
+	else if (_Custom == 2)
+	{
+		AlwayAttack = false;
+		ChanageState(ObstacleState::Idle);
+	}
 }
 // 공격안하는 대기상황
 void Spike::IdleStart()
@@ -62,7 +78,7 @@ void Spike::IdleUpdate(float _delta)
 
 void Spike::AttackUpdate(float _delta)
 {
-	if (Player::GetMainPlayer()->IsMoved() == true)
+	if ((Player::GetMainPlayer()->IsMoved() == true) and (AlwayAttack == false))
 	{
 		ChanageState(ObstacleState::Idle);
 	}

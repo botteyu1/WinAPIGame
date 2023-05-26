@@ -26,7 +26,7 @@ protected:
 	void AttackUpdate(float _delta) override;
 
 private:
-
+	bool AlwayAttack = false;
 	
 };
 

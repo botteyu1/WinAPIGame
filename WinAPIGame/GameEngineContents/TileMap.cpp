@@ -23,10 +23,11 @@ void TileMap::Init(std::vector<TTYPE>& _TileMapVector, float4 _Size, float4 _Pos
 	for (size_t i = 0; i < _TileMapVector.size(); i++)
 	{
 		TTYPE Type = _TileMapVector[i];
-		if (Type == TTYPE::SF or Type == TTYPE::SN or Type == TTYPE::SP)
+		if (Type == TTYPE::SF or Type == TTYPE::SO or Type == TTYPE::SP)
 		{
 			TrapMapVector[i] = std::make_pair(Type, nullptr);
 			TileMapVector[i] = std::make_pair(TTYPE::NO, nullptr);
+			continue;
 		}
 		TileMapVector[i] = std::make_pair(Type, nullptr);
 	}
@@ -140,7 +141,7 @@ std::pair<TTYPE, Obstacle*>& TileMap::GetTileTrapPair(int _X, int _Y)
 	return TrapMapVector[Pos];
 }
 
-Obstacle* TileMap::GetTileTrap(int _X, int _Y)
+Obstacle* TileMap::GetTileTrapActor(int _X, int _Y)
 {
 	int Pos = (TileMapSize.iX() * _Y) + _X;
 	if (TrapMapVector.size() < Pos)
@@ -150,4 +151,17 @@ Obstacle* TileMap::GetTileTrap(int _X, int _Y)
 	}
 
 	return TrapMapVector[Pos].second;
+}
+
+TTYPE TileMap::GetTileTrapType(int _X, int _Y)
+{
+	int Pos = (TileMapSize.iX() * _Y) + _X;
+	if (TrapMapVector.size() < Pos)
+	{
+		MsgBoxAssert("지정한 위치값이 타일값을 초과했습니다.");
+		return TTYPE::EN;
+	}
+
+	return TrapMapVector[Pos].first;
+
 }

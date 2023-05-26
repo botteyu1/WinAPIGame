@@ -2,7 +2,6 @@
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
-#include "Player.h"
 #include "TileMap.h"
 
 NPC::NPC() 
