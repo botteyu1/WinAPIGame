@@ -195,7 +195,7 @@ void PlayLevel::ResetActor()
 }
 void PlayLevel::Update(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('O'))
+	if (true == GameEngineInput::IsDown('R'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
