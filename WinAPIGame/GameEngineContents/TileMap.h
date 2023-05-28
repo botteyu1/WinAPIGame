@@ -26,18 +26,26 @@ class TileMap
 	
 
 public:
+
 	static TileMap*  GetLevelTileMap()  { return &LevelTileMap; }
-	
+	static void SetLevelTileMap(TileMap* _LevelTileMap) {
+		LevelTileMap.TileMapVector = _LevelTileMap->TileMapVector;
+		LevelTileMap.TrapMapVector = _LevelTileMap->TrapMapVector;
+		LevelTileMap.TileMapPos = _LevelTileMap->TileMapPos;
+		LevelTileMap.TileMapSize = _LevelTileMap->TileMapSize;
+
+	}
 	// constrcuter destructer
 	TileMap();
 	~TileMap();
 
 	// delete Function
-	TileMap(const TileMap& _Other) = delete;
-	TileMap(TileMap&& _Other) noexcept = delete;
-	TileMap& operator=(const TileMap& _Other) = delete;
-	TileMap& operator=(TileMap&& _Other) noexcept = delete;
-	void Init(std::vector< TTYPE>& _TileMapVector, float4 _Size, float4 _Pos);
+	//TileMap(const TileMap& _Other) = delete;
+	//TileMap(TileMap&& _Other) noexcept = delete;
+	//TileMap& operator=(const TileMap& _Other) = delete;
+	//TileMap& operator=(TileMap&& _Other) noexcept = delete;
+	void Init(std::vector< TTYPE>& _TileMapVector, float4 _Size, float4 _Pos); //타일 설정 밑 타일 렌더 시작 기준점 설정
+	void Reset(std::vector< TTYPE>& _TileMapVector);
 
 	TTYPE GetTileType(int _X, int _Y);
 	float4 GetTilePos(int _X, int _Y);

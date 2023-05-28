@@ -40,6 +40,6 @@ void LockBox::Obtained()
 void LockBox::DeathStart()
 {
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
-	Death();
+	Off();
 }
 

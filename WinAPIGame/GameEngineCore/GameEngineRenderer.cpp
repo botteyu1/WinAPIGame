@@ -7,6 +7,8 @@
 #include "ResourcesManager.h"
 #include "GameEngineActor.h"
 #include "GameEngineSprite.h"
+#include "GameEngineLevel.h"
+#include <math.h>
 
 GameEngineRenderer::GameEngineRenderer()
 {
@@ -61,24 +63,26 @@ void GameEngineRenderer::SetRenderScaleToTexture()
 	ScaleCheck = false;
 }
 
-void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
+void GameEngineRenderer::Render( float _DeltaTime)
 {
 	if (nullptr != CurAnimation)
 	{
+	
+		CurAnimation->IsEnd = false;
+		
 
 		CurAnimation->CurInter -= _DeltaTime;
 		if (0.0f >= CurAnimation->CurInter)
 		{
-			CurAnimation->CurInter
-				= CurAnimation->Inters[CurAnimation->CurFrame - CurAnimation->StartFrame];
-
 			++CurAnimation->CurFrame;
+
 			// 2 8 
 			// 2 - 2 0
 			// 3 - 2 1
 
 			if (CurAnimation->CurFrame > CurAnimation->EndFrame)
 			{
+				CurAnimation->IsEnd = true;
 				if (true == CurAnimation->Loop)
 				{
 					CurAnimation->CurFrame = CurAnimation->StartFrame;
@@ -89,6 +93,8 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 				}
 			}
 
+			CurAnimation->CurInter
+				= CurAnimation->Inters[CurAnimation->CurFrame - CurAnimation->StartFrame];
 		}
 
 		Sprite = CurAnimation->Sprite;
@@ -109,14 +115,11 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 	}
 
 	//백버퍼가 아닌 자신의 함수로 그린다.
-	Texture->TransCopy( Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
+	Texture->TransCopy( GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
 
 }
 
-bool GameEngineRenderer::IsDeath()
-{
-	return true == GameEngineObject::IsDeath() || Master->IsDeath();
-}
+
 
 GameEngineRenderer::Animation* GameEngineRenderer::FindAnimation(const std::string& _AniamtionName)
 {
@@ -210,4 +213,40 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다." + _AniamtionName);
 		return;
 	}
+}
+
+void GameEngineRenderer::MainCameraSetting()
+{
+	Camera = GetActor()->GetLevel()->GetMainCamera();
+}
+
+void GameEngineRenderer::UICameraSetting()
+{
+	Camera = GetActor()->GetLevel()->GetUICamera();
+}
+
+void GameEngineRenderer::Start()
+{
+}
+
+void GameEngineRenderer::SetOrder(int _Order)
+{
+	if (nullptr == Camera)
+	{
+		MsgBoxAssert("카메라가 세팅되지 않았는데 오더를 지정했습니다.");
+	}
+
+	// 0 => 5번으로 바꾸고 싶다.
+
+	// 오더를 변경하는건 마구잡이로 쓸만한건 아니다. 
+	// 0번 랜더 그룹
+	// 0번그룹에서는 삭제가 된다.
+	std::list<GameEngineRenderer*>& PrevRenders = Camera->Renderers[GetOrder()];
+	PrevRenders.remove(this);
+
+	GameEngineObject::SetOrder(_Order);
+
+	std::list<GameEngineRenderer*>& NextRenders = Camera->Renderers[GetOrder()];
+	NextRenders.push_back(this);
+
 }

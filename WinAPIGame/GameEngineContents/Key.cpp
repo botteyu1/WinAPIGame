@@ -38,7 +38,7 @@ void Key::Obtained()
 void Key::DeathStart()
 {
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
-	Death();
+	Off();
 }
 
 void Key::DeathUpdate(float _Delta)

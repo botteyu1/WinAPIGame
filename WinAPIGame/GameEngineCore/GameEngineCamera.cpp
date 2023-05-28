@@ -1,5 +1,7 @@
 #include "GameEngineCamera.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineCore/GameEngineActorSubObject.h>
+#include <GameEngineCore/GameEngineActor.h>
 
 GameEngineCamera::GameEngineCamera()
 {
@@ -30,12 +32,12 @@ void GameEngineCamera::Render(float _Delta)
 		{
 			GameEngineRenderer* Render = *RenderStartIter;
 
-			if (false == Render->IsUpdate())
+			if (false == Render->GetActor()->IsUpdate())
 			{
 				continue;
 			}
 
-			Render->Render(this, _Delta);
+			Render->Render(_Delta);
 		}
 	}
 }
@@ -47,6 +49,7 @@ void GameEngineCamera::PushRenderer(GameEngineRenderer* _Renderer, int _Order)
 		MsgBoxAssert("nullptr인 랜더러를 그룹에 속하게 하려고 했습니다.");
 	}
 
+	_Renderer->Camera = this;
 	Renderers[_Order].push_back(_Renderer);
 }
 

@@ -30,7 +30,7 @@ void PlayLevel::Start()
 	BackGroundPtr = CreateActor<BackGround>();
 	BackGroundPtr->Init("chapterBG0001.bmp");
 
-	std::vector<TTYPE> TileData =
+	std::vector<TTYPE> TileStartData =
 	{
 		TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 		TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::KE, TTYPE::PL, TTYPE::WA, TTYPE::WA,
@@ -42,15 +42,19 @@ void PlayLevel::Start()
 		TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,	TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA, TTYPE::WA,
 	};
 
-
-	TileMap::GetLevelTileMap()->Init(TileData, {9.0f,8.0f}, {510.0f,120.0f});
+	
+	TileMapStartData.Init(TileStartData, { 9.0f,8.0f }, { 510.0f,120.0f });
+	
 	BatchActor();
+
+	//세팅된 위치 플레이 타일에 저장
+	TileMap::SetLevelTileMap(&TileMapStartData);
 }
 
 void PlayLevel::BatchActor()
 {
-	TileMap* LevelTileMap = TileMap::GetLevelTileMap();
-	float4 Size = LevelTileMap->GetTileMapSize();
+	//TileMap* LevelTileMap = TileMap::GetLevelTileMap();
+	float4 Size = TileMapStartData.GetTileMapSize();
 	//std::vector<Obstacle*>& AllObstacle = Obstacle::GetAllObstacle();
 	Obstacle* ObstacleObj;
 	float TileSize = 100.0f;
@@ -58,7 +62,7 @@ void PlayLevel::BatchActor()
 	{
 		for (int X = 0; X < Size.iX(); X++)
 		{
-			std::pair<TTYPE, GameEngineActor*>& TilePair = LevelTileMap->GetTilePair(X, Y);
+			std::pair<TTYPE, GameEngineActor*>& TilePair = TileMapStartData.GetTilePair(X, Y);
 			float4 Pos = {static_cast<float>(X), static_cast<float>(Y), 0.0f, 0.0f};
 			switch (TilePair.first)
 			{
@@ -68,7 +72,7 @@ void PlayLevel::BatchActor()
 				break;
 			case TTYPE::PL:
 				LevelPlayer = CreateActor<Player>();
-				LevelPlayer->SetPos(LevelTileMap->GetTilePos(X, Y));
+				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y));
 				LevelPlayer->SetPlayerTilePos(X,Y);
 				TilePair.second = LevelPlayer;
 				break;
@@ -102,8 +106,7 @@ void PlayLevel::BatchActor()
 			default:
 				break;
 			}
-			
-			std::pair<TTYPE, Obstacle*>& TrapPair = LevelTileMap->GetTileTrapPair(X, Y);
+			std::pair<TTYPE, Obstacle*>& TrapPair = TileMapStartData.GetTileTrapPair(X, Y);
 			switch (TrapPair.first)
 			{
 			case TTYPE::SP:
@@ -127,17 +130,79 @@ void PlayLevel::BatchActor()
 		}
 	}
 
+	
+}
+void PlayLevel::ResetActor()
+{
+	//TileMap* LevelTileMap = TileMap::GetLevelTileMap();
+	float4 Size = TileMapStartData.GetTileMapSize();
+	Obstacle* ObstacleObj;
+	float TileSize = 100.0f;
+	for (int Y = 0; Y < Size.iY(); Y++)
+	{
+		for (int X = 0; X < Size.iX(); X++)
+		{
+			std::pair<TTYPE, GameEngineActor*>& TilePair = TileMapStartData.GetTilePair(X, Y);
+			float4 Pos = { static_cast<float>(X), static_cast<float>(Y), 0.0f, 0.0f };
+			Obstacle* ObstacleObj = static_cast<Obstacle*>(TilePair.second);
+			
+			switch (TilePair.first)
+			{
+			case TTYPE::NO:
+				break;
+			case TTYPE::WA:
+				break;
+			case TTYPE::PL:
+				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y));
+				LevelPlayer->SetPlayerTilePos(X, Y);
+				TilePair.second = LevelPlayer;
+				TilePair.second->On();
+				break;
+			case TTYPE::NP:
+			case TTYPE::UN:
+			case TTYPE::RO:
+			case TTYPE::LO:
+			case TTYPE::KE:
+			case TTYPE::EN:
+				static_cast<Obstacle*>(TilePair.second)->Init(Pos);
+				TilePair.second->On();
+				
+				break;
+			default:
+				break;
+			}
+
+			std::pair<TTYPE, Obstacle*>& TrapPair = TileMapStartData.GetTileTrapPair(X, Y);
+			switch (TrapPair.first)
+			{
+			case TTYPE::SP:
+				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 0);
+				TrapPair.second->On();
+				break;
+			case TTYPE::SO:
+				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 1);
+				TrapPair.second->On();
+				break;
+			case TTYPE::SF:
+				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 2);
+				TrapPair.second->On();
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 void PlayLevel::Update(float _Delta)
 {
 	if (true == GameEngineInput::IsDown('O'))
 	{
-		GameEngineCore::ChangeLevel("TitleLevel");
+		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
 	// GameEngineCore::ChangeLevel("TitleLevel");
 }
-void PlayLevel::Render()
+void PlayLevel::Render(float _Delta)
 {
 }
 void PlayLevel::Release()
@@ -150,17 +215,15 @@ void PlayLevel::Release()
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	
+	
+	ResetActor();
+	//저장한 시작위치 불러오기
+	TileMap::SetLevelTileMap(&TileMapStartData);
 	if (nullptr == LevelPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
-
-	//float4 WinScale = GameEngineWindow::MainWindow.GetScale();
-	////LevelPlayer->SetPos(WinScale.Half());
-	//// 0 0
-	//// x y
-	//GetMainCamera()->SetPos(LevelPlayer->GetPos() - WinScale.Half());
-
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

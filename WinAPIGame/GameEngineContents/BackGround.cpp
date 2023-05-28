@@ -22,7 +22,7 @@ void BackGround::Start()
 
 void BackGround::Update(float _Delta) {
 }
-void BackGround::Render()
+void BackGround::Render(float _Delta)
 {
 	//GameEngineWindowTexture* FindTexture = ResourcesManager::GetInst().FindTexture(FileName);
 

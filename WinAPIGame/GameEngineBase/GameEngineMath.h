@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngineDebug.h"
+
 // Ό³Έν :
 class GameEngineMath
 {
@@ -194,6 +195,9 @@ public:
 		return sqrtf(Value);
 	}
 
+	float Max2D()
+	{
+		return X > Y ? X : Y;
+	}
 
 };
-

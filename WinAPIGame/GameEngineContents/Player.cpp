@@ -26,6 +26,7 @@ Player::~Player()
 
 void Player::Start()
 {
+	if (false == ResourcesManager::GetInst().IsLoadTexture("player_idle001.png"))
 	{
 		GameEnginePath FolderPath;
 		FolderPath.SetCurrentPath();

@@ -10,8 +10,10 @@
 // 플레이 장면
 // 엔딩 장면
 class GameEngineCamera;
+class GameEngineCollision;
 class GameEngineLevel : public GameEngineObject
 {
+	friend class GameEngineCollision;
 	friend class GameEngineActor;
 	friend class GameEngineCore;
 
@@ -50,32 +52,39 @@ public:
 		return MainCamera;
 	}
 
+	GameEngineCamera* GetUICamera()
+	{
+		return UICamera;
+	}
+
+	static void CollisionDebugRenderSwitch()
+	{
+		IsCollisionDebugRender = !IsCollisionDebugRender;
+	}
+
 protected:
 	virtual void LevelStart(GameEngineLevel* _PrevLevel) {}
 	virtual void LevelEnd(GameEngineLevel* _NextLevel) {}
 
+	std::map<int, std::list<GameEngineActor*>> AllActors;
+
+	std::map<int, std::list<GameEngineCollision*>> AllCollision;
+
 private:
+	static bool IsCollisionDebugRender;
+
 	GameEngineCamera* MainCamera;
 	GameEngineCamera* UICamera;
 
-	// 맵
-	// 플레이어
-	// 몬스터
 
-	// -10번 std::list<> 액터 액터 액터 액터 
-	// 0번 std::list<> 액터 액터 액터 액터
-	// 1번 std::list<> 액터 액터 액터 액터
 
-	std::map<int, std::list<GameEngineActor*>> AllActors;
 
 	void ActorInit(GameEngineActor* _Actor, int _Order);
 
 	void ActorLevelEnd();
 	void ActorLevelStart();
 
-
 	void ActorUpdate(float _Delta);
 	void ActorRender(float _Delta);
 	void ActorRelease();
 };
-

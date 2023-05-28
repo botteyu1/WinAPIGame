@@ -1,5 +1,5 @@
 #pragma once
-#include "GameEngineObject.h"
+#include "GameEngineActorSubObject.h"
 #include <GameEngineBase/GameEngineMath.h>
 #include <string>
 #include <map>
@@ -9,7 +9,7 @@
 class GameEngineSprite;
 class GameEngineActor;
 class GameEngineWindowTexture;
-class GameEngineRenderer : public GameEngineObject
+class GameEngineRenderer : public GameEngineActorSubObject
 {
 	friend class GameEngineCamera;
 	friend class GameEngineActor;
@@ -66,7 +66,8 @@ public:
 
 	void SetRenderScaleToTexture();
 
-	bool IsDeath() override;
+	void SetOrder(int _Order) override;
+
 
 	void Flip()
 	{
@@ -82,9 +83,10 @@ public:
 	}
 
 protected:
+	void Start() override;
 
 private:
-	GameEngineActor* Master = nullptr;
+	GameEngineCamera* Camera = nullptr;
 	GameEngineWindowTexture* Texture = nullptr;
 	GameEngineSprite* Sprite = nullptr;
 
@@ -98,7 +100,8 @@ private:
 	float4 CopyPos; // 이미지의 위치값
 	float4 CopyScale;
 
-	void Render(class GameEngineCamera* _Camera, float _DeltaTime);
+	void Render(float _DeltaTime);
+
 
 private:
 	class Animation
@@ -109,28 +112,14 @@ private:
 		size_t StartFrame = -1;
 		size_t EndFrame = -1;
 		float CurInter = 0.0f;
+		std::vector<size_t> Frames;
 		std::vector<float> Inters;
 		bool Loop = true;
+		bool IsEnd = false;
 	};
 
 public:
 	Animation* FindAnimation(const std::string& _AniamtionName);
-
-	bool IsAnimationEnd()
-	{
-		if (CurAnimation->CurFrame == CurAnimation->EndFrame)
-		{
-			if (true == CurAnimation->Loop)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/// <summary>
 	/// 애니메이션 생성함수
@@ -150,6 +139,13 @@ public:
 
 	void ChangeAnimation(const std::string& _AniamtionName, bool _ForceChange = false);
 
+	void MainCameraSetting();
+	void UICameraSetting();
+
+	bool IsAnimationEnd()
+	{
+		return CurAnimation->IsEnd;
+	}
 
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;

@@ -35,6 +35,26 @@ void TileMap::Init(std::vector<TTYPE>& _TileMapVector, float4 _Size, float4 _Pos
 	TileMapPos = _Pos;
 }
 
+void TileMap::Reset(std::vector<TTYPE>& _TileMapVector)
+{
+	TileMapVector.resize(_TileMapVector.size());
+	TrapMapVector.resize(_TileMapVector.size());
+
+	for (size_t i = 0; i < _TileMapVector.size(); i++)
+	{
+		TTYPE Type = _TileMapVector[i];
+		if (Type == TTYPE::SF or Type == TTYPE::SO or Type == TTYPE::SP)
+		{
+			TrapMapVector[i] = std::make_pair(Type, nullptr);
+			TileMapVector[i] = std::make_pair(TTYPE::NO, nullptr);
+			continue;
+		}
+		TileMapVector[i] = std::make_pair(Type, nullptr);
+	}
+	//TileMapSize = _Size;
+	//TileMapPos = _Pos;
+}
+
 TTYPE TileMap::GetTileType(int _X, int _Y)
 {
 	int Pos = (TileMapSize.iX() * _Y) + _X;

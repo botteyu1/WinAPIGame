@@ -26,13 +26,17 @@ protected:
 private:
 	void Start() override;
 	void Update(float _Delta) override;
-	void Render() override;
+	void Render(float _Delta) override;
 	void Release() override;
 
 	class BackGround* BackGroundPtr = nullptr;
 	class Player* LevelPlayer = nullptr;
-	
 
-	void BatchActor();
+	
+	//std::vector<TTYPE> TileStartData;
+	class TileMap TileMapStartData;
+
+	void BatchActor(); // 액터 생성밎 배치
+	void ResetActor(); // 액터 위치 초기화 및 업데이트 온
 };
 

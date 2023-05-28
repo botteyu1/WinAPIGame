@@ -148,6 +148,6 @@ void Undead::MoveUpdate(float _Delta)
 void Undead::DeathUpdate(float _Delta)
 {
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
-	Death();
+	Off();
 }
 
