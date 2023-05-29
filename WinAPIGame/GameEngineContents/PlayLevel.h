@@ -31,12 +31,16 @@ private:
 
 	class BackGround* BackGroundPtr = nullptr;
 	class Player* LevelPlayer = nullptr;
-
+	int StageLevel = 1;
 	
+	class LevelChange* PlayLevelChange = nullptr; // 화면전환시 나오는 애니메이션
+
 	//std::vector<TTYPE> TileStartData;
 	class TileMap TileMapStartData;
 
 	void BatchActor(); // 액터 생성밎 배치
 	void ResetActor(); // 액터 위치 초기화 및 업데이트 온
+
+	void SetLevelData(); // 각 스테이지 별 저장한 데이터 불러오기
 };
 

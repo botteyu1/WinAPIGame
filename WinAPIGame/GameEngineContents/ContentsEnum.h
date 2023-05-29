@@ -12,6 +12,7 @@ enum class RenderOrder
 	Obstacle,
 	Play,
 	PlayUI,
+	LevelChange,
 };
 
 #define TILESIZE 100.0f

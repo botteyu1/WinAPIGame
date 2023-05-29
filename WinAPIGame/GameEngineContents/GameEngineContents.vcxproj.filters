@@ -26,9 +26,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>Tile</Filter>
     </ClInclude>
-    <ClInclude Include="TileMapData.h">
-      <Filter>Tile</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Tile</Filter>
     </ClInclude>
@@ -52,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="Key.h">
       <Filter>Global\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelChange.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +80,6 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
-    <ClCompile Include="TileMapData.cpp">
-      <Filter>Tile</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
@@ -106,6 +103,13 @@
     </ClCompile>
     <ClCompile Include="Key.cpp">
       <Filter>Global\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevelData.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TILEMAPDATA.CPP" />
+    <ClCompile Include="LevelChange.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

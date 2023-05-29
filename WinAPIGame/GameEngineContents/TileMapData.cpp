@@ -1,10 +1,9 @@
-#include "TileMapData.h"
+#include "LevelChange.h"
 
-TileMapData::TileMapData() 
+LevelChange::LevelChange()
 {
 }
 
-TileMapData::~TileMapData()
+LevelChange::~LevelChange()
 {
 }
-

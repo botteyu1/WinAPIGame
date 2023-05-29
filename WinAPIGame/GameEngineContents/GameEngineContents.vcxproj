@@ -217,7 +217,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="TileMapData.h">
+    <ClInclude Include="LevelChange.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -255,11 +255,13 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PlayLevelData.cpp" />
     <ClCompile Include="Rock.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Spike.cpp" />
+    <ClCompile Include="TILEMAPDATA.CPP" />
     <ClCompile Include="Undead.cpp">
       <SubType>
       </SubType>
@@ -288,7 +290,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TileMapData.cpp">
+    <ClCompile Include="LevelChange.cpp">
       <SubType>
       </SubType>
     </ClCompile>
