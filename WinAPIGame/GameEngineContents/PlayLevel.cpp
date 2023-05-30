@@ -33,7 +33,7 @@ void PlayLevel::Start()
 
 
 	//ChangeRenderer = CreateRenderer(RenderOrder::);
-	
+	SetLevelData();
 	BatchActor();
 
 	//세팅된 위치 플레이 타일에 저장
