@@ -107,7 +107,6 @@
     <ClCompile Include="PlayLevelData.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="TILEMAPDATA.CPP" />
     <ClCompile Include="LevelChange.cpp">
       <Filter>Global</Filter>
     </ClCompile>

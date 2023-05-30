@@ -2,6 +2,7 @@
 #include <GameEngineCore/ResourcesManager.h>
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
 
 LevelChange::LevelChange()
 {
@@ -26,22 +27,24 @@ void LevelChange::Start()
 	}
 
 	{
-		MainRenderer = CreateRenderer(RenderOrder::Play);
+		MainRenderer = CreateRenderer(RenderOrder::LevelChange);
+		//GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 
 		//애니메이션은 로드된 스프라이트를 가지고 만든다.3
-		MainRenderer->CreateAnimation("leveltransition", "leveltransition", 0, 28, 0.07f, true);
-
-
+		MainRenderer->CreateAnimation("leveltransition", "leveltransition", 0, 28, 0.07f, false);
 		MainRenderer->ChangeAnimation("leveltransition");
+		float4 Scale = GameEngineWindow::MainWindow.GetScale().Half();
+		MainRenderer->SetRenderPos(Scale);
 
-		MainRenderer->SetRenderScaleToTexture();
+		MainRenderer->Off();
+		//MainRenderer->SetRenderScaleToTexture();
 	}
 }
 
 void LevelChange::Update(float _Delta)
 {
 
-	StateUpdate(_Delta);
+	//StateUpdate(_Delta);
 }
 
 void LevelChange::ChanageState(LevelState _State)
@@ -76,10 +79,14 @@ void LevelChange::StateUpdate(float _Delta)
 
 void LevelChange::IdleStart()
 {
+
 }
 
 void LevelChange::TransitionStart()
 {
+	MainRenderer->ChangeAnimation("leveltransition");
+	MainRenderer->On();
+
 }
 
 void LevelChange::DeathStart()
@@ -92,6 +99,7 @@ void LevelChange::IdleUpdate(float _Delta)
 
 void LevelChange::TransitionUpdate(float _Delta)
 {
+
 }
 
 void LevelChange::DeathUpdate(float _Delta)

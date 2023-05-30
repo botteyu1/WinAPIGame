@@ -24,13 +24,13 @@ public:
 	LevelChange& operator=(LevelChange&& _Other) noexcept = delete;
 
 	void Update(float _Delta) override;
+	void ChanageState(LevelState _State);
 
 protected:
 
 private:
 	GameEngineRenderer* MainRenderer = nullptr;
 
-	void ChanageState(LevelState _State);
 	void StateUpdate(float _Delta);
 	LevelState State = LevelState::Max;
 

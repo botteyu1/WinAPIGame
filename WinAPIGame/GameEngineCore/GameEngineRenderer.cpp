@@ -54,6 +54,7 @@ void GameEngineRenderer::SetTexture(const std::string& _Name)
 	}
 }
 
+
 void GameEngineRenderer::SetRenderScaleToTexture()
 {
 	if (nullptr != Texture)

@@ -8,7 +8,7 @@ void PlayLevel::SetLevelData()
 	{
 	case 1:
 		BackGroundPtr = CreateActor<BackGround>();
-		BackGroundPtr->Init("chapterBG0001.bmp");
+		BackGroundPtr->Init("chapterBG0002.png");
 
 		TileStartData =
 		{

@@ -32,6 +32,7 @@ public:
 	void SetRenderPos(const float4& _Value)
 	{
 		RenderPos = _Value;
+		//int a = 0;
 	}
 	void SetRenderScale(const float4& _Value)
 	{

@@ -261,7 +261,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Spike.cpp" />
-    <ClCompile Include="TILEMAPDATA.CPP" />
     <ClCompile Include="Undead.cpp">
       <SubType>
       </SubType>

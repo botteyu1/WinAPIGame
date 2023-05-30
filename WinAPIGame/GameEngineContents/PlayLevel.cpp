@@ -11,7 +11,7 @@
 #include "Key.h"
 #include "LockBox.h"
 #include <vector>
-
+#include "LevelChange.h"
 // Contents
 #include "Player.h"
 #include "BackGround.h"
@@ -23,16 +23,14 @@ PlayLevel::PlayLevel()
 PlayLevel::~PlayLevel()
 {
 	
+
 }
 
 void PlayLevel::Start()
 {
 	
-
-
-
-
-	//ChangeRenderer = CreateRenderer(RenderOrder::);
+	PlayLevelChange = CreateActor<LevelChange>();
+	PlayLevelChange->Off();
 	SetLevelData();
 	BatchActor();
 
@@ -187,6 +185,8 @@ void PlayLevel::Update(float _Delta)
 {
 	if (true == GameEngineInput::IsDown('R'))
 	{
+		PlayLevelChange->ChanageState(LevelState::Transition);
+		PlayLevelChange->On();
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
