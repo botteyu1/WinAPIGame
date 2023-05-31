@@ -3,7 +3,31 @@
 #include <GameEngineBase/GameEngineDebug.h>
 
 
+ULONG_PTR GameEngineWindowPNG::Token;
+Gdiplus::GdiplusStartupInput GameEngineWindowPNG::Input;
 
+
+class GDIPlusInit
+{
+public:
+	GDIPlusInit()
+	{
+		Gdiplus::Status Result = Gdiplus::GdiplusStartup(&GameEngineWindowPNG::Token, &GameEngineWindowPNG::Input, nullptr);
+
+		if (Result != Gdiplus::Status::Ok)
+		{
+			int a = 0;
+		}
+	}
+	~GDIPlusInit()
+	{
+		Gdiplus::GdiplusShutdown(GameEngineWindowPNG::Token);
+	}
+};
+
+GDIPlusInit InitInstance;
+
+/////////////////////// GIDPLUSInit
 
 GameEngineWindowPNG::GameEngineWindowPNG() 
 {
@@ -16,14 +40,16 @@ GameEngineWindowPNG::~GameEngineWindowPNG()
 void GameEngineWindowPNG::ResLoad(const std::string& _Path) 
 {
 
-	ULONG_PTR gdiplusToken;
-	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
 
 	std::wstring wPath;
 	wPath.assign(_Path.begin(), _Path.end());
 	Image = Gdiplus::Image::FromFile(wPath.c_str());
 	
+	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+	HDC BackBufferImageDC = BackBuffer->GetImageDC();
+
+	graphics = new Gdiplus::Graphics(BackBufferImageDC);
 
 	ScaleCheck();
 }
@@ -38,17 +64,14 @@ float4 GameEngineWindowPNG::GetScale()
 void GameEngineWindowPNG::TransCopy(const float4& _Pos, 
 	const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, int _TransColor /*= RGB(255, 0, 255)*/, bool _FlipCheck/* = false*/)
 {
-	ULONG_PTR gdiplusToken;
-	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
-	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
-	HDC BackBufferImageDC = BackBuffer->GetImageDC();
+	//GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+	//HDC BackBufferImageDC = BackBuffer->GetImageDC();
 
 	if (true == _FlipCheck)
 	{
-		Gdiplus::Graphics g(BackBufferImageDC);
-		g.DrawImage(Image,
+		//Gdiplus::Graphics g(BackBufferImageDC);
+		graphics->DrawImage(Image,
 			_Pos.iX() + _Scale.ihX(),
 			_Pos.iY() - _Scale.ihY(),
 			- _Scale.iX(),
@@ -56,8 +79,8 @@ void GameEngineWindowPNG::TransCopy(const float4& _Pos,
 	}
 	else
 	{
-		Gdiplus::Graphics g(BackBufferImageDC);
-		g.DrawImage(Image,
+		//Gdiplus::Graphics g(BackBufferImageDC);
+		graphics->DrawImage(Image,
 			_Pos.iX() - _Scale.ihX(),
 			_Pos.iY() - _Scale.ihY(),
 			_Scale.iX(),

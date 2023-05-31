@@ -195,13 +195,12 @@ void PlayLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		PlayLevelChange->ChanageState(LevelState::Transition);
-		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 	if (true == GameEngineInput::IsDown('T'))
 	{
 		PlayLevelChange->ChanageState(LevelState::Death);
 	}
-	// GameEngineCore::ChangeLevel("TitleLevel");
+	
 }
 void PlayLevel::Render(float _Delta)
 {

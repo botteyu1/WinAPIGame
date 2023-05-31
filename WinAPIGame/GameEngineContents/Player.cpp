@@ -71,8 +71,6 @@ void Player::Update(float _Delta)
 	}
 	Moved = false; // 이동 초기화
 	StateUpdate(_Delta);
-
-	
 }
 
 void Player::StateUpdate(float _Delta)

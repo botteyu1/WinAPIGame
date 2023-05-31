@@ -9,6 +9,11 @@
 
 class GameEngineWindowPNG : public GameEngineWindowTexture
 {
+
+	friend class GDIPlusInit;
+
+	static ULONG_PTR Token;
+	static Gdiplus::GdiplusStartupInput Input;
 public:
 	// constrcuter destructer
 	GameEngineWindowPNG();
@@ -33,6 +38,7 @@ protected:
 
 private:
 	Gdiplus::Image* Image = nullptr;
+	Gdiplus::Graphics* graphics;
 
 };
 

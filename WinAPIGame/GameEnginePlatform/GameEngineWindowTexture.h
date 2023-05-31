@@ -8,6 +8,7 @@
 class GameEngineWindowTexture
 {
 	friend class GameEngineWindowPNG;
+
 public:
 	// constrcuter destructer
 	GameEngineWindowTexture();
