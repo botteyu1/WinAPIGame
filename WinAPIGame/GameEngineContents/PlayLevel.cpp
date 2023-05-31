@@ -29,6 +29,7 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start()
 {
 	
+	
 	PlayLevelChange = CreateActor<LevelChange>();
 	PlayLevelChange->Off();
 	SetLevelData();
@@ -186,8 +187,9 @@ void PlayLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		PlayLevelChange->ChanageState(LevelState::Transition);
-		PlayLevelChange->On();
-		GameEngineCore::ChangeLevel("PlayLevel");
+		PlayLevelChange->On(); 
+		std::string ResetLevel = "PlayLevel" + std::to_string(StageLevel);
+		GameEngineCore::ChangeLevel( ResetLevel);
 	}
 
 	// GameEngineCore::ChangeLevel("TitleLevel");

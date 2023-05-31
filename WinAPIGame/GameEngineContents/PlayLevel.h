@@ -31,7 +31,7 @@ private:
 
 	class BackGround* BackGroundPtr = nullptr;
 	class Player* LevelPlayer = nullptr;
-	int StageLevel = 1;
+	int StageLevel = 0;
 	
 	class LevelChange* PlayLevelChange = nullptr; // 화면전환시 나오는 애니메이션
 
