@@ -16,6 +16,8 @@ public:
 
 	void Start() override;
 
+	void Init(float4 _TilePos, int _Custom = 0) override;
+
 protected:
 
 private:

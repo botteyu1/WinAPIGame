@@ -11,12 +11,18 @@ enum class TTYPE
 	PL,//ayer
 	NP,//C,
 	UN,//dead,
-	SP,//ike always,
-	SO,//pike on,
-	SF,// pike off,
 	RO,//ck
 	LO,//ckBox
 	KE,//Y
+	EN,//D
+};
+// 트랩타일
+enum class OTYPE
+{
+	NO,//NE,
+	SP,//ike always,
+	SO,//pike on,
+	SF,// pike off,
 	EN,//D
 };
 // 설명 :
@@ -44,8 +50,8 @@ public:
 	//TileMap(TileMap&& _Other) noexcept = delete;
 	//TileMap& operator=(const TileMap& _Other) = delete;
 	//TileMap& operator=(TileMap&& _Other) noexcept = delete;
-	void Init(std::vector< TTYPE>& _TileMapVector, float4 _Size, float4 _Pos); //타일 설정 밑 타일 렌더 시작 기준점 설정
-	void Reset(std::vector< TTYPE>& _TileMapVector);
+	void Init(std::vector< TTYPE>& _TileMapVector, std::vector<OTYPE>& _TrapMapVector, float4 _Size, float4 _Pos); //타일 설정 밑 타일 렌더 시작 기준점 설정
+	void Reset(std::vector< TTYPE>& _TileMapVector, std::vector<OTYPE>& _TrapMapVector);
 
 	TTYPE GetTileType(int _X, int _Y);
 	float4 GetTilePos(int _X, int _Y);
@@ -77,15 +83,15 @@ public:
 
 
 	Obstacle* GetTileTrapActor(int _X, int _Y);
-	TTYPE GetTileTrapType(int _X, int _Y);
-	std::pair<TTYPE, Obstacle*>& GetTileTrapPair(int _X, int _Y);
+	OTYPE GetTileTrapType(int _X, int _Y);
+	std::pair<OTYPE, Obstacle*>& GetTileTrapPair(int _X, int _Y);
 protected:
 
 private:
 	//타입을 주소까지 저장하게 페어로 변경
 	
 	std::vector<std::pair<TTYPE, GameEngineActor*>> TileMapVector; // 타일을 벡터로 저장
-	std::vector<std::pair<TTYPE, Obstacle*>> TrapMapVector; // 스파이크을 벡터로 저장
+	std::vector<std::pair<OTYPE, Obstacle*>> TrapMapVector; // 스파이크을 벡터로 저장
 	float4 TileMapPos = float4(0.0f, 0.0f, 0.0f, 0.0f); // 타일맵 좌표 0,0이 화면상에 배치될 위치
 	float4 TileMapSize = float4(0.0f, 0.0f, 0.0f, 0.0f); // 타일맵의 총 크기
 	

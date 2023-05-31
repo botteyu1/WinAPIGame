@@ -51,6 +51,8 @@ void GameEngineWindowPNG::ResLoad(const std::string& _Path)
 
 	graphics = new Gdiplus::Graphics(BackBufferImageDC);
 
+
+
 	ScaleCheck();
 }
 
@@ -71,6 +73,7 @@ void GameEngineWindowPNG::TransCopy(const float4& _Pos,
 	if (true == _FlipCheck)
 	{
 		//Gdiplus::Graphics g(BackBufferImageDC);
+
 		graphics->DrawImage(Image,
 			_Pos.iX() + _Scale.ihX(),
 			_Pos.iY() - _Scale.ihY(),
@@ -82,9 +85,7 @@ void GameEngineWindowPNG::TransCopy(const float4& _Pos,
 		//Gdiplus::Graphics g(BackBufferImageDC);
 		graphics->DrawImage(Image,
 			_Pos.iX() - _Scale.ihX(),
-			_Pos.iY() - _Scale.ihY(),
-			_Scale.iX(),
-			_Scale.iY());
+			_Pos.iY() - _Scale.ihY());
 	}
 }
 

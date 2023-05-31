@@ -15,44 +15,43 @@ TileMap::~TileMap()
 	
 }
 
-void TileMap::Init(std::vector<TTYPE>& _TileMapVector, float4 _Size, float4 _Pos)
+void TileMap::Init(std::vector<TTYPE>& _TileMapVector, std::vector<OTYPE>& _TrapMapVector, float4 _Size, float4 _Pos)
 {
 	TileMapVector.resize(_TileMapVector.size());
-	TrapMapVector.resize(_TileMapVector.size());
+	TrapMapVector.resize(_TrapMapVector.size());
 
 	for (size_t i = 0; i < _TileMapVector.size(); i++)
 	{
 		TTYPE Type = _TileMapVector[i];
-		if (Type == TTYPE::SF or Type == TTYPE::SO or Type == TTYPE::SP)
-		{
-			TrapMapVector[i] = std::make_pair(Type, nullptr);
-			TileMapVector[i] = std::make_pair(TTYPE::NO, nullptr);
-			continue;
-		}
+		
 		TileMapVector[i] = std::make_pair(Type, nullptr);
 	}
+	for (size_t i = 0; i < _TrapMapVector.size(); i++)
+	{
+		OTYPE Type = _TrapMapVector[i];
+		TrapMapVector[i] = std::make_pair(Type, nullptr);
+	}
+
 	TileMapSize = _Size;
 	TileMapPos = _Pos;
 }
 
-void TileMap::Reset(std::vector<TTYPE>& _TileMapVector)
+void TileMap::Reset(std::vector<TTYPE>& _TileMapVector, std::vector<OTYPE>& _TrapMapVector)
 {
 	TileMapVector.resize(_TileMapVector.size());
-	TrapMapVector.resize(_TileMapVector.size());
+	TrapMapVector.resize(_TrapMapVector.size());
 
 	for (size_t i = 0; i < _TileMapVector.size(); i++)
 	{
 		TTYPE Type = _TileMapVector[i];
-		if (Type == TTYPE::SF or Type == TTYPE::SO or Type == TTYPE::SP)
-		{
-			TrapMapVector[i] = std::make_pair(Type, nullptr);
-			TileMapVector[i] = std::make_pair(TTYPE::NO, nullptr);
-			continue;
-		}
+
 		TileMapVector[i] = std::make_pair(Type, nullptr);
 	}
-	//TileMapSize = _Size;
-	//TileMapPos = _Pos;
+	for (size_t i = 0; i < _TrapMapVector.size(); i++)
+	{
+		OTYPE Type = _TrapMapVector[i];
+		TrapMapVector[i] = std::make_pair(Type, nullptr);
+	}
 }
 
 TTYPE TileMap::GetTileType(int _X, int _Y)
@@ -150,7 +149,7 @@ void TileMap::SetTilePair(TTYPE _Type, GameEngineActor* _Actor, int _X, int _Y)
 
 // 트랩 타일=============================================================
 
-std::pair<TTYPE, Obstacle*>& TileMap::GetTileTrapPair(int _X, int _Y)
+std::pair<OTYPE, Obstacle*>& TileMap::GetTileTrapPair(int _X, int _Y)
 {
 	int Pos = (TileMapSize.iX() * _Y) + _X;
 	if (TrapMapVector.size() < Pos)
@@ -173,13 +172,13 @@ Obstacle* TileMap::GetTileTrapActor(int _X, int _Y)
 	return TrapMapVector[Pos].second;
 }
 
-TTYPE TileMap::GetTileTrapType(int _X, int _Y)
+OTYPE TileMap::GetTileTrapType(int _X, int _Y)
 {
 	int Pos = (TileMapSize.iX() * _Y) + _X;
 	if (TrapMapVector.size() < Pos)
 	{
 		MsgBoxAssert("지정한 위치값이 타일값을 초과했습니다.");
-		return TTYPE::EN;
+		return OTYPE::EN;
 	}
 
 	return TrapMapVector[Pos].first;

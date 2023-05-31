@@ -4,6 +4,8 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 
+
+
 LevelChange::LevelChange()
 {
 	
@@ -41,8 +43,10 @@ void LevelChange::Start()
 		float4 Scale = GameEngineWindow::MainWindow.GetScale().Half();
 		MainRenderer->SetRenderPos(Scale);
 
-		Off();
-		MainRenderer->Off();
+		State = LevelState::Transition; 
+		MainRenderer->ChangeAnimation("leveltransition");
+		MainRenderer->SetCurFrame(15);
+
 		//MainRenderer->SetRenderScaleToTexture();
 	}
 }

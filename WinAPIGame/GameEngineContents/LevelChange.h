@@ -12,6 +12,8 @@ enum class LevelState
 class LevelChange : public GameEngineActor
 {
 	friend class PlayLevel;
+
+	
 	
 public:
 	// constrcuter destructer

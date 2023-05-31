@@ -126,8 +126,7 @@ void Player::IdleUpdate(float _Delta)
 				ChanageState(PlayerState::Run);
 			}
 			break;
-		case TTYPE::SP:
-			break;
+		
 		case TTYPE::EN:
 			break;
 		default:

@@ -65,8 +65,6 @@ void Rock::TryMove(float4 _Dir)
 	case TTYPE::LO:
 	case TTYPE::KE:
 		break;
-	case TTYPE::SP:
-		break;
 	case TTYPE::EN:
 		break;
 	default:

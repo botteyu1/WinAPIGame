@@ -41,9 +41,8 @@ void PlayLevel::Start()
 
 void PlayLevel::BatchActor()
 {
-	//TileMap* LevelTileMap = TileMap::GetLevelTileMap();
+	TileMap::SetLevelTileMap(&TileMapStartData);
 	float4 Size = TileMapStartData.GetTileMapSize();
-	//std::vector<Obstacle*>& AllObstacle = Obstacle::GetAllObstacle();
 	Obstacle* ObstacleObj;
 	float TileSize = 100.0f;
 	for (int Y = 0; Y < Size.iY(); Y++)
@@ -66,7 +65,7 @@ void PlayLevel::BatchActor()
 				break;
 			case TTYPE::NP:
 				ObstacleObj = CreateActor<NPC>();
-				ObstacleObj->Init(Pos);
+				ObstacleObj->Init(Pos, StageLevel);
 				TilePair.second = ObstacleObj;
 				break;
 			case TTYPE::UN:
@@ -94,20 +93,20 @@ void PlayLevel::BatchActor()
 			default:
 				break;
 			}
-			std::pair<TTYPE, Obstacle*>& TrapPair = TileMapStartData.GetTileTrapPair(X, Y);
+			std::pair<OTYPE, Obstacle*>& TrapPair = TileMapStartData.GetTileTrapPair(X, Y);
 			switch (TrapPair.first)
 			{
-			case TTYPE::SP:
+			case OTYPE::SP:
 				ObstacleObj = CreateActor<Spike>();
 				ObstacleObj->Init(Pos, 0);
 				TrapPair.second = ObstacleObj;
 				break;
-			case TTYPE::SO:
+			case OTYPE::SO:
 				ObstacleObj = CreateActor<Spike>();
 				ObstacleObj->Init(Pos, 1);
 				TrapPair.second = ObstacleObj;
 				break;
-			case TTYPE::SF:
+			case OTYPE::SF:
 				ObstacleObj = CreateActor<Spike>();
 				ObstacleObj->Init(Pos, 2);
 				TrapPair.second = ObstacleObj;
@@ -117,8 +116,6 @@ void PlayLevel::BatchActor()
 			}
 		}
 	}
-
-	
 }
 void PlayLevel::ResetActor()
 {
@@ -160,18 +157,18 @@ void PlayLevel::ResetActor()
 				break;
 			}
 
-			std::pair<TTYPE, Obstacle*>& TrapPair = TileMapStartData.GetTileTrapPair(X, Y);
+			std::pair<OTYPE, Obstacle*>& TrapPair = TileMapStartData.GetTileTrapPair(X, Y);
 			switch (TrapPair.first)
 			{
-			case TTYPE::SP:
+			case OTYPE::SP:
 				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 0);
 				TrapPair.second->On();
 				break;
-			case TTYPE::SO:
+			case OTYPE::SO:
 				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 1);
 				TrapPair.second->On();
 				break;
-			case TTYPE::SF:
+			case OTYPE::SF:
 				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 2);
 				TrapPair.second->On();
 				break;
@@ -199,6 +196,22 @@ void PlayLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('T'))
 	{
 		PlayLevelChange->ChanageState(LevelState::Death);
+
+	}
+	if (true == GameEngineInput::IsDown('1'))
+	{
+		PlayLevelChange->ChanageState(LevelState::Transition);
+		StageLevel = 1;
+	}
+	if (true == GameEngineInput::IsDown('2'))
+	{
+		PlayLevelChange->ChanageState(LevelState::Transition);
+		StageLevel = 2;
+	}
+	if (true == GameEngineInput::IsDown('3'))
+	{
+		PlayLevelChange->ChanageState(LevelState::Transition);
+		StageLevel = 3;
 	}
 	
 }
@@ -217,13 +230,9 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	
 	
+	TileMap::SetLevelTileMap(&TileMapStartData);
 	ResetActor();
 	//저장한 시작위치 불러오기
-	TileMap::SetLevelTileMap(&TileMapStartData);
-	if (nullptr == LevelPlayer)
-	{
-		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-	}
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

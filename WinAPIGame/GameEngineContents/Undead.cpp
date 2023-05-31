@@ -51,7 +51,6 @@ void Undead::TryMove(float4 _Dir)
 	switch (NextTile)
 	{
 	case TTYPE::NO:
-	case TTYPE::SP:
 		
 		
 		ChanageState(ObstacleState::Move);
