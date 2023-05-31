@@ -29,6 +29,7 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start()
 {
 	
+	
 	PlayLevelChange = CreateActor<LevelChange>();
 	
 	SetLevelData();
@@ -186,19 +187,20 @@ void PlayLevel::Update(float _Delta)
 	//씬전환 애니메이션 중 화면이 전부 가려졋을 때 레벨전환이 일어남
 	if (PlayLevelChange->State == LevelState::Transition && PlayLevelChange->CoverFullScreen == true)
 	{
-		GameEngineCore::ChangeLevel("PlayLevel");
+		std::string ResetLevel = "PlayLevel" + std::to_string(StageLevel);
+		GameEngineCore::ChangeLevel(ResetLevel);
 		PlayLevelChange->CoverFullScreen = false;
 	}
 
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		PlayLevelChange->ChanageState(LevelState::Transition);
+		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 	if (true == GameEngineInput::IsDown('T'))
 	{
 		PlayLevelChange->ChanageState(LevelState::Death);
 	}
-
 	// GameEngineCore::ChangeLevel("TitleLevel");
 }
 void PlayLevel::Render(float _Delta)

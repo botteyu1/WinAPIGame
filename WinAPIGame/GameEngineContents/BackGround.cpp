@@ -71,7 +71,7 @@ void BackGround::Init(const std::string& _FileName)
 		// ContentsResources
 
 		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Texture\\" + _FileName);
+		FilePath.MoveChild("ContentsResources\\Texture\\chapterbg\\" + _FileName);
 
 		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 
