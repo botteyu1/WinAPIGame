@@ -143,6 +143,17 @@ public:
 	void MainCameraSetting();
 	void UICameraSetting();
 
+	int GetCurFrame()
+	{
+		return static_cast<int>(CurAnimation->CurFrame);
+	}
+	 
+	void SetCurFrame(size_t _Frame)
+	{
+		CurAnimation->IsEnd = false;
+		CurAnimation->CurFrame = _Frame;
+	}
+
 	bool IsAnimationEnd()
 	{
 		return CurAnimation->IsEnd;

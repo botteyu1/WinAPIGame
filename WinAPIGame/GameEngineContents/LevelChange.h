@@ -11,6 +11,7 @@ enum class LevelState
 // Ό³Έν :
 class LevelChange : public GameEngineActor
 {
+	friend class PlayLevel;
 	
 public:
 	// constrcuter destructer
@@ -30,7 +31,7 @@ protected:
 
 private:
 	GameEngineRenderer* MainRenderer = nullptr;
-
+	bool CoverFullScreen = false;
 	void StateUpdate(float _Delta);
 	LevelState State = LevelState::Max;
 
