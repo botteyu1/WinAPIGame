@@ -163,10 +163,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ContentCore.h">
       <SubType>
       </SubType>
@@ -188,6 +184,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Rock.h">
       <SubType>
       </SubType>
@@ -228,10 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -308,6 +301,9 @@
     <ProjectReference Include="..\GameEnginePlatform\GameEnginePlatform.vcxproj">
       <Project>{eccf2a11-194b-4572-8a3d-4e4eb28bcff0}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameEngineContents.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

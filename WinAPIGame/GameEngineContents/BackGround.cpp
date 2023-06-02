@@ -75,20 +75,11 @@ void BackGround::Init(const std::string& _FileName)
 
 		GameEngineWindowTexture* Text = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 
-		// 208
-
-		//float4 Scale = Text->GetScale();
-
-		//Scale.X *= 3.0f;
-		//Scale.Y *= 3.0f;
-
-		// SetScale(Scale * 5.0f);
 
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 		float4 Scale = Render->GetRenderScale().Half();
 		Render->SetRenderPos(Scale);
-		//Render->SetRenderPos
-		//Render->SetRenderScale(Scale);
+
 	}
 
 }

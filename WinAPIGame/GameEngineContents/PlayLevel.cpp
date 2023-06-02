@@ -121,7 +121,7 @@ void PlayLevel::ResetActor()
 {
 	//TileMap* LevelTileMap = TileMap::GetLevelTileMap();
 	float4 Size = TileMapStartData.GetTileMapSize();
-	Obstacle* ObstacleObj;
+	Obstacle* ObstacleObj = nullptr;
 	float TileSize = 100.0f;
 	for (int Y = 0; Y < Size.iY(); Y++)
 	{

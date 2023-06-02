@@ -158,7 +158,7 @@ public:
 	{
 		return CurAnimation->IsEnd;
 	}
-
+private:
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;
 };
