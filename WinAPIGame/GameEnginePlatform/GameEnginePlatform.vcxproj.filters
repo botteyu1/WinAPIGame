@@ -5,11 +5,40 @@
     <ClCompile Include="GameEngineWindowTexture.cpp" />
     <ClCompile Include="GameEngineInput.cpp" />
     <ClCompile Include="GameEngineWindowPNG.cpp" />
+    <ClCompile Include="GameEngineSound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineWindow.h" />
     <ClInclude Include="GameEngineWindowTexture.h" />
     <ClInclude Include="GameEngineInput.h" />
     <ClInclude Include="GameEngineWindowPNG.h" />
+    <ClInclude Include="GameEngineSound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FOMOD">
+      <UniqueIdentifier>{20cfa862-1b63-412f-8eea-f5239501d010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FOMOD\Debug">
+      <UniqueIdentifier>{159f728f-7614-4c0a-b3a0-93e532ec72a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FOMOD\Release">
+      <UniqueIdentifier>{d1273ef1-ecda-4e04-9060-3a22d585a46a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\FMOD\lib\x64\fmodL_vc.lib">
+      <Filter>FOMOD\Debug</Filter>
+    </Library>
+    <Library Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib">
+      <Filter>FOMOD\Release</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL.dll">
+      <Filter>FOMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod.dll">
+      <Filter>FOMOD\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

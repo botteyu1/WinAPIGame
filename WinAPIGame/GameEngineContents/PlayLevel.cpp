@@ -15,6 +15,7 @@
 // Contents
 #include "Player.h"
 #include "BackGround.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 PlayLevel::PlayLevel()
 {
@@ -28,8 +29,18 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start()
 {
-	
-	
+	GameEngineSound::SetGlobalVolume(0.05f);
+	if (nullptr == GameEngineSound::FindSound("BGMTest.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BGMTest.mp3"));
+	}
+	GameEngineSound::SoundPlay("BGMTest.mp3");
+
 	PlayLevelChange = CreateActor<LevelChange>();
 	
 	SetLevelData();
