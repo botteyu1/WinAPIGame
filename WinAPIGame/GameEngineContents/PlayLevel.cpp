@@ -12,9 +12,9 @@
 #include "LockBox.h"
 #include <vector>
 #include "LevelChange.h"
-// Contents
 #include "Player.h"
 #include "BackGround.h"
+#include "UI.h"
 #include <GameEnginePlatform/GameEngineSound.h>
 
 PlayLevel::PlayLevel()
@@ -29,7 +29,7 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start()
 {
-	GameEngineSound::SetGlobalVolume(0.05f);
+	/*GameEngineSound::SetGlobalVolume(0.05f);
 	if (nullptr == GameEngineSound::FindSound("BGMTest.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -39,7 +39,8 @@ void PlayLevel::Start()
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BGMTest.mp3"));
 	}
-	GameEngineSound::SoundPlay("BGMTest.mp3");
+	GameEngineSound::SoundPlay("BGMTest.mp3");*/
+
 
 	PlayLevelChange = CreateActor<LevelChange>();
 	
@@ -48,6 +49,9 @@ void PlayLevel::Start()
 
 	//세팅된 위치 플레이 타일에 저장
 	TileMap::SetLevelTileMap(&TileMapStartData);
+
+	PlayUI = CreateActor<UI>();
+	PlayUI->Init(StageLevel);
 }
 
 void PlayLevel::BatchActor()

@@ -12,7 +12,7 @@ enum class RenderOrder
 	Trap,
 	Obstacle,
 	Play,
-	PlayUI,
+	UI,
 	LevelChange,
 };
 

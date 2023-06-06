@@ -34,6 +34,7 @@ private:
 	int StageLevel = 0;
 	
 	class LevelChange* PlayLevelChange = nullptr; // 화면전환시 나오는 애니메이션
+	class UI* PlayUI = nullptr; // 게임중 UI
 
 	//std::vector<TTYPE> TileStartData;
 	class TileMap TileMapStartData;

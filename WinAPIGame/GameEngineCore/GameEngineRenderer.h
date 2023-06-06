@@ -5,6 +5,12 @@
 #include <map>
 #include <vector>
 
+enum class CameraType
+{
+	MAIN,
+	UI,
+};
+
 // 설명 :
 class GameEngineSprite;
 class GameEngineActor;
@@ -65,6 +71,14 @@ public:
 		return RenderScale;
 	}
 
+	CameraType GetCameraType()
+	{
+		return CameraTypeValue;
+	}
+
+
+
+
 	void SetRenderScaleToTexture();
 
 	void SetOrder(int _Order) override;
@@ -100,6 +114,10 @@ private:
 
 	float4 CopyPos; // 이미지의 위치값
 	float4 CopyScale;
+	CameraType CameraTypeValue = CameraType::MAIN;
+	std::string Text;
+
+	void TextRender(float _DeltaTime);
 
 	void Render(float _DeltaTime);
 
@@ -158,7 +176,21 @@ public:
 	{
 		return CurAnimation->IsEnd;
 	}
+
 private:
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;
+
+	/////////////////////////////////// Text관련
+public:
+	void SetText(const std::string& _Text, int _TextScale = 20, const std::string& _Face = "굴림")
+	{
+		Text = _Text;
+		TextScale = _TextScale;
+		Face = _Face;
+	}
+
+private:
+	std::string Face;
+	int TextScale;
 };

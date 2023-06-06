@@ -14,7 +14,7 @@ LockBox::~LockBox()
 
 void LockBox::Start()
 {
-	static int RockNum = 1;
+	
 	if (false == ResourcesManager::GetInst().IsLoadTexture("lockbox001.png"))
 	{
 
