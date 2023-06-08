@@ -2,9 +2,9 @@
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
-#include <GameEnginePlatform/GameEngineWindow.h>
-#include "Player.h"
 #include <GameEngineCore/GameEngineLevel.h>
+#include "Player.h"
+#include <GameEnginePlatform/GameEngineWindow.h>
 UI::UI() 
 {
 }

@@ -16,6 +16,9 @@
 #include "BackGround.h"
 #include "UI.h"
 #include <GameEnginePlatform/GameEngineSound.h>
+#include "ContentsEnum.h"
+#include "VFX.h"
+#include "Dialog.h"
 
 PlayLevel::PlayLevel()
 {
@@ -43,15 +46,17 @@ void PlayLevel::Start()
 
 
 	PlayLevelChange = CreateActor<LevelChange>();
+	//PlayVFX = CreateActor<VFX>();
 	
 	SetLevelData();
 	BatchActor();
 
 	//세팅된 위치 플레이 타일에 저장
 	TileMap::SetLevelTileMap(&TileMapStartData);
-
-	PlayUI = CreateActor<UI>();
+	
+	PlayUI = CreateActor<UI, UpdateOrder>(UpdateOrder::PlayerUI);
 	PlayUI->Init(StageLevel);
+	PlayDialog = CreateActor<Dialog, UpdateOrder>(UpdateOrder::PlayerUI);
 }
 
 void PlayLevel::BatchActor()
@@ -73,8 +78,8 @@ void PlayLevel::BatchActor()
 			case TTYPE::WA:
 				break;
 			case TTYPE::PL:
-				LevelPlayer = CreateActor<Player>();
-				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y));
+				LevelPlayer = CreateActor<Player, UpdateOrder>(UpdateOrder::Player);
+				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y) + float4{0.0f,40.0f});
 				LevelPlayer->SetPlayerTilePos(X,Y);
 				TilePair.second = LevelPlayer;
 				break;
@@ -153,7 +158,7 @@ void PlayLevel::ResetActor()
 			case TTYPE::WA:
 				break;
 			case TTYPE::PL:
-				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y));
+				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y) + float4{ 0.0f,30.0f });
 				LevelPlayer->SetPlayerTilePos(X, Y);
 				TilePair.second = LevelPlayer;
 				TilePair.second->On();
@@ -227,6 +232,10 @@ void PlayLevel::Update(float _Delta)
 	{
 		PlayLevelChange->ChanageState(LevelState::Transition);
 		StageLevel = 3;
+	}
+	if (true == GameEngineInput::IsDown('L'))
+	{
+		PlayDialog->ChanageState(DialogeState::On);
 	}
 	
 }

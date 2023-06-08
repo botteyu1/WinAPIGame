@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Obstacle.h"
-
+#include "VFX.h"
 
 
 // Ό³Έν :
@@ -37,6 +37,7 @@ protected:
 	
 
 private:
-	
+	class VFX* UndeadVFX = nullptr;
+
 };
 

@@ -29,11 +29,16 @@ void NPC::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("lucyh", FolderPath.PlusFilePath("lucyh"));
 		ResourcesManager::GetInst().CreateSpriteFolder("malina", FolderPath.PlusFilePath("malina"));
 		ResourcesManager::GetInst().CreateSpriteFolder("modeus", FolderPath.PlusFilePath("modeus"));
+
+
+		FolderPath.MoveParentToExistsChild("ContentsResources");
+		FolderPath.MoveChild("ContentsResources\\Texture\\lovesign\\");
+
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("lovesign.png"));
 	}
 	MainRenderer = CreateRenderer(RenderOrder::Obstacle);
-	//MainRenderer->CreateAnimation("pandemonica", "pandemonica", 0, 11, 0.07f, true);
-	//MainRenderer->ChangeAnimation("pandemonica");
-	//
+	LoveSignRenderer = CreateRenderer(RenderOrder::VFX2);
+	LoveSignRenderer->SetTexture("lovesign.png");
 	ChanageState(ObstacleState::Idle);
 }
 
@@ -59,5 +64,25 @@ void NPC::Init(float4 _TilePos, int _Custom)
 	default:
 		break;
 	}
+}
+
+void NPC::Update(float _Delta)
+{
+	Obstacle::Update(_Delta);
+	static float LoveSignY = -35.0f;
+
+	
+
+	LoveSignY += LoveSignSpeed * _Delta;
+	if (LoveSignY > -25.0f)
+	{
+		LoveSignSpeed = -LoveSignSpeed;
+	}
+	else if (LoveSignY < -35.0f)
+	{
+		LoveSignSpeed = -LoveSignSpeed;
+	}
+
+	LoveSignRenderer->SetRenderPos({ -50.0f, LoveSignY });
 }
 

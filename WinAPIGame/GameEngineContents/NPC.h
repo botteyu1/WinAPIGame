@@ -17,10 +17,12 @@ public:
 	void Start() override;
 
 	void Init(float4 _TilePos, int _Custom = 0) override;
+	void Update(float _Delta) override;
 
 protected:
-
 private:
 
+	GameEngineRenderer* LoveSignRenderer = nullptr;
+	float LoveSignSpeed = 50.0f;
 };
 

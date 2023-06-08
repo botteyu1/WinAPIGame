@@ -10,6 +10,7 @@
 #include "Rock.h"
 #include "Key.h"
 #include "LockBox.h"
+#include "VFX.h"
 
 
 
@@ -25,11 +26,13 @@ void Player::RunStart()
 	MotionTime = 0.0f;
 	MainRenderer->ChangeAnimation("player_run");
 
+	PlayerVFX->Small_VFXOn(TilePos);
 	
 	float4 nextTilePos = GetPlayerTilePos() + Dir;
 	std::pair<TTYPE, GameEngineActor*>& NextTilePair = TileMap::GetLevelTileMap()->GetTilePair(nextTilePos);
 	TTYPE NextTile = NextTilePair.first;
 	GameEngineActor* Obstacle = NextTilePair.second;
+
 
 	// 이동할 때 키나 상자인경우 사망처리
 	switch (NextTile)
@@ -51,6 +54,8 @@ void Player::RunStart()
 
 	// 플레이어 타일 위치 업데이트
 	TilePos = nextTilePos;
+
+	
 }
 
 void Player::AttackStart()
@@ -62,6 +67,8 @@ void Player::AttackStart()
 	float4 nextTilePos = GetPlayerTilePos() + Dir;
 	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(nextTilePos.iX(), nextTilePos.iY());
 	GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(nextTilePos.iX(), nextTilePos.iY());
+
+	PlayerVFX->Hit_VFXOn(nextTilePos);
 
 	// 타입에 맞는 적 처리
 	switch (NextTile)
@@ -140,6 +147,15 @@ void Player::IdleUpdate(float _Delta)
 
 void Player::RunUpdate(float _Delta)
 {
+	//한번 트랩 체크
+	/*static bool Check = false;
+	if (Check == false)
+	{
+		TrapChek();
+		Check = true;
+	}*/
+	
+
 	//애니메이션에 맞게 100픽셀 이동
 	
 	//인자하나 만들어서 100픽셀 계산해서 이동후 완료하면 아이들로 전호나
@@ -157,7 +173,7 @@ void Player::RunUpdate(float _Delta)
 
 	if (MotionTime >= TILESIZE)
 	{
-		TrapChek();
+		//Check = false;
 		ChanageState(PlayerState::Idle);
 	}
 

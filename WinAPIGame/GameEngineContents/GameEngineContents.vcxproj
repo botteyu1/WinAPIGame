@@ -168,6 +168,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="Dialog.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EndingLevel.h">
       <SubType>
       </SubType>
@@ -181,6 +185,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="NPC.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -210,10 +218,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="TileMap.h">
       <SubType>
       </SubType>
@@ -226,6 +230,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="VFX.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp">
@@ -233,6 +241,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Dialog.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -249,6 +261,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="NPC.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -282,10 +298,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <SubType>
       </SubType>
@@ -295,6 +307,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="VFX.cpp">
       <SubType>
       </SubType>
     </ClCompile>

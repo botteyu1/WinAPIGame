@@ -1,5 +1,6 @@
 #pragma once
 #include "Obstacle.h"
+#include "VFX.h"
 
 // Ό³Έν :
 class Rock : public Obstacle
@@ -26,6 +27,6 @@ protected:
 
 private:
 	//void Init(float4 _Pos, int _TileX, int _TileY, int _TextureNum);
-
+	class VFX* RockVFX = nullptr;
 };
 

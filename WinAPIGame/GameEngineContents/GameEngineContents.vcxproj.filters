@@ -23,9 +23,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Tile</Filter>
-    </ClInclude>
     <ClInclude Include="Obstacle.h">
       <Filter>Global\Obstacle</Filter>
     </ClInclude>
@@ -54,6 +51,15 @@
     <ClInclude Include="UI.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>Global\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="VFX.h">
+      <Filter>vfx</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TitleLevel.cpp">
@@ -76,9 +82,6 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
@@ -111,6 +114,15 @@
     <ClCompile Include="UI.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>Global\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="VFX.cpp">
+      <Filter>vfx</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -125,8 +137,11 @@
     <Filter Include="Global\Obstacle">
       <UniqueIdentifier>{43b8bc90-79bc-4958-b39e-3b00d9c66e75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI">
-      <UniqueIdentifier>{d679e461-b510-4440-a287-d80b77c7f26d}</UniqueIdentifier>
+    <Filter Include="Global\Obj">
+      <UniqueIdentifier>{9b66f035-f39b-40b5-aa70-4577bdcdaf21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vfx">
+      <UniqueIdentifier>{9c6e8fb9-85c5-4148-a8cd-f061aaa8751b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

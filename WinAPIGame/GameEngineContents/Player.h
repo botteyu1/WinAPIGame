@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include "VFX.h"
 
 enum class PlayerState
 {
@@ -42,6 +43,12 @@ public:
 		return TilePos;
 	}
 
+
+	class VFX* GetPlayerVFX()
+	{
+		return PlayerVFX;
+	}
+
 	void SetPlayerTilePos(int _X, int _Y)
 	{
 		TilePos = { static_cast<float>(_X),static_cast<float>(_Y) };
@@ -63,6 +70,7 @@ public:
 	{
 		return Moved;
 	}
+	void TrapChek(float4 _ObsTilePos);
 
 protected:
 
@@ -85,8 +93,7 @@ protected:
 	int HP = 0; // 이동횟수 체력
 	bool Moved = false; // 이번 프레임에 이동했는지 확인
 
-	void TrapChek();
-
+	 VFX* PlayerVFX = nullptr; // 게임중 VFX
 	
 	float MotionTime = 0.0f; // 100 = 0.1초 모션이동시간 연속키입력딜레이
 

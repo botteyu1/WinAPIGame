@@ -32,7 +32,7 @@ void GameEngineCamera::Render(float _Delta)
 		{
 			GameEngineRenderer* Render = *RenderStartIter;
 
-			if (false == Render->GetActor()->IsUpdate())
+			if (false == Render->GetActor()->IsUpdate() or false == Render->IsUpdate())
 			{
 				continue;
 			}

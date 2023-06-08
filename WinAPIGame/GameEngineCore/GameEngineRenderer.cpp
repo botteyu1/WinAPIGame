@@ -145,6 +145,11 @@ void GameEngineRenderer::Render( float _DeltaTime)
 				{
 					--CurAnimation->CurFrame;
 				}
+
+				if (IsAnimationEndOff == true)
+				{
+					Off();
+				}
 			}
 
 			CurAnimation->CurInter
@@ -157,7 +162,7 @@ void GameEngineRenderer::Render( float _DeltaTime)
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
 
-		if (true/*false == ScaleCheck*/)
+		if (false == ScaleCheck)
 		{
 			SetRenderScale(SpriteInfo.RenderScale * ScaleRatio);
 		}
@@ -252,10 +257,10 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 {
 	Animation* ChangeAni = FindAnimation(_AniamtionName);
 
-	if (ChangeAni == CurAnimation && false == _ForceChange)
+	/*if (ChangeAni == CurAnimation && false == _ForceChange)
 	{
 		return;
-	}
+	}*/
 
 	CurAnimation = FindAnimation(_AniamtionName);
 

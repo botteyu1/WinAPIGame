@@ -3,6 +3,8 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include "TileMap.h"
+#include "Player.h"
+#include "VFX.h"
 Key::Key() 
 {
 }
@@ -37,6 +39,8 @@ void Key::Obtained()
 
 void Key::DeathStart()
 {
+	//플레이어의 vfx를 가져와서 큰 파티클을 생성
+	Player::GetMainPlayer()->GetPlayerVFX()->Huge_VFXOn(GetTilePos());
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
 	Off();
 }

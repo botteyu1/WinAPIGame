@@ -25,7 +25,7 @@ Player::~Player()
 
 void Player::Start()
 {
-	if (false == ResourcesManager::GetInst().IsLoadTexture("player_idle001.png"))
+	if (false == ResourcesManager::GetInst().IsLoadSprite("player_idle"))
 	{
 		GameEnginePath FolderPath;
 		FolderPath.SetCurrentPath();
@@ -54,7 +54,9 @@ void Player::Start()
 		MainRenderer->SetRenderScaleToTexture();
 	}
 
-
+	//ÀÌÆåÆ® Ãß°¡
+	GameEngineLevel* Level = GetLevel();
+	PlayerVFX = Level->CreateActor<VFX>();
 
 	ChanageState(PlayerState::Idle);
 	Dir = float4::RIGHT;
@@ -116,11 +118,12 @@ void Player::ChanageState(PlayerState _State)
 }
 
 
-void Player::TrapChek()
+void Player::TrapChek(float4 _ObsTilePos)
 {
-	Obstacle* NextTrapTile = TileMap::GetLevelTileMap()->GetTileTrapActor(TilePos.iX(), TilePos.iY()); //Æ®·¦ÀÖ´ÂÁö È°¼ºÈ­½Ã »ç¸Á
-	if (NextTrapTile != nullptr and NextTrapTile->GetState() == ObstacleState::Attack)
+	
+	if (_ObsTilePos == GetPlayerTilePos())
 	{
+		PlayerVFX->Blood_VFXOn(TilePos);
 		HP--;
 	}
 }

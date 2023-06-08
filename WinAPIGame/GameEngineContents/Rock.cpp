@@ -2,6 +2,7 @@
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
+#include <GameEngineCore/GameEngineLevel.h>
 #include "Player.h"
 #include "TileMap.h"
 
@@ -44,6 +45,10 @@ void Rock::Start()
 		RockNum = 1;
 	}
 	ChanageState(ObstacleState::Idle);
+	//이펙트 추가
+	GameEngineLevel* Level = GetLevel();
+	RockVFX = Level->CreateActor<VFX>();
+
 }
 
 
@@ -76,6 +81,9 @@ void Rock::TryMove(float4 _Dir)
 void Rock::MoveStart()
 {
 	PixelCount = 0.0f;
+
+	//이펙트 활성화
+	RockVFX->Small_VFXOn(GetTilePos());
 
 	//기존  타일 위치 길로 다시 바꾸기
 	float4 nextTilePos = GetTilePos();

@@ -32,7 +32,7 @@ void Spike::Start()
 	MainRenderer->CreateAnimation("spike_on", "spike_on", 0, 3, 0.05f, false);
 	MainRenderer->CreateAnimation("spike_off", "spike_off", 0, 3, 0.05f, false);
 	MainRenderer->ChangeAnimation("spike_on");
-
+	
 	
 }
 void Spike::Init(float4 _TilePos, int _Custom)
@@ -76,15 +76,27 @@ void Spike::IdleUpdate(float _delta)
 	
 	if (Player::GetMainPlayer()->IsMoved() == true)
 	{
+		Player* playerptr = Player::GetMainPlayer();
+		playerptr->Player::TrapChek(GetTilePos());
 		ChanageState(ObstacleState::Attack);
 	}
 }
 
 void Spike::AttackUpdate(float _delta)
 {
-	if ((Player::GetMainPlayer()->IsMoved() == true) and (AlwayAttack == false))
+	if ((Player::GetMainPlayer()->IsMoved() == true) )
 	{
-		ChanageState(ObstacleState::Idle);
+		if (AlwayAttack == false)
+		{
+			ChanageState(ObstacleState::Idle);
+		}
+		else
+		{
+			Player* playerptr = Player::GetMainPlayer();
+			playerptr->Player::TrapChek(GetTilePos());
+		}
+
+		
 	}
 	
 }

@@ -135,6 +135,7 @@ private:
 		std::vector<float> Inters;
 		bool Loop = true;
 		bool IsEnd = false;
+		 
 	};
 
 public:
@@ -177,9 +178,16 @@ public:
 		return CurAnimation->IsEnd;
 	}
 
+	void AnimationEndOff()
+	{
+		IsAnimationEndOff = true;
+	}
+
 private:
 	std::map<std::string, Animation> AllAnimation;
 	Animation* CurAnimation = nullptr;
+	bool IsAnimationEndOff= false;//애니메이션이 끝날때 렌더러를 끌지 여부.
+	
 
 	/////////////////////////////////// Text관련
 public:

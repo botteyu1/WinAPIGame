@@ -20,14 +20,14 @@
     <ClInclude Include="GameEngineSprite.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRenderer.h">
-      <Filter>Object\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineCollision.h">
       <Filter>Object\Collosion</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineActorSubObject.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderer.h">
+      <Filter>Object\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

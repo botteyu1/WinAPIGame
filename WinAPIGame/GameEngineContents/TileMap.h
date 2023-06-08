@@ -54,6 +54,10 @@ public:
 	void Reset(std::vector< TTYPE>& _TileMapVector, std::vector<OTYPE>& _TrapMapVector);
 
 	TTYPE GetTileType(int _X, int _Y);
+	float4 GetTilePos(float4 _TilePos)
+	{
+		return GetTilePos(_TilePos.iX(), _TilePos.iY());
+	}
 	float4 GetTilePos(int _X, int _Y);
 	
 	GameEngineActor* GetTileActor(int _X, int _Y);

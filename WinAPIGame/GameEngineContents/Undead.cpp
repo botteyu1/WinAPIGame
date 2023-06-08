@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include "ContentsEnum.h"
 #include <GameEngineCore/ResourcesManager.h>
+#include <GameEngineCore/GameEngineLevel.h>
 #include "Player.h"
 #include "TileMap.h"
 
@@ -36,6 +37,10 @@ void Undead::Start()
 	MainRenderer->CreateAnimation("undead_idle", "undead_idle", 0, 11, 0.07f, true);
 	MainRenderer->CreateAnimation("undead_move", "undead_move", 0, 5, 0.05f, false);
 	MainRenderer->ChangeAnimation("undead_idle");
+
+	//이펙트 추가
+	GameEngineLevel* Level = GetLevel();
+	UndeadVFX = Level->CreateActor<VFX>();
 
 	ChanageState(ObstacleState::Idle);
 }
@@ -82,6 +87,7 @@ void Undead::MoveStart()
 {
 	PixelCount = 0.0f;
 	MainRenderer->ChangeAnimation("undead_move");
+	UndeadVFX->Small_VFXOn(GetTilePos());
 
 	//기존  타일 위치 길로 다시 바꾸기
 

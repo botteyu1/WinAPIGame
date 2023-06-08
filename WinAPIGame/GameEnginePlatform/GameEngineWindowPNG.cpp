@@ -85,7 +85,10 @@ void GameEngineWindowPNG::TransCopy(const float4& _Pos,
 		//Gdiplus::Graphics g(BackBufferImageDC);
 		graphics->DrawImage(Image,
 			_Pos.iX() - _Scale.ihX(),
-			_Pos.iY() - _Scale.ihY());
+			_Pos.iY() - _Scale.ihY(),
+			_Scale.iX(),
+			_Scale.iY()
+			);
 	}
 }
 

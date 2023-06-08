@@ -1,5 +1,6 @@
 #include "PlayLevel.h"
 #include "BackGround.h"
+#include "Obj.h"
 
 void PlayLevel::SetLevelData()
 {
@@ -10,6 +11,9 @@ void PlayLevel::SetLevelData()
 
 	std::vector<TTYPE> TileStartData;
 	std::vector<OTYPE> TrapStartData;
+
+	Obj* ObjPtr = nullptr;
+
 	switch (Stage)
 	{
 	case 1:
@@ -39,6 +43,19 @@ void PlayLevel::SetLevelData()
 			OTYPE::NO, 	OTYPE::NO, OTYPE::NO, OTYPE::NO, OTYPE::NO, OTYPE::NO, OTYPE::NO, OTYPE::NO, OTYPE::NO, 
 		};
 		TileMapStartData.Init(TileStartData, TrapStartData,{ 9.0f,8.0f }, { 510.0f,120.0f });
+
+		ObjPtr = CreateActor<Obj>();
+		ObjPtr->Init({ 624.0f,270.0f }, 1);
+
+		ObjPtr = CreateActor<Obj>();
+		ObjPtr->Init({ 1226.0f,515.0f }, 1);
+
+		ObjPtr = CreateActor<Obj>();
+		ObjPtr->Init({ 519.0f,559.0f }, 0);
+
+		ObjPtr = CreateActor<Obj>();
+		ObjPtr->Init({ 917.0f,160.0f }, 0);
+
 		break;
 	case 2:
 		BackGroundPtr = CreateActor<BackGround>();
