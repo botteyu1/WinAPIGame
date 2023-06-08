@@ -23,7 +23,7 @@ void Obstacle::Init(float4 _TilePos, int _Custom)
 	SetPos(TileMap::GetLevelTileMap()->GetTilePos(X, Y));
 	SetTilePos(X, Y);
 
-	ChanageState(ObstacleState::Idle);
+	ChangeState(ObstacleState::Idle);
 }
 
 void Obstacle::Update(float _Delta)
@@ -31,7 +31,7 @@ void Obstacle::Update(float _Delta)
 	StateUpdate(_Delta);
 }
 
-void Obstacle::ChanageState(ObstacleState _State)
+void Obstacle::ChangeState(ObstacleState _State)
 {
 
 	if (_State != State)

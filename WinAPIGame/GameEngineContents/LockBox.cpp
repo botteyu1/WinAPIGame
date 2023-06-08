@@ -30,12 +30,12 @@ void LockBox::Start()
 	
 	MainRenderer->SetTexture("lockbox001.png");
 
-	ChanageState(ObstacleState::Idle);
+	ChangeState(ObstacleState::Idle);
 }
 
 void LockBox::Obtained()
 {
-	ChanageState(ObstacleState::Death);
+	ChangeState(ObstacleState::Death);
 }
 
 void LockBox::DeathStart()

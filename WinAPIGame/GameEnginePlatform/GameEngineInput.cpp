@@ -141,6 +141,7 @@ void GameEngineInput::GameEngineKey::Update(float _DeltaTime)
 		else if (true == Down)
 		{
 			Down = false;
+
 			Press = true;
 			Up = false;
 			Free = false;

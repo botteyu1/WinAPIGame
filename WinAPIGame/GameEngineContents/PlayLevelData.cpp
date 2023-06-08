@@ -44,6 +44,8 @@ void PlayLevel::SetLevelData()
 		};
 		TileMapStartData.Init(TileStartData, TrapStartData,{ 9.0f,8.0f }, { 510.0f,120.0f });
 
+		
+
 		ObjPtr = CreateActor<Obj>();
 		ObjPtr->Init({ 624.0f,270.0f }, 1);
 

@@ -57,7 +57,7 @@ void LevelChange::Update(float _Delta)
 	StateUpdate(_Delta);
 }
 
-void LevelChange::ChanageState(LevelState _State)
+void LevelChange::ChangeState(LevelState _State)
 {
 	if (State != _State)
 	{
@@ -138,7 +138,7 @@ void LevelChange::TransitionUpdate(float _Delta)
 	if (MainRenderer->IsAnimationEnd())
 	{
 		MainRenderer->Off();
-		ChanageState(LevelState::Idle);
+		ChangeState(LevelState::Idle);
 	}
 }
 
@@ -148,6 +148,6 @@ void LevelChange::DeathUpdate(float _Delta)
 
 	if (MainRenderer->IsAnimationEnd())
 	{
-		ChanageState(LevelState::Transition);
+		ChangeState(LevelState::Transition);
 	}
 }

@@ -80,18 +80,18 @@ void GameEngineRenderer::TextRender(float _DeltaTime)
 	OldFont = static_cast<HFONT>(SelectObject(hdc, hFont));
 
 	//SetTextAlign(hdc, static_cast<UINT>(Align));
-	SetTextColor(hdc, RGB(255, 255, 255));
+	SetTextColor(hdc, TextColor);
 	SetBkMode(hdc, TRANSPARENT);
 
 	RECT Rect;
-	Rect.left = TextPos.iX();
-	Rect.top = TextPos.iY();
-	Rect.right = TextPos.iX() + TextScale * static_cast<int>(Text.size());// TextBoxScale.ix();
-	Rect.bottom = TextPos.iY() + TextScale;// TextBoxScale.iy();
+	Rect.left = TextPos.iX()- (TextScale * static_cast<int>(TextSize) / 2);
+	Rect.top = TextPos.iY() - (TextScale * 2 / 2);
+	Rect.right = TextPos.iX() + (TextScale * static_cast<int>(TextSize)/2);// TextBoxScale.ix();
+	Rect.bottom = TextPos.iY() + (TextScale * 2/2);// TextBoxScale.iy();
 
 
 
-	DrawTextA(hdc, Text.c_str(), static_cast<int>(Text.size()), &Rect, static_cast<UINT>(DT_BOTTOM));
+	DrawTextA(hdc, Text.c_str(), static_cast<int>(Text.size()), &Rect, static_cast<UINT>(DT_CENTER));
 
 
 	// TextOutA(GameEngineWindow::GetDoubleBufferImage()->GetImageDC(), RenderPos.ix(), RenderPos.iy(), RenderText.c_str(), static_cast<int>(RenderText.size()));

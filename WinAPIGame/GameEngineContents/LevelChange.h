@@ -27,7 +27,7 @@ public:
 	LevelChange& operator=(LevelChange&& _Other) noexcept = delete;
 
 	void Update(float _Delta) override;
-	void ChanageState(LevelState _State);
+	void ChangeState(LevelState _State);
 
 protected:
 

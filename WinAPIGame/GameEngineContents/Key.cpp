@@ -29,12 +29,12 @@ void Key::Start()
 	MainRenderer->CreateAnimation("Key", "Key", 0, 11, 0.07f, true);
 	MainRenderer->ChangeAnimation("Key");
 
-	ChanageState(ObstacleState::Idle);
+	ChangeState(ObstacleState::Idle);
 }
 
 void Key::Obtained()
 {
-	ChanageState(ObstacleState::Death);
+	ChangeState(ObstacleState::Death);
 }
 
 void Key::DeathStart()

@@ -3,7 +3,9 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include "TileMap.h"
-
+#include <GameEngineCore/GameEngineLevel.h>
+#include "VFX.h"
+#include "Player.h"
 NPC::NPC() 
 {
 }
@@ -39,7 +41,9 @@ void NPC::Start()
 	MainRenderer = CreateRenderer(RenderOrder::Obstacle);
 	LoveSignRenderer = CreateRenderer(RenderOrder::VFX2);
 	LoveSignRenderer->SetTexture("lovesign.png");
-	ChanageState(ObstacleState::Idle);
+	ChangeState(ObstacleState::Idle);
+
+	
 }
 
 void NPC::Init(float4 _TilePos, int _Custom)
@@ -69,20 +73,33 @@ void NPC::Init(float4 _TilePos, int _Custom)
 void NPC::Update(float _Delta)
 {
 	Obstacle::Update(_Delta);
-	static float LoveSignY = -35.0f;
+	static float LoveSignY = -30.0f;
 
 	
 
 	LoveSignY += LoveSignSpeed * _Delta;
 	if (LoveSignY > -25.0f)
 	{
+		LoveSignY = -25.0f;
 		LoveSignSpeed = -LoveSignSpeed;
 	}
 	else if (LoveSignY < -35.0f)
 	{
+		LoveSignY = -35.0f;
 		LoveSignSpeed = -LoveSignSpeed;
 	}
 
 	LoveSignRenderer->SetRenderPos({ -50.0f, LoveSignY });
+}
+
+void NPC::DeathStart()
+{
+	if (IsUpdate() == true)
+	{
+		Player::GetMainPlayer()->GetPlayerVFX()->LovePlosion_VFXOn(GetTilePos());
+	}
+	
+	Off();
+	//TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
 }
 

@@ -44,7 +44,7 @@ void Rock::Start()
 	{
 		RockNum = 1;
 	}
-	ChanageState(ObstacleState::Idle);
+	ChangeState(ObstacleState::Idle);
 	//ÀÌÆåÆ® Ãß°¡
 	GameEngineLevel* Level = GetLevel();
 	RockVFX = Level->CreateActor<VFX>();
@@ -60,7 +60,7 @@ void Rock::TryMove(float4 _Dir)
 	switch (NextTile)
 	{
 	case TTYPE::NO:
-		ChanageState(ObstacleState::Move);
+		ChangeState(ObstacleState::Move);
 		break;
 	case TTYPE::WA:
 	case TTYPE::PL:
@@ -118,7 +118,7 @@ void Rock::MoveUpdate(float _Delta)
 
 	if (PixelCount >= TILESIZE)
 	{
-		ChanageState(ObstacleState::Idle);
+		ChangeState(ObstacleState::Idle);
 	}
 
 }

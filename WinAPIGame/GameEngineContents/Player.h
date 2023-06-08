@@ -59,6 +59,11 @@ public:
 		HP = _HP;
 	}
 
+	void SetPlayLevel(class PlayLevel* _PlayLevel)
+	{
+		PlayLevelPtr = _PlayLevel;
+	}
+
 	int GetHP()
 	{
 		return HP;
@@ -71,6 +76,8 @@ public:
 		return Moved;
 	}
 	void TrapChek(float4 _ObsTilePos);
+
+	void ChangeState(PlayerState State);
 
 protected:
 
@@ -85,8 +92,8 @@ protected:
 	void AttackUpdate(float _Delta);
 	void SuccessUpdate(float _Delta);
 
-	void ChanageState(PlayerState State);
 	void StateUpdate(float _Delta);
+	PlayLevel* PlayLevelPtr= nullptr;
 	PlayerState State = PlayerState::Max;
 	float4 Dir = float4::ZERO;
 	float4 TilePos = float4::ZERO; //플레이어 타일위치

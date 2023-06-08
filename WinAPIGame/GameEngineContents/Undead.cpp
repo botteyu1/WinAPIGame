@@ -42,7 +42,7 @@ void Undead::Start()
 	GameEngineLevel* Level = GetLevel();
 	UndeadVFX = Level->CreateActor<VFX>();
 
-	ChanageState(ObstacleState::Idle);
+	ChangeState(ObstacleState::Idle);
 }
 
 
@@ -58,7 +58,7 @@ void Undead::TryMove(float4 _Dir)
 	case TTYPE::NO:
 		
 		
-		ChanageState(ObstacleState::Move);
+		ChangeState(ObstacleState::Move);
 		
 		break;
 	case TTYPE::WA:
@@ -68,7 +68,7 @@ void Undead::TryMove(float4 _Dir)
 	case TTYPE::RO:
 	case TTYPE::LO:
 	case TTYPE::KE:
-		ChanageState( ObstacleState::Death);
+		ChangeState( ObstacleState::Death);
 		break;
 
 	case TTYPE::EN:
@@ -121,7 +121,7 @@ void Undead::IdleUpdate(float _Delta)
 	Obstacle* NextTrapTile = TileMap::GetLevelTileMap()->GetTileTrapActor(TilePos.iX(), TilePos.iY()); //트랩있는지 활성화시 사망
 	if (NextTrapTile != nullptr and NextTrapTile->GetState() == ObstacleState::Attack)
 	{
-		ChanageState(ObstacleState::Death); 
+		ChangeState(ObstacleState::Death); 
 	}
 }
 
@@ -144,7 +144,7 @@ void Undead::MoveUpdate(float _Delta)
 
 	if (PixelCount >= TILESIZE)
 	{
-		ChanageState(ObstacleState::Idle);
+		ChangeState(ObstacleState::Idle);
 	}
 
 	AddPos(MovePos);

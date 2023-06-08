@@ -57,6 +57,7 @@ void PlayLevel::Start()
 	PlayUI = CreateActor<UI, UpdateOrder>(UpdateOrder::PlayerUI);
 	PlayUI->Init(StageLevel);
 	PlayDialog = CreateActor<Dialog, UpdateOrder>(UpdateOrder::PlayerUI);
+	PlayDialog->Init(StageLevel);
 }
 
 void PlayLevel::BatchActor()
@@ -81,6 +82,7 @@ void PlayLevel::BatchActor()
 				LevelPlayer = CreateActor<Player, UpdateOrder>(UpdateOrder::Player);
 				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y) + float4{0.0f,40.0f});
 				LevelPlayer->SetPlayerTilePos(X,Y);
+				LevelPlayer->SetPlayLevel(this);
 				TilePair.second = LevelPlayer;
 				break;
 			case TTYPE::NP:
@@ -160,10 +162,12 @@ void PlayLevel::ResetActor()
 			case TTYPE::PL:
 				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y) + float4{ 0.0f,30.0f });
 				LevelPlayer->SetPlayerTilePos(X, Y);
+				
 				TilePair.second = LevelPlayer;
 				TilePair.second->On();
 				break;
 			case TTYPE::NP:
+				NPCPos = { Pos };
 			case TTYPE::UN:
 			case TTYPE::RO:
 			case TTYPE::LO:
@@ -205,37 +209,43 @@ void PlayLevel::Update(float _Delta)
 	if (PlayLevelChange->State == LevelState::Transition && PlayLevelChange->CoverFullScreen == true)
 	{
 		std::string ResetLevel = "PlayLevel" + std::to_string(StageLevel);
-		GameEngineCore::ChangeLevel(ResetLevel);
 		PlayLevelChange->CoverFullScreen = false;
+		PlayDialog->ChangeState(DialogState::Off); // 다이얼로그가 켜져있으면 꺼줌
+		GameEngineCore::ChangeLevel(ResetLevel);
+	}
+	//다이얼로그 화면일떄 조작 중지.
+	if (PlayDialog->IsUpdate() == true)
+	{
+		return;
 	}
 
 	if (true == GameEngineInput::IsDown('R'))
 	{
-		PlayLevelChange->ChanageState(LevelState::Transition);
+		PlayLevelChange->ChangeState(LevelState::Transition);
 	}
 	if (true == GameEngineInput::IsDown('T'))
 	{
-		PlayLevelChange->ChanageState(LevelState::Death);
+		PlayLevelChange->ChangeState(LevelState::Death);
 
 	}
 	if (true == GameEngineInput::IsDown('1'))
 	{
-		PlayLevelChange->ChanageState(LevelState::Transition);
+		PlayLevelChange->ChangeState(LevelState::Transition);
 		StageLevel = 1;
 	}
 	if (true == GameEngineInput::IsDown('2'))
 	{
-		PlayLevelChange->ChanageState(LevelState::Transition);
+		PlayLevelChange->ChangeState(LevelState::Transition);
 		StageLevel = 2;
 	}
 	if (true == GameEngineInput::IsDown('3'))
 	{
-		PlayLevelChange->ChanageState(LevelState::Transition);
+		PlayLevelChange->ChangeState(LevelState::Transition);
 		StageLevel = 3;
 	}
 	if (true == GameEngineInput::IsDown('L'))
 	{
-		PlayDialog->ChanageState(DialogeState::On);
+		PlayDialog->ChangeState(DialogState::On);
 	}
 	
 }

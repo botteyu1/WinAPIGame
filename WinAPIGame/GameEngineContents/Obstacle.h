@@ -47,6 +47,7 @@ public:
 	{
 		return State;
 	}
+	void ChangeState(ObstacleState _State);
 
 protected:
 	GameEngineRenderer* MainRenderer = nullptr;
@@ -54,7 +55,6 @@ protected:
 	float4 Dir = float4::ZERO;
 	float PixelCount = 0.0f; 
 
-	void ChanageState(ObstacleState _State);
 	void StateUpdate(float _Delta);
 	ObstacleState State = ObstacleState::Max;
 

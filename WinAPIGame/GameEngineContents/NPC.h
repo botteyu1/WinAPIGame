@@ -23,6 +23,9 @@ protected:
 private:
 
 	GameEngineRenderer* LoveSignRenderer = nullptr;
-	float LoveSignSpeed = 50.0f;
+	float LoveSignSpeed = 30.0f;
+	void DeathStart()  override;
+
+	
 };
 

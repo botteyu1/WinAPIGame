@@ -58,7 +58,7 @@ void Player::Start()
 	GameEngineLevel* Level = GetLevel();
 	PlayerVFX = Level->CreateActor<VFX>();
 
-	ChanageState(PlayerState::Idle);
+	ChangeState(PlayerState::Idle);
 	Dir = float4::RIGHT;
 	HP = 10;
 
@@ -91,7 +91,7 @@ void Player::StateUpdate(float _Delta)
 	}
 }
 
-void Player::ChanageState(PlayerState _State)
+void Player::ChangeState(PlayerState _State)
 {
 	if (_State != State)
 	{

@@ -11,6 +11,9 @@
 #include "Key.h"
 #include "LockBox.h"
 #include "VFX.h"
+#include "Dialog.h"
+#include "NPC.h"
+#include "LevelChange.h"
 
 
 
@@ -68,6 +71,7 @@ void Player::AttackStart()
 	TTYPE NextTile = TileMap::GetLevelTileMap()->GetTileType(nextTilePos.iX(), nextTilePos.iY());
 	GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(nextTilePos.iX(), nextTilePos.iY());
 
+	//위치에 타격 이펙트생성
 	PlayerVFX->Hit_VFXOn(nextTilePos);
 
 	// 타입에 맞는 적 처리
@@ -114,23 +118,24 @@ void Player::IdleUpdate(float _Delta)
 		case TTYPE::NO:
 		case TTYPE::KE:
 			Move();
-			ChanageState(PlayerState::Run);
+			ChangeState(PlayerState::Run);
 			break;
 		case TTYPE::WA:
 			break;
 		case TTYPE::NP:
-			ChanageState(PlayerState::Success);
+			PlayLevelPtr->GetDialog()->ChangeState(DialogState::On);
+			//ChangeState(PlayerState::Success);
 			break;
 		case TTYPE::UN:
 		case TTYPE::RO:
 			Move();
-			ChanageState(PlayerState::Attack);
+			ChangeState(PlayerState::Attack);
 			break;
 		case TTYPE::LO:
 			if (KeyCheck == true)
 			{
 				Move();
-				ChanageState(PlayerState::Run);
+				ChangeState(PlayerState::Run);
 			}
 			break;
 		
@@ -174,7 +179,7 @@ void Player::RunUpdate(float _Delta)
 	if (MotionTime >= TILESIZE)
 	{
 		//Check = false;
-		ChanageState(PlayerState::Idle);
+		ChangeState(PlayerState::Idle);
 	}
 
 	AddPos(MovePos);
@@ -187,16 +192,28 @@ void Player::AttackUpdate(float _Delta)
 
 	if (MotionTime >= TILESIZE)
 	{
-		ChanageState(PlayerState::Idle);
+		ChangeState(PlayerState::Idle);
 	}
 }
 
 void Player::SuccessUpdate(float _Delta)
 {
-	MotionTime += 1000.0f * _Delta;
+	
 
-	if (MotionTime >= TILESIZE)
+	if (MainRenderer->GetCurFrame() == 6)
 	{
-		ChanageState(PlayerState::Idle);
+		//npc 위치 타일 정보 가져오기
+		
+		float4 NPCPos = PlayLevelPtr->GetNPCPos();
+		GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(NPCPos.iX(), NPCPos.iY());
+
+		static_cast<NPC*>(Obstacle)->ChangeState(ObstacleState::Death);
+	}
+
+	if (true == MainRenderer->IsAnimationEnd())
+	{
+		PlayLevelPtr->GetLevelChange()->ChangeState(LevelState::Transition);
+		PlayLevelPtr->AddStageLevel(1);
+		ChangeState(PlayerState::Idle);
 	}
 }

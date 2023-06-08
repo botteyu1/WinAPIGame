@@ -137,6 +137,10 @@ void VFX::Huge_VFXOn(float4 _TilePos)
 
 void VFX::LovePlosion_VFXOn(float4 _TilePos)
 {
+	LovePlosionRenderer->On();
+	float4 Pos = TileMap::GetLevelTileMap()->GetTilePos(_TilePos);
+	LovePlosionRenderer->SetRenderPos(Pos + float4{ 0.0f,40.0f });
+	LovePlosionRenderer->ChangeAnimation("lovePlosion_vfx");
 }
 
 

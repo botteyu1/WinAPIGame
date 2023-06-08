@@ -42,17 +42,17 @@ void Spike::Init(float4 _TilePos, int _Custom)
 	if (_Custom == 0)
 	{
 		AlwayAttack = true;
-		ChanageState(ObstacleState::Attack);
+		ChangeState(ObstacleState::Attack);
 	}
 	else if (_Custom == 1)
 	{
 		AlwayAttack = false;
-		ChanageState(ObstacleState::Attack);
+		ChangeState(ObstacleState::Attack);
 	}
 	else if (_Custom == 2)
 	{
 		AlwayAttack = false;
-		ChanageState(ObstacleState::Idle);
+		ChangeState(ObstacleState::Idle);
 	}
 
 	//¹Ø¿¡ ±ò¸®±â À§ÇÑ pos Á¶Á¤
@@ -78,7 +78,7 @@ void Spike::IdleUpdate(float _delta)
 	{
 		Player* playerptr = Player::GetMainPlayer();
 		playerptr->Player::TrapChek(GetTilePos());
-		ChanageState(ObstacleState::Attack);
+		ChangeState(ObstacleState::Attack);
 	}
 }
 
@@ -88,7 +88,7 @@ void Spike::AttackUpdate(float _delta)
 	{
 		if (AlwayAttack == false)
 		{
-			ChanageState(ObstacleState::Idle);
+			ChangeState(ObstacleState::Idle);
 		}
 		else
 		{

@@ -248,6 +248,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="DialogData.cpp" />
     <ClCompile Include="EndingLevel.cpp">
       <SubType>
       </SubType>

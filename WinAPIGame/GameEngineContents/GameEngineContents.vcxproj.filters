@@ -123,6 +123,9 @@
     <ClCompile Include="Dialog.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="DialogData.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

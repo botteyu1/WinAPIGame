@@ -16,8 +16,12 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
-
+	class LevelChange* GetLevelChange() const { return PlayLevelChange; }
+	class Dialog* GetDialog() const { return PlayDialog; }
 	
+	float4 GetNPCPos() const { return NPCPos; }
+
+	void AddStageLevel(int _Num) { StageLevel += _Num; }
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -32,14 +36,15 @@ private:
 	class BackGround* BackGroundPtr = nullptr;
 	class Player* LevelPlayer = nullptr;
 	
-	class LevelChange* PlayLevelChange = nullptr; // 화면전환시 나오는 애니메이션
+	LevelChange* PlayLevelChange = nullptr; // 화면전환시 나오는 애니메이션
 	class UI* PlayUI = nullptr; // 게임중 UI
-	class Dialog* PlayDialog = nullptr; // 대화창
+	Dialog* PlayDialog = nullptr; // 대화창
 
 	//std::vector<TTYPE> TileStartData;
 	class TileMap TileMapStartData;
 
 	int StageLevel = 0; // 현재 스테이지 레벨
+	float4 NPCPos = float4::ZERO; // NPC위치
 
 	void BatchActor(); // 액터 생성밎 배치
 	void ResetActor(); // 액터 위치 초기화 및 업데이트 온
