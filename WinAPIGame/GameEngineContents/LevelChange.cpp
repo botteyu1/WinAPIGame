@@ -31,23 +31,28 @@ void LevelChange::Start()
 	}
 
 	{
+		DeathRenderer = CreateRenderer(RenderOrder::LevelChange);
 		MainRenderer = CreateRenderer(RenderOrder::LevelChange);
 		//GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 
 		//애니메이션은 로드된 스프라이트를 가지고 만든다.3
 		MainRenderer->CreateAnimation("leveltransition", "leveltransition", 0, 28, 0.05f, false);
-		MainRenderer->CreateAnimation("leveldeath", "leveldeath", 0, 17, 0.05f, false);
+		DeathRenderer->CreateAnimation("leveldeath", "leveldeath", 0, 17, 0.05f, false);
 
 		MainRenderer->ChangeAnimation("leveltransition");
+		DeathRenderer->ChangeAnimation("leveldeath");
 
 		float4 Scale = GameEngineWindow::MainWindow.GetScale().Half();
 		MainRenderer->SetRenderPos(Scale);
+		DeathRenderer->SetRenderPos(Scale);
 
 		State = LevelState::Transition; 
-		MainRenderer->ChangeAnimation("leveltransition");
+		
 		MainRenderer->SetCurFrame(15);
 
-		//MainRenderer->SetRenderScaleToTexture();
+		MainRenderer->SetRenderScaleToTexture();
+
+		DeathRenderer->Off();
 	}
 }
 
@@ -107,6 +112,7 @@ void LevelChange::IdleStart()
 	CoverFullScreen = false;
 	Off();
 	MainRenderer->Off();
+	DeathRenderer->Off();
 }
 
 void LevelChange::TransitionStart()
@@ -120,10 +126,10 @@ void LevelChange::TransitionStart()
 
 void LevelChange::DeathStart()
 {
-	MainRenderer->ChangeAnimation("leveldeath");
-	MainRenderer->SetCurFrame(0);
+	DeathRenderer->ChangeAnimation("leveldeath");
+	DeathRenderer->SetCurFrame(0);
 	On();
-	MainRenderer->On();
+	DeathRenderer->On();
 }
 
 void LevelChange::IdleUpdate(float _Delta)
@@ -133,7 +139,10 @@ void LevelChange::IdleUpdate(float _Delta)
 void LevelChange::TransitionUpdate(float _Delta)
 {
 	if (MainRenderer->GetCurFrame() == 14)
+	{
 		CoverFullScreen = true;
+		DeathRenderer->Off();
+	}
 
 	if (MainRenderer->IsAnimationEnd())
 	{
@@ -146,7 +155,7 @@ void LevelChange::DeathUpdate(float _Delta)
 {
 	
 
-	if (MainRenderer->IsAnimationEnd())
+	if (DeathRenderer->IsAnimationEnd())
 	{
 		ChangeState(LevelState::Transition);
 	}

@@ -31,7 +31,7 @@ void Player::Start()
 		FolderPath.SetCurrentPath();
 		FolderPath.MoveParentToExistsChild("ContentsResources");
 
-		FolderPath.MoveChild("ContentsResources\\Texture\\");
+		FolderPath.MoveChild("ContentsResources\\Texture\\player\\");
 		//로드하면서 스프라이트를 생성한다
 		ResourcesManager::GetInst().CreateSpriteFolder("player_idle", FolderPath.PlusFilePath("player_idle"));
 		ResourcesManager::GetInst().CreateSpriteFolder("player_run", FolderPath.PlusFilePath("player_run"));
@@ -60,7 +60,6 @@ void Player::Start()
 
 	ChangeState(PlayerState::Idle);
 	Dir = float4::RIGHT;
-	HP = 10;
 
 }
 

@@ -33,6 +33,7 @@ protected:
 
 private:
 	GameEngineRenderer* MainRenderer = nullptr;
+	GameEngineRenderer* DeathRenderer = nullptr;
 	bool CoverFullScreen = false;
 	void StateUpdate(float _Delta);
 	LevelState State = LevelState::Max;

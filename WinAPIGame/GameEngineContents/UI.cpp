@@ -15,7 +15,7 @@ UI::~UI()
 
 void UI::Start()
 {
-	if (false == ResourcesManager::GetInst().IsLoadTexture("mainUI001.png"))
+	if (false == ResourcesManager::GetInst().IsLoadTexture("mainUI002.bmp"))
 	{
 
 		GameEnginePath FilePath;
@@ -24,7 +24,8 @@ void UI::Start()
 		FilePath.MoveChild("ContentsResources\\Texture\\playUI\\");
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI001.png"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI002.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI002.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI003.bmp"));
 	}
 	UIRendererLT = CreateRenderer(RenderOrder::UI);
 	UIRendererLB = CreateRenderer(RenderOrder::UI);
@@ -33,15 +34,15 @@ void UI::Start()
 
 	float4 windowScale = GameEngineWindow::MainWindow.GetBackBuffer()->GetScale();
 
-	UIRendererLT->SetTexture("mainUI002.png");
+	UIRendererLT->SetTexture("mainUI002.bmp");
 	float4 Scale = UIRendererLT->GetRenderScale().Half();
 	UIRendererLT->SetRenderPos(Scale);
 
-	UIRendererRT->SetTexture("mainUI002.png");
+	UIRendererRT->SetTexture("mainUI003.bmp");
 	Scale = UIRendererRT->GetRenderScale().Half();
 
 	UIRendererRT->SetRenderPos({ windowScale.X - Scale .X, Scale.Y});
-	UIRendererRT->FlipON();
+	
 
 	UIRendererLB->SetTexture("mainUI001.png");
 	Scale = UIRendererLB->GetRenderScale().Half();
@@ -56,22 +57,22 @@ void UI::Start()
 	UIRendererRB->FlipON();
 
 	GameEngineRenderer* Ptr = CreateRenderer(RenderOrder::UI);
-	Ptr->SetRenderPos({ 145, 770 });
-	Ptr->SetRenderScale({ 200, 40 });
+	Ptr->SetRenderPos({ 200, 900 });
+	
 	Ptr->SetText("26", 120, "양재참숯체B");
 	UIRendererHP = Ptr;
 
 	
 
 	Ptr = CreateRenderer(RenderOrder::UI);
-	Ptr->SetRenderPos({ 580, 985 });
-	Ptr->SetRenderScale({ 200, 40 });
-	Ptr->SetText("●  인생조언[L키]  ●", 35, "양재참숯체B");
+	Ptr->SetRenderPos({ 720, 1050 });
+	
+	Ptr->SetText("●  인생조언[L키]  ●", 38, "양재참숯체B");
 
 	Ptr = CreateRenderer(RenderOrder::UI);
-	Ptr->SetRenderPos({ 1030, 985 });
-	Ptr->SetRenderScale({ 200, 40 });
-	Ptr->SetText("●  재시작[R키]  ●", 35, "양재참숯체B");
+	Ptr->SetRenderPos({ 1150, 1050 });
+	
+	Ptr->SetText("●  재시작[R키]  ●", 38, "양재참숯체B");
 
 
 }
@@ -79,12 +80,11 @@ void UI::Start()
 void UI::Init(int _Stage)
 {
 	GameEngineRenderer* Ptr = CreateRenderer(RenderOrder::UI);
-	Ptr->SetRenderPos({ 1695, 770 });
-	Ptr->SetRenderScale({ 200, 40 });
+	Ptr->SetRenderPos({ 1717, 900 });
 	
 	std::string str = "Ⅰ" ;
 	str[1] += -1 + _Stage;
-	Ptr->SetText(str, 120, "양재참숯체B");
+	Ptr->SetText(str, 150, "양재참숯체B");
 
 }
 
@@ -93,5 +93,14 @@ void UI::Update(float _Delta)
 	Player* playerptr = Player::GetMainPlayer();
 	int HP = playerptr->GetHP();
 	
-	UIRendererHP->SetText(std::to_string(HP), 120, "양재참숯체B");
+	if (HP == 0)
+	{
+		UIRendererHP->SetText("X", 120, "양재참숯체B");
+	}
+	else
+	{
+		UIRendererHP->SetText(std::to_string(HP), 120, "양재참숯체B");
+	}
+
+	
 }

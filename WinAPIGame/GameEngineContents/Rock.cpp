@@ -24,7 +24,7 @@ void Rock::Start()
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Texture\\rock\\");
+		FilePath.MoveChild("ContentsResources\\Texture\\obstacle\\rock\\");
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Rock001.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("Rock002.png"));
@@ -68,7 +68,7 @@ void Rock::TryMove(float4 _Dir)
 	case TTYPE::UN:
 	case TTYPE::RO:
 	case TTYPE::LO:
-	case TTYPE::KE:
+	
 		break;
 	case TTYPE::EN:
 		break;

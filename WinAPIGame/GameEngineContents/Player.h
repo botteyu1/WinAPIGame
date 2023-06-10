@@ -63,6 +63,8 @@ public:
 	{
 		PlayLevelPtr = _PlayLevel;
 	}
+	
+
 
 	int GetHP()
 	{
@@ -78,6 +80,11 @@ public:
 	void TrapChek(float4 _ObsTilePos);
 
 	void ChangeState(PlayerState State);
+
+	void KeyCheckOff()
+	{
+		KeyCheck = false;
+	}
 
 protected:
 

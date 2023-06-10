@@ -21,7 +21,7 @@ void Spike::Start()
 		GameEnginePath FolderPath;
 		FolderPath.SetCurrentPath();
 		FolderPath.MoveParentToExistsChild("ContentsResources");
-		FolderPath.MoveChild("ContentsResources\\Texture\\");
+		FolderPath.MoveChild("ContentsResources\\Texture\\obstacle\\");
 
 		ResourcesManager::GetInst().CreateSpriteFolder("spike_on", FolderPath.PlusFilePath("spike_on"));
 		ResourcesManager::GetInst().CreateSpriteFolder("spike_off", FolderPath.PlusFilePath("spike_off"));

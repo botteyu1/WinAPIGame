@@ -33,23 +33,19 @@ void Player::RunStart()
 	
 	float4 nextTilePos = GetPlayerTilePos() + Dir;
 	std::pair<TTYPE, GameEngineActor*>& NextTilePair = TileMap::GetLevelTileMap()->GetTilePair(nextTilePos);
-	TTYPE NextTile = NextTilePair.first;
-	GameEngineActor* Obstacle = NextTilePair.second;
-
-
+	std::pair<OTYPE, Obstacle*>& NextTrapTilePair = TileMap::GetLevelTileMap()->GetTileTrapPair(nextTilePos);
+	
 	// 이동할 때 키나 상자인경우 사망처리
-	switch (NextTile)
+	if (NextTrapTilePair.first == OTYPE::KE)
 	{
-	case TTYPE::KE:
 		KeyCheck = true;
-		static_cast<Key*>(Obstacle)->Obtained();
-		break;
-	case TTYPE::LO:
-		static_cast<LockBox*>(Obstacle)->Obtained();
-		break;
-	default:
-		break;
+		static_cast<Key*>(NextTrapTilePair.second)->Obtained();
 	}
+	if (NextTilePair.first == TTYPE::LO)
+	{
+		static_cast<LockBox*>(NextTilePair.second)->Obtained();
+	}
+
 	//기존 플레이어 타일 위치 이동되는 타일로 바꾸기
 	TileMap::GetLevelTileMap()->SetTilePair(NextTilePair.first, NextTilePair.second, TilePos);
 	//이동할 타일 위치 플레이어로 바꾸기
@@ -116,7 +112,6 @@ void Player::IdleUpdate(float _Delta)
 		switch (NextTile)
 		{
 		case TTYPE::NO:
-		case TTYPE::KE:
 			Move();
 			ChangeState(PlayerState::Run);
 			break;
@@ -124,6 +119,8 @@ void Player::IdleUpdate(float _Delta)
 			break;
 		case TTYPE::NP:
 			PlayLevelPtr->GetDialog()->ChangeState(DialogState::On);
+			ChangeState(PlayerState::Max);
+			Move();
 			//ChangeState(PlayerState::Success);
 			break;
 		case TTYPE::UN:
@@ -213,7 +210,7 @@ void Player::SuccessUpdate(float _Delta)
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		PlayLevelPtr->GetLevelChange()->ChangeState(LevelState::Transition);
-		PlayLevelPtr->AddStageLevel(1);
+		PlayLevelPtr->AddNextStageLevel(1);
 		ChangeState(PlayerState::Idle);
 	}
 }

@@ -13,7 +13,7 @@ enum class TTYPE
 	UN,//dead,
 	RO,//ck
 	LO,//ckBox
-	KE,//Y
+	
 	EN,//D
 };
 // 트랩타일
@@ -23,6 +23,7 @@ enum class OTYPE
 	SP,//ike always,
 	SO,//pike on,
 	SF,// pike off,
+	KE,//Y
 	EN,//D
 };
 // 설명 :
@@ -89,6 +90,10 @@ public:
 	Obstacle* GetTileTrapActor(int _X, int _Y);
 	OTYPE GetTileTrapType(int _X, int _Y);
 	std::pair<OTYPE, Obstacle*>& GetTileTrapPair(int _X, int _Y);
+	std::pair<OTYPE, Obstacle*>& GetTileTrapPair(float4 _Pos)
+	{
+		return GetTileTrapPair(_Pos.iX(), _Pos.iY());
+	}
 protected:
 
 private:

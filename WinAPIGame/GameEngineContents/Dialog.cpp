@@ -18,7 +18,7 @@ Dialog::~Dialog()
 void Dialog::Start()
 {
 
-	if (false == ResourcesManager::GetInst().IsLoadTexture("dialogueBG_hell.png"))
+	if (false == ResourcesManager::GetInst().IsLoadTexture("dialogueBG_hell.bmp"))
 	{
 		// 무조건 자동으로 현재 실행중인 위치가 된다.
 		// 경로
@@ -36,7 +36,7 @@ void Dialog::Start()
 		FilePath.MoveParentToExistsChild("ContentsResources");
 		FilePath.MoveChild("ContentsResources\\Texture\\dialog\\");
 
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_hell.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_hell.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0001.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0002.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("pand\\pand_idle.png"));
@@ -52,7 +52,7 @@ void Dialog::Start()
 		float4 Scale = Render->GetRenderScale().Half();
 		Render->SetRenderPos(Scale);
 		
-		Render = CreateRenderer("dialogueBG_hell.png", RenderOrder::Dialouge);
+		Render = CreateRenderer("dialogueBG_hell.bmp", RenderOrder::Dialouge);
 		Scale = Render->GetRenderScale().Half();
 		Render->SetRenderPos(Scale+ float4{0.0f,170.0f});
 
@@ -179,6 +179,7 @@ void Dialog::StateUpdate(float _Delta)
 
 void Dialog::ConversationStart()
 {
+	
 	CurConversationIndex++;
 	Conversation Con = ConversationList[CurConversationIndex];
 	

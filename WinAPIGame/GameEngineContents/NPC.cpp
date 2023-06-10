@@ -34,7 +34,7 @@ void NPC::Start()
 
 
 		FolderPath.MoveParentToExistsChild("ContentsResources");
-		FolderPath.MoveChild("ContentsResources\\Texture\\lovesign\\");
+		FolderPath.MoveChild("ContentsResources\\Texture\\npc\\lovesign\\");
 
 		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("lovesign.png"));
 	}
@@ -64,8 +64,30 @@ void NPC::Init(float4 _TilePos, int _Custom)
 		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
 		MainRenderer->ChangeAnimation("cerberus");
 		break;
+	case 4:
+		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		MainRenderer->ChangeAnimation("cerberus");
+		break;
+	case 5:
+		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		MainRenderer->ChangeAnimation("cerberus");
+		break;
+	case 6:
+		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		MainRenderer->ChangeAnimation("cerberus");
+		break;
+	case 7:
+		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		MainRenderer->ChangeAnimation("cerberus");
+		break;
+	case 8:
+		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		MainRenderer->ChangeAnimation("cerberus");
+		break;
+	
 
 	default:
+		
 		break;
 	}
 }

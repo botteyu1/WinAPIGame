@@ -21,7 +21,7 @@ public:
 	
 	float4 GetNPCPos() const { return NPCPos; }
 
-	void AddStageLevel(int _Num) { StageLevel += _Num; }
+	void AddNextStageLevel(int _Num) { NextStageLevel += _Num; }
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -44,7 +44,9 @@ private:
 	class TileMap TileMapStartData;
 
 	int StageLevel = 0; // 현재 스테이지 레벨
+	int NextStageLevel = 0; // 다음 스테이지 레벨
 	float4 NPCPos = float4::ZERO; // NPC위치
+	int StartHP = 0; // 시작 HP
 
 	void BatchActor(); // 액터 생성밎 배치
 	void ResetActor(); // 액터 위치 초기화 및 업데이트 온

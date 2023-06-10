@@ -27,7 +27,7 @@ void Undead::Start()
 		GameEnginePath FolderPath;
 		FolderPath.SetCurrentPath();
 		FolderPath.MoveParentToExistsChild("ContentsResources");
-		FolderPath.MoveChild("ContentsResources\\Texture\\");
+		FolderPath.MoveChild("ContentsResources\\Texture\\obstacle\\");
 
 		ResourcesManager::GetInst().CreateSpriteFolder("undead_idle", FolderPath.PlusFilePath("undead_idle"));
 		ResourcesManager::GetInst().CreateSpriteFolder("undead_move", FolderPath.PlusFilePath("undead_move"));
@@ -67,7 +67,6 @@ void Undead::TryMove(float4 _Dir)
 	case TTYPE::UN:
 	case TTYPE::RO:
 	case TTYPE::LO:
-	case TTYPE::KE:
 		ChangeState( ObstacleState::Death);
 		break;
 

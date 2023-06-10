@@ -25,6 +25,7 @@ void Dialog::SetDialogData(int _StageLevel)
 	case 2:
 		break;
 	default:
+		//MsgBoxAssert("다이얼로그 정보를 입력하지 않았거나 잘못된 스테이지 레벨입니다.")
 		break;
 	}
 	

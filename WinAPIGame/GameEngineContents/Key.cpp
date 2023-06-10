@@ -20,12 +20,12 @@ void Key::Start()
 		GameEnginePath FolderPath;
 		FolderPath.SetCurrentPath();
 		FolderPath.MoveParentToExistsChild("ContentsResources");
-		FolderPath.MoveChild("ContentsResources\\Texture\\");
+		FolderPath.MoveChild("ContentsResources\\Texture\\obstacle\\");
 
 		ResourcesManager::GetInst().CreateSpriteFolder("Key", FolderPath.PlusFilePath("Key"));
 
 	}
-	MainRenderer = CreateRenderer(RenderOrder::Obstacle);
+	MainRenderer = CreateRenderer(RenderOrder::Obstaclefly);
 	MainRenderer->CreateAnimation("Key", "Key", 0, 11, 0.07f, true);
 	MainRenderer->ChangeAnimation("Key");
 

@@ -22,7 +22,7 @@ void LockBox::Start()
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Texture\\lockbox\\");
+		FilePath.MoveChild("ContentsResources\\Texture\\obstacle\\lockbox\\");
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("lockbox001.png"));
 	}

@@ -105,10 +105,7 @@ void PlayLevel::BatchActor()
 				ObstacleObj->Init(Pos);
 				TilePair.second = ObstacleObj;
 				break;
-			case TTYPE::KE:
-				ObstacleObj = CreateActor<Key>();
-				ObstacleObj->Init(Pos);
-				TilePair.second = ObstacleObj;
+			
 				break;
 			case TTYPE::EN:
 				break;
@@ -131,6 +128,11 @@ void PlayLevel::BatchActor()
 			case OTYPE::SF:
 				ObstacleObj = CreateActor<Spike>();
 				ObstacleObj->Init(Pos, 2);
+				TrapPair.second = ObstacleObj;
+				break;
+			case OTYPE::KE:
+				ObstacleObj = CreateActor<Key>();
+				ObstacleObj->Init(Pos);
 				TrapPair.second = ObstacleObj;
 				break;
 			default:
@@ -162,16 +164,19 @@ void PlayLevel::ResetActor()
 			case TTYPE::PL:
 				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y) + float4{ 0.0f,30.0f });
 				LevelPlayer->SetPlayerTilePos(X, Y);
-				
+				LevelPlayer->KeyCheckOff();
+				LevelPlayer->SetHP(StartHP);
+				LevelPlayer->ChangeState(PlayerState::Idle);
 				TilePair.second = LevelPlayer;
 				TilePair.second->On();
 				break;
 			case TTYPE::NP:
 				NPCPos = { Pos };
+				//static_cast<Obstacle*>(TilePair.second)->Init(Pos, StageLevel);
+				//TilePair.second->On();
 			case TTYPE::UN:
 			case TTYPE::RO:
 			case TTYPE::LO:
-			case TTYPE::KE:
 			case TTYPE::EN:
 				static_cast<Obstacle*>(TilePair.second)->Init(Pos);
 				TilePair.second->On();
@@ -196,6 +201,10 @@ void PlayLevel::ResetActor()
 				static_cast<Obstacle*>(TrapPair.second)->Init(Pos, 2);
 				TrapPair.second->On();
 				break;
+			case OTYPE::KE:
+				static_cast<Obstacle*>(TrapPair.second)->Init(Pos);
+				TrapPair.second->On();
+				break;
 			default:
 				break;
 			}
@@ -208,7 +217,7 @@ void PlayLevel::Update(float _Delta)
 	//씬전환 애니메이션 중 화면이 전부 가려졋을 때 레벨전환이 일어남
 	if (PlayLevelChange->State == LevelState::Transition && PlayLevelChange->CoverFullScreen == true)
 	{
-		std::string ResetLevel = "PlayLevel" + std::to_string(StageLevel);
+		std::string ResetLevel = "PlayLevel" + std::to_string(NextStageLevel);
 		PlayLevelChange->CoverFullScreen = false;
 		PlayDialog->ChangeState(DialogState::Off); // 다이얼로그가 켜져있으면 꺼줌
 		GameEngineCore::ChangeLevel(ResetLevel);
@@ -231,17 +240,42 @@ void PlayLevel::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('1'))
 	{
 		PlayLevelChange->ChangeState(LevelState::Transition);
-		StageLevel = 1;
+		NextStageLevel = 1;
 	}
 	if (true == GameEngineInput::IsDown('2'))
 	{
 		PlayLevelChange->ChangeState(LevelState::Transition);
-		StageLevel = 2;
+		NextStageLevel = 2;
 	}
 	if (true == GameEngineInput::IsDown('3'))
 	{
 		PlayLevelChange->ChangeState(LevelState::Transition);
-		StageLevel = 3;
+		NextStageLevel = 3;
+	}
+	if (true == GameEngineInput::IsDown('4'))
+	{
+		PlayLevelChange->ChangeState(LevelState::Transition);
+		NextStageLevel = 4;
+	}
+	if (true == GameEngineInput::IsDown('5'))
+	{
+		PlayLevelChange->ChangeState(LevelState::Transition);
+		NextStageLevel = 5;
+	}
+	if (true == GameEngineInput::IsDown('6'))
+	{
+		PlayLevelChange->ChangeState(LevelState::Transition);
+		NextStageLevel = 6;
+	}
+	if (true == GameEngineInput::IsDown('7'))
+	{
+		PlayLevelChange->ChangeState(LevelState::Transition);
+		NextStageLevel = 7;
+	}
+	if (true == GameEngineInput::IsDown('8'))
+	{
+		PlayLevelChange->ChangeState(LevelState::Transition);
+		NextStageLevel = 8;
 	}
 	if (true == GameEngineInput::IsDown('L'))
 	{
@@ -263,9 +297,9 @@ void PlayLevel::Release()
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	
-	
 	TileMap::SetLevelTileMap(&TileMapStartData);
 	ResetActor();
+	NextStageLevel = StageLevel;
 	//저장한 시작위치 불러오기
 }
 

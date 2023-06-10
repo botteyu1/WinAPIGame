@@ -16,6 +16,7 @@ enum class RenderOrder
 	Trap,
 	Obstacle,
 	Play,
+	Obstaclefly,
 	VFX2,
 	UI,
 	Dialouge,
