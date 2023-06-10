@@ -41,6 +41,18 @@ void Dialog::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0002.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("pand\\pand_idle.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("pand\\pand_flust.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("modeus\\mod_close.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("modeus\\mod_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cer\\cer_happy.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cer\\cer_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mal\\mal_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mal\\mal_puzzled.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("zdra\\z_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("zdra\\z_laugh.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("az\\az_note.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("az\\az_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("jus\\jus_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("jus\\jus_curious.png"));
 		ResourcesManager::GetInst().CreateSpriteFolder("booper", FilePath.PlusFilePath("booper"));
 		ResourcesManager::GetInst().CreateSpriteFolder("Success", FilePath.PlusFilePath("Success"));
 		ResourcesManager::GetInst().CreateSpriteFolder("BadEnd", FilePath.PlusFilePath("BadEnd"));
@@ -180,9 +192,7 @@ void Dialog::StateUpdate(float _Delta)
 void Dialog::ConversationStart()
 {
 	
-	CurConversationIndex++;
 	Conversation Con = ConversationList[CurConversationIndex];
-	
 	MainTextRenderer->SetText(Con.Text, 35, "양재참숯체B", RGB(255,255, 255));
 
 	// npc스탠딩 이미지 변경
@@ -204,14 +214,16 @@ void Dialog::AnswerStart()
 
 void Dialog::SuccessStart()
 {
-	MainTextRenderer->SetText(SuccessConversation.Text, 35, "양재참숯체B", RGB(255, 255, 255));
+	Conversation Con = ConversationList[CurConversationIndex];
+	MainTextRenderer->SetText(Con.Text, 35, "양재참숯체B", RGB(255, 255, 255));
+
 	SuccessRenderer->On();
 	SuccessRenderer->ChangeAnimation("Success");
 
 	// npc스탠딩 이미지 변경
-	if (SuccessConversation.NPCStanding != "")
+	if (Con.NPCStanding != "")
 	{
-		MainNPCRenderer->SetTexture(SuccessConversation.NPCStanding + ".PNG");
+		MainNPCRenderer->SetTexture(Con.NPCStanding + ".PNG");
 	}
 }
 
@@ -228,7 +240,8 @@ void Dialog::OnStart()
 {
 	On();
 	CurAnswer = 1;
-	CurConversationIndex = -1;
+	CurConversationIndex = 0;
+	NameTextRenderer->On();
 	MainNPCRenderer->On();
 	BadEndRenderer->Off();
 }
@@ -251,7 +264,9 @@ void Dialog::ConversationUpdate(float _Delta)
 	{
 		Conversation Con = ConversationList[CurConversationIndex];
 		
-		// 대화가 끝났는지
+		
+
+		// 대화가 끝났는지 정답인지 확인
 		if (Con.IsEnd == true)
 		{
 			if (CurAnswer == CorrectAnswer)
@@ -260,6 +275,7 @@ void Dialog::ConversationUpdate(float _Delta)
 			}
 			else
 			{
+				//CurConversationIndex = Con.Right;
 				ChangeState(DialogState::BadEnd);
 			}
 		}
@@ -271,6 +287,14 @@ void Dialog::ConversationUpdate(float _Delta)
 		// 둘다아니면 대화 이어서 진행
 		else if(Con.IsAnswer == false)
 		{
+			if (Con.Left == 0)
+			{
+				CurConversationIndex++;
+			}
+			else
+			{
+				CurConversationIndex = Con.Left;
+			}
 			ChangeState(DialogState::Conversation);
 		}
 		
@@ -286,6 +310,7 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2On->Off();
 		AnswerRenderer2Off->On();
 		CurAnswer = 1;
+		
 	}
 	
 	if(true == GameEngineInput::IsDown('S'))
@@ -305,15 +330,18 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2Off->Off();
 		AnswerTextRenderer1->Off();
 		AnswerTextRenderer2->Off();
+
+		Conversation Con = ConversationList[CurConversationIndex];
 		if (CurAnswer == CorrectAnswer)
 		{
-			ChangeState(DialogState::Success);
+			CurConversationIndex = Con.Left;
+			
 		}
 		else
 		{
-			ChangeState(DialogState::Conversation);
+			CurConversationIndex = Con.Right;
 		}
-		
+		ChangeState(DialogState::Conversation);
 	}
 }
 

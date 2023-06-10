@@ -45,6 +45,33 @@ private:
 		std::string NPCStanding = "";
 		bool IsAnswer = false;
 		bool IsEnd = false;
+		int Left = 0; // 기본적으로 대화가 왼쪽으로 진행 기본값인경우 ++가된다.
+		int Right = 0; // 틀렸을 때만 오른쪽으로 진행
+
+		void SetNPCStanding(const std::string& _NPCStanding)
+		{
+			NPCStanding = _NPCStanding;
+		}
+		void AnswerOn()
+		{
+			IsAnswer = true;
+		}
+		
+		void EndOn()
+		{
+			IsEnd = true;
+		}
+		void SetLeft(int _Left)
+		{
+			Left = _Left;
+		}
+
+		void SetRight(int _Right)
+		{
+			Right = _Right;
+		}
+
+
 	};
 
 	void StateUpdate(float _Delta);
@@ -55,7 +82,7 @@ private:
 	int CurAnswer = 1;
 	int CurConversationIndex = 0;
 	Conversation BadEndConversation;  // BadEnd가 발생할때 대화 인덱스
-	Conversation SuccessConversation;  // Success가 발생할때 대화 인덱스
+	
 
 	GameEngineRenderer* MainTextRenderer = nullptr;
 	GameEngineRenderer* MainNPCRenderer = nullptr;
