@@ -37,6 +37,7 @@ void Dialog::Start()
 		FilePath.MoveChild("ContentsResources\\Texture\\dialog\\");
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_hell.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_abyss.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0001.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0002.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("pand\\pand_idle.png"));
@@ -53,20 +54,28 @@ void Dialog::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("az\\az_idle.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("jus\\jus_idle.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("jus\\jus_curious.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("beel\\beel_fly.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("beel\\dummy.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0002_Group-2.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0003_Group-3-copy-2.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0004_Layer-273-copy.png"));
 		ResourcesManager::GetInst().CreateSpriteFolder("booper", FilePath.PlusFilePath("booper"));
 		ResourcesManager::GetInst().CreateSpriteFolder("Success", FilePath.PlusFilePath("Success"));
 		ResourcesManager::GetInst().CreateSpriteFolder("BadEnd", FilePath.PlusFilePath("BadEnd"));
 
-		GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("dialogueBG_Fade", { 1920, 1080 });
-		T->FillTexture(RGB(2, 2, 27));
+		if (false == ResourcesManager::GetInst().IsLoadTexture("BG_Fade"))
+		{
+			GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("BG_Fade", { 1920, 1080 });
+			T->FillTexture(RGB(2, 2, 27));
+		}
 	}
-		GameEngineRenderer* Render = CreateRenderer("dialogueBG_Fade", RenderOrder::Dialouge);
+		GameEngineRenderer* Render = CreateRenderer("BG_Fade", RenderOrder::Dialouge);
 		float4 Scale = Render->GetRenderScale().Half();
 		Render->SetRenderPos(Scale);
 		
-		Render = CreateRenderer("dialogueBG_hell.bmp", RenderOrder::Dialouge);
-		Scale = Render->GetRenderScale().Half();
-		Render->SetRenderPos(Scale+ float4{0.0f,170.0f});
+		MainBGRenderer = CreateRenderer("dialogueBG_hell.bmp", RenderOrder::Dialouge);
+		Scale = MainBGRenderer->GetRenderScale().Half();
+		MainBGRenderer->SetRenderPos(Scale+ float4{0.0f,170.0f});
 
 		SuccessRenderer = CreateRenderer(RenderOrder::Dialouge);
 		SuccessRenderer->CreateAnimation("Success", "Success", 0, 7, 0.07f, false);
@@ -79,6 +88,19 @@ void Dialog::Start()
 		BadEndRenderer->ChangeAnimation("BadEnd");
 		BadEndRenderer->SetRenderPos({ 960, 500 });
 		BadEndRenderer->Off();
+
+		BooperRenderer = CreateRenderer(RenderOrder::Dialouge);
+		BooperRenderer->CreateAnimation("booper", "booper", 0, 16, 0.07f, true);
+		BooperRenderer->ChangeAnimation("booper");
+		BooperRenderer->SetRenderPos({ 960, 950 });
+		BooperRenderer->Off();
+
+		//BooperTabRenderer = CreateRenderer(RenderOrder::Dialouge);
+		//BooperTabRenderer->CreateAnimation("booper", "booper", 0, 10, 0.07f, false);
+		//BooperTabRenderer->ChangeAnimation("booper");
+		//BooperTabRenderer->SetRenderPos({ 960, 950 });
+		//BooperTabRenderer->AnimationEndOff();
+		//BooperTabRenderer->Off();
 
 		NameTextRenderer = CreateRenderer(RenderOrder::Dialouge);
 		NameTextRenderer->SetRenderPos({ 960, 780 });
@@ -157,7 +179,6 @@ void Dialog::ChangeState(DialogState _State)
 void Dialog::Update(float _Delta)
 {
 	StateUpdate(_Delta);
-	
 }
 
 void Dialog::StateUpdate(float _Delta)
@@ -194,10 +215,13 @@ void Dialog::ConversationStart()
 	
 	Conversation Con = ConversationList[CurConversationIndex];
 	MainTextRenderer->SetText(Con.Text, 35, "양재참숯체B", RGB(255,255, 255));
-
+	MainNPCRenderer->On();
+	BooperRenderer->On();
+	BooperRenderer->SetCurFrame(0);
 	// npc스탠딩 이미지 변경
-	if (Con.NPCStanding != "")
+	if (Con.NPCStanding != "" and Con.NPCStanding != "Fade")
 	{
+		
 		MainNPCRenderer->SetTexture(Con.NPCStanding + ".PNG");
 	}
 
@@ -209,6 +233,7 @@ void Dialog::AnswerStart()
 	AnswerRenderer2Off->On();
 	AnswerTextRenderer1->On();
 	AnswerTextRenderer2->On();
+	BooperRenderer->Off();
 	
 }
 
@@ -219,6 +244,7 @@ void Dialog::SuccessStart()
 
 	SuccessRenderer->On();
 	SuccessRenderer->ChangeAnimation("Success");
+	BooperRenderer->Off();
 
 	// npc스탠딩 이미지 변경
 	if (Con.NPCStanding != "")
@@ -229,10 +255,13 @@ void Dialog::SuccessStart()
 
 void Dialog::BadEndStart()
 {
+	MainBGRenderer->Off();
+	MainNPCRenderer->Off();
 	NameTextRenderer->Off();
 	MainNPCRenderer->Off();
 	MainTextRenderer->SetText(BadEndConversation.Text, 35, "양재참숯체B", RGB(205, 20, 16), 30);
 	BadEndRenderer->On();
+	BooperRenderer->Off();
 	BadEndRenderer->ChangeAnimation("BadEnd");
 }
 
@@ -244,6 +273,8 @@ void Dialog::OnStart()
 	NameTextRenderer->On();
 	MainNPCRenderer->On();
 	BadEndRenderer->Off();
+	MainBGRenderer->On();
+	MainNPCRenderer->On();
 }
 
 void Dialog::OffStart()
@@ -256,16 +287,17 @@ void Dialog::OffStart()
 
 void Dialog::ConversationUpdate(float _Delta)
 {
+
+	
 	if (true == GameEngineInput::IsDown('K'))
 	{
 		ChangeState(DialogState::Off);
 	}
 	if (true == GameEngineInput::IsDown(VK_RETURN))
 	{
+		BooperRenderer->Off();
 		Conversation Con = ConversationList[CurConversationIndex];
 		
-		
-
 		// 대화가 끝났는지 정답인지 확인
 		if (Con.IsEnd == true)
 		{
@@ -297,7 +329,6 @@ void Dialog::ConversationUpdate(float _Delta)
 			}
 			ChangeState(DialogState::Conversation);
 		}
-		
 	}
 }
 

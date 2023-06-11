@@ -36,7 +36,6 @@ public:
 protected:
 	void Update(float _Delta) override;
 
-private:
 
 	class Conversation
 	{
@@ -85,6 +84,7 @@ private:
 	
 
 	GameEngineRenderer* MainTextRenderer = nullptr;
+	GameEngineRenderer* MainBGRenderer = nullptr;
 	GameEngineRenderer* MainNPCRenderer = nullptr;
 	GameEngineRenderer* NameTextRenderer = nullptr;
 	GameEngineRenderer* AnswerRenderer1On = nullptr;
@@ -95,24 +95,28 @@ private:
 	GameEngineRenderer* AnswerTextRenderer2 = nullptr;
 	GameEngineRenderer* SuccessRenderer = nullptr;
 	GameEngineRenderer* BadEndRenderer = nullptr;
+	GameEngineRenderer* BooperRenderer = nullptr;
+	//GameEngineRenderer* BooperTabRenderer = nullptr;
+
 
 	void SetDialogData(int _StageLevel);
 
-	void ConversationUpdate(float _Delta);
+	virtual void ConversationUpdate(float _Delta);
 	void AnswerUpdate(float _Delta);
-	void SuccessUpdate(float _Delta);
+	virtual void SuccessUpdate(float _Delta);
 	void BadEndUpdate(float _Delta);
 
 	void OnUpdate(float _Delta);
 	void OffUpdate(float _Delta);
 
-	void ConversationStart();
+	virtual void ConversationStart();
 	void AnswerStart();
-	void SuccessStart();
-	void BadEndStart();
-	void OnStart();
+	virtual void SuccessStart();
+	virtual void BadEndStart();
+	virtual void OnStart();
 	void OffStart();
 
+private:
 
 };
 

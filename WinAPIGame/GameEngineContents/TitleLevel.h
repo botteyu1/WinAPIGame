@@ -17,10 +17,24 @@ public:
 	TitleLevel& operator=(const TitleLevel& _Other) = delete;
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
+	class DialogTitle* GetTitleDialog()
+	{
+		return TitleDialog;
+	}
+
+	class LevelChange* GetTitleLevelChange()
+	{
+		return TitleLevelChange;
+	}
+
+	void Start() override;
+
 protected:
 	void Update(float _DeltaTime) override;
 
 private:
+	DialogTitle* TitleDialog = nullptr;
+	LevelChange* TitleLevelChange = nullptr;
 	
 };
 

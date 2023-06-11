@@ -28,11 +28,21 @@ void LevelChange::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("leveltransition", FolderPath.PlusFilePath("leveltransition"));
 		ResourcesManager::GetInst().CreateSpriteFolder("leveldeath", FolderPath.PlusFilePath("leveldeath"));
 
+		if (false == ResourcesManager::GetInst().IsLoadTexture("BG_Fade"))
+		{
+			GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("BG_Fade", { 1920, 1080 });
+			T->FillTexture(RGB(2, 2, 27));
+		}
 	}
 
 	{
+		DeathBGRenderer = CreateRenderer("BG_Fade", RenderOrder::Dialouge);
+		float4 Scale = DeathBGRenderer->GetRenderScale().Half();
+		DeathBGRenderer->SetRenderPos(Scale);
+
 		DeathRenderer = CreateRenderer(RenderOrder::LevelChange);
 		MainRenderer = CreateRenderer(RenderOrder::LevelChange);
+
 		//GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 
 		//애니메이션은 로드된 스프라이트를 가지고 만든다.3
@@ -42,17 +52,19 @@ void LevelChange::Start()
 		MainRenderer->ChangeAnimation("leveltransition");
 		DeathRenderer->ChangeAnimation("leveldeath");
 
-		float4 Scale = GameEngineWindow::MainWindow.GetScale().Half();
+		Scale = GameEngineWindow::MainWindow.GetScale().Half();
 		MainRenderer->SetRenderPos(Scale);
+		MainRenderer->SetRenderScale(GameEngineWindow::MainWindow.GetScale());
 		DeathRenderer->SetRenderPos(Scale);
 
 		State = LevelState::Transition; 
 		
 		MainRenderer->SetCurFrame(15);
 
-		MainRenderer->SetRenderScaleToTexture();
+		//MainRenderer->SetRenderScaleToTexture();
 
 		DeathRenderer->Off();
+		DeathBGRenderer->Off();
 	}
 }
 
@@ -129,6 +141,7 @@ void LevelChange::DeathStart()
 	DeathRenderer->ChangeAnimation("leveldeath");
 	DeathRenderer->SetCurFrame(0);
 	On();
+	DeathBGRenderer->On();
 	DeathRenderer->On();
 }
 
@@ -142,6 +155,7 @@ void LevelChange::TransitionUpdate(float _Delta)
 	{
 		CoverFullScreen = true;
 		DeathRenderer->Off();
+		DeathBGRenderer->Off();
 	}
 
 	if (MainRenderer->IsAnimationEnd())

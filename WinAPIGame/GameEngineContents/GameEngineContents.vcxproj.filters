@@ -60,6 +60,9 @@
     <ClInclude Include="Dialog.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="DialogTitle.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TitleLevel.cpp">
@@ -124,6 +127,9 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="DialogData.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogTitle.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
