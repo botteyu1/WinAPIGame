@@ -25,6 +25,7 @@ private:
 	GameEngineRenderer* LoveSignRenderer = nullptr;
 	float LoveSignSpeed = 30.0f;
 	void DeathStart()  override;
+	float4 PlusPos = { 0.0f,0.0f };
 
 	
 };

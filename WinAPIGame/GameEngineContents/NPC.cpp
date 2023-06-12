@@ -31,6 +31,7 @@ void NPC::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("lucyh", FolderPath.PlusFilePath("lucyh"));
 		ResourcesManager::GetInst().CreateSpriteFolder("malina", FolderPath.PlusFilePath("malina"));
 		ResourcesManager::GetInst().CreateSpriteFolder("modeus", FolderPath.PlusFilePath("modeus"));
+		ResourcesManager::GetInst().CreateSpriteFolder("zdrada", FolderPath.PlusFilePath("zdrada"));
 
 
 		FolderPath.MoveParentToExistsChild("ContentsResources");
@@ -53,36 +54,62 @@ void NPC::Init(float4 _TilePos, int _Custom)
 	switch (_Custom)
 	{
 	case 1:
-		MainRenderer->CreateAnimation("pandemonica", "pandemonica", 0, 11, 0.07f, true);
+		if (nullptr == MainRenderer->FindAnimation("pandemonica"))
+		{
+			MainRenderer->CreateAnimation("pandemonica", "pandemonica", 0, 11, 0.07f, true);
+		}
 		MainRenderer->ChangeAnimation("pandemonica");
 		break;
 	case 2:
+		if (nullptr == MainRenderer->FindAnimation("modeus")) {
 		MainRenderer->CreateAnimation("modeus", "modeus", 0, 11, 0.07f, true);
+
+		}
 		MainRenderer->ChangeAnimation("modeus");
 		break;
 	case 3:
-		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		if (nullptr == MainRenderer->FindAnimation("cerberus"))
+		{
+			MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+		}
 		MainRenderer->ChangeAnimation("cerberus");
 		break;
 	case 4:
-		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
-		MainRenderer->ChangeAnimation("cerberus");
+		if (nullptr == MainRenderer->FindAnimation("malina"))
+		{
+			MainRenderer->CreateAnimation("malina", "malina", 0, 11, 0.07f, true);
+		}
+		MainRenderer->ChangeAnimation("malina");
 		break;
 	case 5:
-		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
-		MainRenderer->ChangeAnimation("cerberus");
+		if (nullptr == MainRenderer->FindAnimation("zdrada"))
+		{
+			MainRenderer->CreateAnimation("zdrada", "zdrada", 0, 11, 0.07f, true);
+		}
+		MainRenderer->ChangeAnimation("zdrada");
 		break;
 	case 6:
-		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
-		MainRenderer->ChangeAnimation("cerberus");
+		if (nullptr == MainRenderer->FindAnimation("azazel"))
+		{
+			MainRenderer->CreateAnimation("azazel", "azazel", 0, 11, 0.07f, true);
+		}
+		MainRenderer->ChangeAnimation("azazel");
 		break;
 	case 7:
-		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
-		MainRenderer->ChangeAnimation("cerberus");
+		if (nullptr == MainRenderer->FindAnimation("justice"))
+		{
+			MainRenderer->CreateAnimation("justice", "justice", 0, 11, 0.07f, true);
+		}
+
+		MainRenderer->ChangeAnimation("justice");
 		break;
 	case 8:
-		MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
-		MainRenderer->ChangeAnimation("cerberus");
+		if (nullptr == MainRenderer->FindAnimation("lucy"))
+		{
+			MainRenderer->CreateAnimation("lucy", "lucy", 0, 11, 0.07f, true);
+		}
+		MainRenderer->ChangeAnimation("lucy");
+		SetPos(TileMap::GetLevelTileMap()->GetTilePos(_TilePos.iX(), _TilePos.iY() - 1));
 		break;
 	
 
@@ -90,6 +117,7 @@ void NPC::Init(float4 _TilePos, int _Custom)
 		
 		break;
 	}
+
 }
 
 void NPC::Update(float _Delta)

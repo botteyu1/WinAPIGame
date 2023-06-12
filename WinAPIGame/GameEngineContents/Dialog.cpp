@@ -59,6 +59,10 @@ void Dialog::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0002_Group-2.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0003_Group-3-copy-2.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0004_Layer-273-copy.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_swirl.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_idle.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_angry.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_happy.png"));
 		ResourcesManager::GetInst().CreateSpriteFolder("booper", FilePath.PlusFilePath("booper"));
 		ResourcesManager::GetInst().CreateSpriteFolder("Success", FilePath.PlusFilePath("Success"));
 		ResourcesManager::GetInst().CreateSpriteFolder("BadEnd", FilePath.PlusFilePath("BadEnd"));
@@ -69,27 +73,27 @@ void Dialog::Start()
 			T->FillTexture(RGB(2, 2, 27));
 		}
 	}
-		GameEngineRenderer* Render = CreateRenderer("BG_Fade", RenderOrder::Dialouge);
+		GameEngineRenderer* Render = CreateUIRenderer("BG_Fade", RenderOrder::Dialouge);
 		float4 Scale = Render->GetRenderScale().Half();
 		Render->SetRenderPos(Scale);
 		
-		MainBGRenderer = CreateRenderer("dialogueBG_hell.bmp", RenderOrder::Dialouge);
+		MainBGRenderer = CreateUIRenderer("dialogueBG_hell.bmp", RenderOrder::Dialouge);
 		Scale = MainBGRenderer->GetRenderScale().Half();
 		MainBGRenderer->SetRenderPos(Scale+ float4{0.0f,170.0f});
 
-		SuccessRenderer = CreateRenderer(RenderOrder::Dialouge);
+		SuccessRenderer = CreateUIRenderer(RenderOrder::Dialouge);
 		SuccessRenderer->CreateAnimation("Success", "Success", 0, 7, 0.07f, false);
 		SuccessRenderer->ChangeAnimation("Success");
 		SuccessRenderer->SetRenderPos({ 960, 970 });
 		SuccessRenderer->Off();
 
-		BadEndRenderer = CreateRenderer(RenderOrder::Dialouge);
+		BadEndRenderer = CreateUIRenderer(RenderOrder::Dialouge);
 		BadEndRenderer->CreateAnimation("BadEnd", "BadEnd", 0, 8, 0.07f, false);
 		BadEndRenderer->ChangeAnimation("BadEnd");
 		BadEndRenderer->SetRenderPos({ 960, 500 });
 		BadEndRenderer->Off();
 
-		BooperRenderer = CreateRenderer(RenderOrder::Dialouge);
+		BooperRenderer = CreateUIRenderer(RenderOrder::Dialouge);
 		BooperRenderer->CreateAnimation("booper", "booper", 0, 16, 0.07f, true);
 		BooperRenderer->ChangeAnimation("booper");
 		BooperRenderer->SetRenderPos({ 960, 950 });
@@ -102,37 +106,37 @@ void Dialog::Start()
 		//BooperTabRenderer->AnimationEndOff();
 		//BooperTabRenderer->Off();
 
-		NameTextRenderer = CreateRenderer(RenderOrder::Dialouge);
+		NameTextRenderer = CreateUIRenderer(RenderOrder::Dialouge);
 		NameTextRenderer->SetRenderPos({ 960, 780 });
 		NameTextRenderer->SetText("26", 60, "양재참숯체B", RGB(230,77,81));
 
-		MainTextRenderer = CreateRenderer(RenderOrder::Dialouge);
+		MainTextRenderer = CreateUIRenderer(RenderOrder::Dialouge);
 		MainTextRenderer->SetRenderPos({ 960, 830 });
 		MainTextRenderer->SetText("26", 60, "양재참숯체B", RGB(0,0,0));
 
-		AnswerRenderer1On = CreateRenderer("button0001.png",RenderOrder::Dialouge);
+		AnswerRenderer1On = CreateUIRenderer("button0001.png",RenderOrder::Dialouge);
 		AnswerRenderer1On->SetRenderPos({ 960, 920 });
 		AnswerRenderer1On->Off();
-		AnswerRenderer1Off = CreateRenderer("button0002.png",RenderOrder::Dialouge);
+		AnswerRenderer1Off = CreateUIRenderer("button0002.png",RenderOrder::Dialouge);
 		AnswerRenderer1Off->SetRenderPos({ 960, 920 });
 		AnswerRenderer1Off->Off();
 
-		AnswerRenderer2On = CreateRenderer("button0001.png",RenderOrder::Dialouge);
+		AnswerRenderer2On = CreateUIRenderer("button0001.png",RenderOrder::Dialouge);
 		AnswerRenderer2On->SetRenderPos({ 960, 1010 });
 		AnswerRenderer2On->Off();
-		AnswerRenderer2Off = CreateRenderer("button0002.png",RenderOrder::Dialouge);
+		AnswerRenderer2Off = CreateUIRenderer("button0002.png",RenderOrder::Dialouge);
 		AnswerRenderer2Off->SetRenderPos({ 960, 1010 });
 		AnswerRenderer2Off->Off();
 
-		AnswerTextRenderer1 = CreateRenderer(RenderOrder::Dialouge);
+		AnswerTextRenderer1 = CreateUIRenderer(RenderOrder::Dialouge);
 		AnswerTextRenderer1->SetRenderPos({ 960, 936 });
 		AnswerTextRenderer1->Off();
 		
-		AnswerTextRenderer2 = CreateRenderer(RenderOrder::Dialouge);
+		AnswerTextRenderer2 = CreateUIRenderer(RenderOrder::Dialouge);
 		AnswerTextRenderer2->SetRenderPos({ 960, 1026 });
 		AnswerTextRenderer2->Off();
 
-		MainNPCRenderer = CreateRenderer(RenderOrder::Dialouge);
+		MainNPCRenderer = CreateUIRenderer(RenderOrder::Dialouge);
 		MainNPCRenderer->SetRenderPos({ 960, 350 });
 		
 		
@@ -229,6 +233,10 @@ void Dialog::ConversationStart()
 
 void Dialog::AnswerStart()
 {
+	Conversation Con = AnswerList[CurAnswerIndex++];
+	AnswerTextRenderer1->SetText(Con.Text, 30, "양재참숯체B", RGB(255, 255, 255));
+	 Con = AnswerList[CurAnswerIndex++];
+	AnswerTextRenderer2->SetText(Con.Text, 30, "양재참숯체B", RGB(255, 255, 255));
 	AnswerRenderer1On->On();
 	AnswerRenderer2Off->On();
 	AnswerTextRenderer1->On();
@@ -270,6 +278,7 @@ void Dialog::OnStart()
 	On();
 	CurAnswer = 1;
 	CurConversationIndex = 0;
+	CurAnswerIndex = 0;
 	NameTextRenderer->On();
 	MainNPCRenderer->On();
 	BadEndRenderer->Off();
@@ -363,6 +372,8 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerTextRenderer2->Off();
 
 		Conversation Con = ConversationList[CurConversationIndex];
+
+		// 맞으면 왼쪽 틀리면 오른쪽
 		if (CurAnswer == CorrectAnswer)
 		{
 			CurConversationIndex = Con.Left;

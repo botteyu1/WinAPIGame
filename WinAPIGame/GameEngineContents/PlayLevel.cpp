@@ -65,7 +65,7 @@ void PlayLevel::BatchActor()
 	TileMap::SetLevelTileMap(&TileMapStartData);
 	float4 Size = TileMapStartData.GetTileMapSize();
 	Obstacle* ObstacleObj;
-	float TileSize = 100.0f;
+	float TileSize = TILESIZE;
 	for (int Y = 0; Y < Size.iY(); Y++)
 	{
 		for (int X = 0; X < Size.iX(); X++)
@@ -83,6 +83,10 @@ void PlayLevel::BatchActor()
 				LevelPlayer->SetPos(TileMapStartData.GetTilePos(X, Y) + float4{0.0f,40.0f});
 				LevelPlayer->SetPlayerTilePos(X,Y);
 				LevelPlayer->SetPlayLevel(this);
+				if (PlayerCameraFocus == true)
+				{
+					LevelPlayer->CameraFoucusOn();
+				}
 				TilePair.second = LevelPlayer;
 				break;
 			case TTYPE::NP:
@@ -104,8 +108,6 @@ void PlayLevel::BatchActor()
 				ObstacleObj = CreateActor<LockBox>();
 				ObstacleObj->Init(Pos);
 				TilePair.second = ObstacleObj;
-				break;
-			
 				break;
 			case TTYPE::EN:
 				break;
@@ -172,8 +174,10 @@ void PlayLevel::ResetActor()
 				break;
 			case TTYPE::NP:
 				NPCPos = { Pos };
-				//static_cast<Obstacle*>(TilePair.second)->Init(Pos, StageLevel);
-				//TilePair.second->On();
+				static_cast<Obstacle*>(TilePair.second)->Init(Pos, StageLevel);
+				TilePair.second->On();
+				break;
+				
 			case TTYPE::UN:
 			case TTYPE::RO:
 			case TTYPE::LO:

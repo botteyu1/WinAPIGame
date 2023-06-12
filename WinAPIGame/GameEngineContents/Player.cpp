@@ -65,12 +65,19 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	if (HP == 0)
+	/*if (HP == 0)
 	{
 		int a = 0;
-	}
+	}*/
 	Moved = false; // 이동 초기화
 	StateUpdate(_Delta);
+	//카메라 포커스가 온이면 카메라를 따라가게 한다
+	if (true == CameraFoucus)
+	{
+		float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+		GetLevel()->GetMainCamera()->SetPos(float4{ 0.0f, GetPos().Y} + float4{0, -(WindowScale.hY()+ TILESIZE*3)});
+	}
+	
 }
 
 void Player::StateUpdate(float _Delta)

@@ -27,10 +27,10 @@ void UI::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI002.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI003.bmp"));
 	}
-	UIRendererLT = CreateRenderer(RenderOrder::UI);
-	UIRendererLB = CreateRenderer(RenderOrder::UI);
-	UIRendererRT = CreateRenderer(RenderOrder::UI);
-	UIRendererRB = CreateRenderer(RenderOrder::UI);
+	UIRendererLT = CreateUIRenderer(RenderOrder::UI);
+	UIRendererLB = CreateUIRenderer(RenderOrder::UI);
+	UIRendererRT = CreateUIRenderer(RenderOrder::UI);
+	UIRendererRB = CreateUIRenderer(RenderOrder::UI);
 
 	float4 windowScale = GameEngineWindow::MainWindow.GetBackBuffer()->GetScale();
 
@@ -56,7 +56,7 @@ void UI::Start()
 	UIRendererRB->SetRenderPos({ windowScale.X - Scale.X,  windowScale.Y - Scale.Y });
 	UIRendererRB->FlipON();
 
-	GameEngineRenderer* Ptr = CreateRenderer(RenderOrder::UI);
+	GameEngineRenderer* Ptr = CreateUIRenderer(RenderOrder::UI);
 	Ptr->SetRenderPos({ 200, 900 });
 	
 	Ptr->SetText("26", 120, "양재참숯체B");
@@ -64,12 +64,12 @@ void UI::Start()
 
 	
 
-	Ptr = CreateRenderer(RenderOrder::UI);
+	Ptr = CreateUIRenderer(RenderOrder::UI);
 	Ptr->SetRenderPos({ 720, 1050 });
 	
 	Ptr->SetText("●  인생조언[L키]  ●", 38, "양재참숯체B");
 
-	Ptr = CreateRenderer(RenderOrder::UI);
+	Ptr = CreateUIRenderer(RenderOrder::UI);
 	Ptr->SetRenderPos({ 1150, 1050 });
 	
 	Ptr->SetText("●  재시작[R키]  ●", 38, "양재참숯체B");

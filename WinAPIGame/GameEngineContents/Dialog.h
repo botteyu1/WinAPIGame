@@ -77,9 +77,11 @@ protected:
 
 	DialogState State = DialogState::Max;
 	std::vector<Conversation> ConversationList;  // 대화 목록
+	std::vector<Conversation> AnswerList; // 대답 목록
 	int CorrectAnswer = 1;
 	int CurAnswer = 1;
 	int CurConversationIndex = 0;
+	int CurAnswerIndex = 0;
 	Conversation BadEndConversation;  // BadEnd가 발생할때 대화 인덱스
 	
 

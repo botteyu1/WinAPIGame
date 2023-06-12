@@ -85,6 +85,10 @@ public:
 	{
 		KeyCheck = false;
 	}
+	void CameraFoucusOn()
+	{
+		CameraFoucus = true;
+	}
 
 protected:
 
@@ -107,12 +111,11 @@ protected:
 	int HP = 0; // 이동횟수 체력
 	bool Moved = false; // 이번 프레임에 이동했는지 확인
 
-	 VFX* PlayerVFX = nullptr; // 게임중 VFX
+	VFX* PlayerVFX = nullptr; // 게임중 VFX
 	
 	float MotionTime = 0.0f; // 100 = 0.1초 모션이동시간 연속키입력딜레이
 
-	void DirCheck();
-
+	bool CameraFoucus = false; // 카메라 포커스
 	
 
 private:
@@ -121,6 +124,7 @@ private:
 	void Update(float _Delta) override;
 	void Render(float _Delta) override;
 	bool KeyCheck = false;
+	void DirCheck();
 	
 };
 

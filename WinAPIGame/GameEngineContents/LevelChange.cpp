@@ -36,12 +36,12 @@ void LevelChange::Start()
 	}
 
 	{
-		DeathBGRenderer = CreateRenderer("BG_Fade", RenderOrder::Dialouge);
+		DeathBGRenderer = CreateUIRenderer("BG_Fade", RenderOrder::Dialouge);
 		float4 Scale = DeathBGRenderer->GetRenderScale().Half();
 		DeathBGRenderer->SetRenderPos(Scale);
 
-		DeathRenderer = CreateRenderer(RenderOrder::LevelChange);
-		MainRenderer = CreateRenderer(RenderOrder::LevelChange);
+		DeathRenderer = CreateUIRenderer(RenderOrder::LevelChange);
+		MainRenderer = CreateUIRenderer(RenderOrder::LevelChange);
 
 		//GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 
