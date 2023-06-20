@@ -108,6 +108,7 @@ void GameEngineLevel::ActorRender(float _Delta)
 void GameEngineLevel::ActorRelease()
 {
 	MainCamera->Release();
+	UICamera->Release();
 
 	{
 		std::map<int, std::list<GameEngineCollision*>>::iterator GroupStartIter = AllCollision.begin();

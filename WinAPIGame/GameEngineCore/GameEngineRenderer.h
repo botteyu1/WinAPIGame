@@ -126,6 +126,7 @@ private:
 	class Animation
 	{
 	public:
+		std::string Name = "";
 		GameEngineSprite* Sprite = nullptr;
 		size_t CurFrame = 0;
 		size_t StartFrame = -1;
@@ -158,6 +159,12 @@ public:
 		bool _Loop = true);
 
 	void ChangeAnimation(const std::string& _AniamtionName, bool _ForceChange = false);
+	void CreateAnimationToFrame(
+		const std::string& _AniamtionName,
+		const std::string& _SpriteName,
+		const std::vector<size_t>& _Frame,
+		float _Inter = 0.1f,
+		bool _Loop = true);
 
 	void MainCameraSetting();
 	void UICameraSetting();
@@ -181,6 +188,11 @@ public:
 	void AnimationEndOff()
 	{
 		IsAnimationEndOff = true;
+	}
+
+	bool IsAnimation(const std::string& _Name)
+	{
+		return CurAnimation->Name == _Name;
 	}
 
 private:

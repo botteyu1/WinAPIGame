@@ -4,6 +4,17 @@
 // 설명 :
 class GameEngineMath
 {
+public:
+	static const float PI;
+	static const float PI2;
+
+	static const float D2R;
+	static const float R2D;
+
+	// 3.14 => 180도
+	// float R = 3.14;
+	// float Result = R * (180.0f / 3.14);
+
 };
 
 class float4
@@ -198,6 +209,47 @@ public:
 	float Max2D()
 	{
 		return X > Y ? X : Y;
+	}
+
+public:
+	inline float AngleDeg()
+	{
+		return AngleRad() * GameEngineMath::R2D;
+	}
+
+	inline float AngleRad()
+	{
+		float4 AngleVector = NormalizeReturn();
+
+		// 라디안 각도만 나오게 된다. = acosf(AngleVector.X);
+
+		float Angle = acosf(AngleVector.X);
+
+		if (0 >= AngleVector.Y)
+		{
+			Angle = GameEngineMath::PI + GameEngineMath::PI - Angle;
+		}
+
+		return Angle;
+	}
+
+	// GetUnitVectorFromDeg(45)
+
+	static float4 GetUnitVectorFromDeg(const float _Degree)
+	{
+		// 90 => 1.57
+		return GetUnitVectorFromRad(_Degree * GameEngineMath::D2R);
+	}
+
+	//                                       90.0f
+	static float4 GetUnitVectorFromRad(const float _Rad)
+	{
+		// cosf(_Rad)반지름의 길이 1일때의 cosf값이 구해집니다.
+		// sinf(_Rad)반지름의 길이 1일때의 sinf값이 구해집니다.
+		// => 빗변의 길이가 1일때의 결과가 나온다.
+
+		// 1.57
+		return { cosf(_Rad) , sinf(_Rad) };
 	}
 
 };

@@ -220,6 +220,7 @@ void GameEngineRenderer::CreateAnimation(
 
 	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
 
+	Animation.Name = _AniamtionName;
 	Animation.Sprite = Sprite;
 
 	if (_Start != -1)
@@ -251,6 +252,50 @@ void GameEngineRenderer::CreateAnimation(
 	Animation.Loop = _Loop;
 
 }
+
+void GameEngineRenderer::CreateAnimationToFrame(
+	const std::string& _AniamtionName,
+	const std::string& _SpriteName,
+	const std::vector<size_t>& _Frame,
+	float _Inter,
+	bool _Loop)
+{
+	std::string UpperName = GameEngineString::ToUpperReturn(_AniamtionName);
+
+	if (nullptr != FindAnimation(UpperName))
+	{
+		MsgBoxAssert("이미 존재하는 애니메이션 네임입니다." + UpperName);
+		return;
+	}
+
+	GameEngineSprite* Sprite = ResourcesManager::GetInst().FindSprite(_SpriteName);
+
+	if (nullptr == Sprite)
+	{
+		MsgBoxAssert("존재하지 않는 스프라이트로 애니메이션을 만들려고 했습니다." + _SpriteName);
+		return;
+	}
+
+	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
+
+	Animation.Name = _AniamtionName;
+	Animation.Sprite = Sprite;
+	Animation.StartFrame = 0;
+	Animation.EndFrame = _Frame.size() - 1;
+
+	Animation.Inters.resize(_Frame.size() + 1);
+
+	Animation.Frames = _Frame;
+
+	for (size_t i = 0; i < Animation.Frames.size(); i++)
+	{
+		Animation.Inters[i] = _Inter;
+	}
+
+	Animation.Loop = _Loop;
+}
+
+
 
 
 void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool _ForceChange)
