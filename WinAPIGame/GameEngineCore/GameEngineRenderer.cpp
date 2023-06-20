@@ -159,6 +159,7 @@ void GameEngineRenderer::Render( float _DeltaTime)
 		Sprite = CurAnimation->Sprite;
 		const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(CurAnimation->CurFrame);
 		Texture = SpriteInfo.BaseTexture;
+		//MaskTexture = SpriteInfo.MaskTexture;
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
 
@@ -174,8 +175,15 @@ void GameEngineRenderer::Render( float _DeltaTime)
 	}
 
 	//백버퍼가 아닌 자신의 함수로 그린다.
-	Texture->TransCopy( GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
-
+	//if (0 == Angle)
+	//{
+	//	Texture->TransCopy(GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
+	//}
+	//else
+	//{
+	//	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+	//	BackBuffer->PlgCopy(Texture, MaskTexture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Angle);
+	//}
 }
 
 

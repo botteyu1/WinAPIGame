@@ -31,6 +31,8 @@ public:
 	GameEngineRenderer& operator=(const GameEngineRenderer& _Other) = delete;
 	GameEngineRenderer& operator=(GameEngineRenderer&& _Other) noexcept = delete;
 
+	void SetAngle(float _Angle);
+
 	void SetSprite(const std::string& _Name, size_t _Index = 0);
 
 	void SetTexture(const std::string& _Name);
@@ -103,8 +105,10 @@ protected:
 private:
 	GameEngineCamera* Camera = nullptr;
 	GameEngineWindowTexture* Texture = nullptr;
-	GameEngineSprite* Sprite = nullptr;
 
+	GameEngineWindowTexture* MaskTexture = nullptr;
+
+	GameEngineSprite* Sprite = nullptr;
 	float ScaleRatio = 1.0f;
 	bool FlipCheck = false;
 	bool ScaleCheck = false;
@@ -116,6 +120,9 @@ private:
 	float4 CopyScale;
 	CameraType CameraTypeValue = CameraType::MAIN;
 	std::string Text;
+
+	float Angle = 0.0f;
+
 
 	void TextRender(float _DeltaTime);
 
