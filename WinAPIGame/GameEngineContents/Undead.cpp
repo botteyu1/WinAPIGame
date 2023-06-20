@@ -34,7 +34,7 @@ void Undead::Start()
 		
 	}
 	MainRenderer = CreateRenderer(RenderOrder::Obstacle);
-	MainRenderer->CreateAnimation("undead_idle", "undead_idle", 0, 11, 0.07f, true);
+	MainRenderer->CreateAnimation("undead_idle", "undead_idle", 0, 11, 0.06f, true);
 	MainRenderer->CreateAnimation("undead_move", "undead_move", 0, 5, 0.05f, false);
 	MainRenderer->ChangeAnimation("undead_idle");
 

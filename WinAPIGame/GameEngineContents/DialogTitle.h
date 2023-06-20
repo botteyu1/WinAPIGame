@@ -3,6 +3,8 @@
 // 설명 :
 class DialogTitle : public Dialog
 {
+
+	// 시작시 나오는 대화
 public:
 	// constrcuter destructer
 	DialogTitle();

@@ -43,7 +43,7 @@ void Player::Start()
 		MainRenderer = CreateRenderer(RenderOrder::Play);
 
 		//애니메이션은 로드된 스프라이트를 가지고 만든다.3
-		MainRenderer->CreateAnimation("player_idle", "player_idle", 0, 11, 0.07f, true);
+		MainRenderer->CreateAnimation("player_idle", "player_idle", 0, 11, 0.06f, true);
 			
 		MainRenderer->CreateAnimation("player_run", "player_run", 0, 5, 0.06f, false);
 		MainRenderer->CreateAnimation("player_attack", "player_attack", 0, 12, 0.06f, false);

@@ -56,13 +56,13 @@ void NPC::Init(float4 _TilePos, int _Custom)
 	case 1:
 		if (nullptr == MainRenderer->FindAnimation("pandemonica"))
 		{
-			MainRenderer->CreateAnimation("pandemonica", "pandemonica", 0, 11, 0.07f, true);
+			MainRenderer->CreateAnimation("pandemonica", "pandemonica", 0, 11, 0.06f, true);
 		}
 		MainRenderer->ChangeAnimation("pandemonica");
 		break;
 	case 2:
 		if (nullptr == MainRenderer->FindAnimation("modeus")) {
-		MainRenderer->CreateAnimation("modeus", "modeus", 0, 11, 0.07f, true);
+		MainRenderer->CreateAnimation("modeus", "modeus", 0, 11, 0.06f, true);
 
 		}
 		MainRenderer->ChangeAnimation("modeus");
@@ -70,28 +70,28 @@ void NPC::Init(float4 _TilePos, int _Custom)
 	case 3:
 		if (nullptr == MainRenderer->FindAnimation("cerberus"))
 		{
-			MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.07f, true);
+			MainRenderer->CreateAnimation("cerberus", "cerberus", 0, 11, 0.06f, true);
 		}
 		MainRenderer->ChangeAnimation("cerberus");
 		break;
 	case 4:
 		if (nullptr == MainRenderer->FindAnimation("malina"))
 		{
-			MainRenderer->CreateAnimation("malina", "malina", 0, 11, 0.07f, true);
+			MainRenderer->CreateAnimation("malina", "malina", 0, 11, 0.06f, true);
 		}
 		MainRenderer->ChangeAnimation("malina");
 		break;
 	case 5:
 		if (nullptr == MainRenderer->FindAnimation("zdrada"))
 		{
-			MainRenderer->CreateAnimation("zdrada", "zdrada", 0, 11, 0.07f, true);
+			MainRenderer->CreateAnimation("zdrada", "zdrada", 0, 11, 0.06f, true);
 		}
 		MainRenderer->ChangeAnimation("zdrada");
 		break;
 	case 6:
 		if (nullptr == MainRenderer->FindAnimation("azazel"))
 		{
-			MainRenderer->CreateAnimation("azazel", "azazel", 0, 11, 0.07f, true);
+			MainRenderer->CreateAnimation("azazel", "azazel", 0, 11, 0.06f, true);
 		}
 		MainRenderer->ChangeAnimation("azazel");
 		break;

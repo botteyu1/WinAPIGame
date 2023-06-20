@@ -106,4 +106,5 @@ private:
 	
 
 	void ActorRelease();
+	void SubObjectUpdate(float _DeltaTime);
 };

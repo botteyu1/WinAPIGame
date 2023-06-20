@@ -111,6 +111,8 @@ void GameEngineRenderer::SetRenderScaleToTexture()
 	ScaleCheck = false;
 }
 
+
+
 void GameEngineRenderer::Render( float _DeltaTime)
 {
 	if ("" != Text)
@@ -159,7 +161,7 @@ void GameEngineRenderer::Render( float _DeltaTime)
 		Sprite = CurAnimation->Sprite;
 		const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(CurAnimation->CurFrame);
 		Texture = SpriteInfo.BaseTexture;
-		//MaskTexture = SpriteInfo.MaskTexture;
+		MaskTexture = SpriteInfo.MaskTexture;
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
 
@@ -175,15 +177,20 @@ void GameEngineRenderer::Render( float _DeltaTime)
 	}
 
 	//백버퍼가 아닌 자신의 함수로 그린다.
-	//if (0 == Angle)
-	//{
-	//	Texture->TransCopy(GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
-	//}
-	//else
-	//{
-	//	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
-	//	BackBuffer->PlgCopy(Texture, MaskTexture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Angle);
-	//}
+	if (0 == Angle && 255 == Alpha)
+	{
+		Texture->TransCopy(GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, RGB(255, 0, 255), FlipCheck);
+	}
+	else if (0 != Angle)
+	{
+		GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+		BackBuffer->PlgCopy(Texture, MaskTexture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Angle);
+	}
+	else if (255 != Alpha)
+	{
+		GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+		BackBuffer->AlphaCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Alpha);
+	}
 }
 
 
@@ -341,6 +348,11 @@ void GameEngineRenderer::UICameraSetting()
 
 void GameEngineRenderer::Start()
 {
+}
+
+void GameEngineRenderer::SetAngle(float _Angle)
+{
+	Angle = _Angle;
 }
 
 void GameEngineRenderer::SetOrder(int _Order)

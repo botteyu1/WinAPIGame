@@ -37,8 +37,13 @@ void DialogTitle::Start()
 	ConversationList.push_back(Con);
 
 
-	AnswerTextRenderer1->SetText("새 게임", 30, "양재참숯체B", RGB(255, 255, 255));
-	AnswerTextRenderer2->SetText("나가기", 30, "양재참숯체B", RGB(255, 255, 255));
+	Con = { "새 게임", "" };
+	AnswerList.push_back(Con);
+	Con = { "나가기", "" };
+	AnswerList.push_back(Con);
+
+	//AnswerTextRenderer1->SetText("새 게임", 30, "양재참숯체B", RGB(255, 255, 255));
+	//AnswerTextRenderer2->SetText("나가기", 30, "양재참숯체B", RGB(255, 255, 255));
 	CorrectAnswer = 1;
 
 	Con = { "또 헬테이커의 이야기를 들려달라고? 재미있군...", "" };

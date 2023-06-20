@@ -33,6 +33,8 @@ public:
 
 	void SetAngle(float _Angle);
 
+	void SetAlpha(unsigned char _Alpha);
+
 	void SetSprite(const std::string& _Name, size_t _Index = 0);
 
 	void SetTexture(const std::string& _Name);
@@ -122,7 +124,7 @@ private:
 	std::string Text;
 
 	float Angle = 0.0f;
-
+	unsigned char Alpha = 255;
 
 	void TextRender(float _DeltaTime);
 
@@ -175,6 +177,8 @@ public:
 
 	void MainCameraSetting();
 	void UICameraSetting();
+
+	//void Update(float _Delta) override;
 
 	int GetCurFrame()
 	{

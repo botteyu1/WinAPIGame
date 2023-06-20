@@ -44,8 +44,8 @@ protected:
 		std::string NPCStanding = "";
 		bool IsAnswer = false;
 		bool IsEnd = false;
-		int Left = 0; // 기본적으로 대화가 왼쪽으로 진행 기본값인경우 ++가된다.
-		int Right = 0; // 틀렸을 때만 오른쪽으로 진행
+		int Left = 0; // 기본적으로 대화가 왼쪽으로 진행 기본값 인경우 ++가된다.
+		int Right = 0; // 틀렸을 때 오른쪽으로 진행
 
 		void SetNPCStanding(const std::string& _NPCStanding)
 		{
@@ -78,10 +78,10 @@ protected:
 	DialogState State = DialogState::Max;
 	std::vector<Conversation> ConversationList;  // 대화 목록
 	std::vector<Conversation> AnswerList; // 대답 목록
-	int CorrectAnswer = 1;
-	int CurAnswer = 1;
+	int CorrectAnswer = 1; //정답
+	int CurAnswer = 1; // 현재 선택중인 답
 	int CurConversationIndex = 0;
-	int CurAnswerIndex = 0;
+	int CurAnswerIndex = 0; 
 	Conversation BadEndConversation;  // BadEnd가 발생할때 대화 인덱스
 	
 
