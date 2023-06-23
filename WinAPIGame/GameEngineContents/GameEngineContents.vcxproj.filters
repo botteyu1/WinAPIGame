@@ -57,11 +57,11 @@
     <ClInclude Include="VFX.h">
       <Filter>vfx</Filter>
     </ClInclude>
-    <ClInclude Include="Dialog.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="DialogTitle.h">
-      <Filter>Global</Filter>
+      <Filter>Global\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog.h">
+      <Filter>Global\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,14 +123,14 @@
     <ClCompile Include="VFX.cpp">
       <Filter>vfx</Filter>
     </ClCompile>
-    <ClCompile Include="Dialog.cpp">
-      <Filter>Global</Filter>
+    <ClCompile Include="DialogTitle.cpp">
+      <Filter>Global\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="DialogData.cpp">
-      <Filter>Global</Filter>
+      <Filter>Global\Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="DialogTitle.cpp">
-      <Filter>Global</Filter>
+    <ClCompile Include="Dialog.cpp">
+      <Filter>Global\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,9 @@
     </Filter>
     <Filter Include="vfx">
       <UniqueIdentifier>{9c6e8fb9-85c5-4148-a8cd-f061aaa8751b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Dialog">
+      <UniqueIdentifier>{82ecc9fb-e2d4-4ed1-9176-68fb8b7700a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -54,6 +54,19 @@ void GameEngineRenderer::SetTexture(const std::string& _Name)
 	}
 }
 
+void GameEngineRenderer::SetMaskTexture(const std::string& _Name)
+{
+	GameEngineWindowTexture* Texture = ResourcesManager::GetInst().FindTexture(_Name);
+
+	if (nullptr == Texture)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 마스크로 사용하려고 했습니다.");
+	}
+
+	MaskTexture = Texture;
+}
+
+
 void GameEngineRenderer::TextRender(float _DeltaTime)
 {
 	float4 TextPos = GetActor()->GetPos() + RenderPos - Camera->GetPos();
@@ -353,6 +366,16 @@ void GameEngineRenderer::Start()
 void GameEngineRenderer::SetAngle(float _Angle)
 {
 	Angle = _Angle;
+}
+
+void GameEngineRenderer::SetAlpha(unsigned char _Alpha)
+{
+	Alpha = _Alpha;
+}
+
+void GameEngineRenderer::AddAlpha(unsigned char _Alpha)
+{
+	Alpha += _Alpha;
 }
 
 void GameEngineRenderer::SetOrder(int _Order)

@@ -35,9 +35,15 @@ public:
 
 	void SetAlpha(unsigned char _Alpha);
 
+
+	void AddAlpha(unsigned char _Alpha);
+
+
 	void SetSprite(const std::string& _Name, size_t _Index = 0);
 
 	void SetTexture(const std::string& _Name);
+
+	void SetMaskTexture(const std::string& _Name);
 
 	void SetRenderPos(const float4& _Value)
 	{
@@ -47,6 +53,11 @@ public:
 	void SetRenderScale(const float4& _Value)
 	{
 		RenderScale = _Value;
+		ScaleCheck = true;
+	}
+	void AddRenderScale(const float4& _Value)
+	{
+		RenderScale += _Value;
 		ScaleCheck = true;
 	}
 
@@ -74,13 +85,25 @@ public:
 	{
 		return RenderScale;
 	}
+	float4 GetCopyPos()
+	{
+		return CopyPos;
+	}
+
+	float4 GetCopyScale()
+	{
+		return CopyScale;
+	}
 
 	CameraType GetCameraType()
 	{
 		return CameraTypeValue;
 	}
 
-
+	void AddRenderPos(const float4& _Value)
+	{
+		RenderPos += _Value;
+	}
 
 
 	void SetRenderScaleToTexture();

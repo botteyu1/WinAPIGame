@@ -108,7 +108,7 @@ protected:
 	virtual void SuccessUpdate(float _Delta);
 	void BadEndUpdate(float _Delta);
 
-	void OnUpdate(float _Delta);
+	virtual void OnUpdate(float _Delta);
 	void OffUpdate(float _Delta);
 
 	virtual void ConversationStart();

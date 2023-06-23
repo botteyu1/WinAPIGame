@@ -19,16 +19,22 @@ public:
 	void Start() override;
 
 protected:
+	void Update(float _Delta) override;
 
 private:
 
 	void ConversationUpdate(float _Delta) override;
 	void SuccessUpdate(float _Delta) override;
+	void OnUpdate(float _Delta) override;
 
 	void ConversationStart() override;
 	void SuccessStart() override;
 	void BadEndStart() override;
 	void OnStart() override;
+
+	GameEngineRenderer* MainBGRenderer2 = nullptr;
+	GameEngineRenderer* MainCutSceneBGRenderer  = nullptr;
+	GameEngineRenderer* IntroRenderer  = nullptr;
 
 	//GameEngineRenderer* AnswerRenderer0On = nullptr;
 	//GameEngineRenderer* AnswerRenderer0Off = nullptr;

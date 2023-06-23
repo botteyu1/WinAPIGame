@@ -38,6 +38,7 @@ void Dialog::Start()
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_hell.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_abyss.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("introTexture.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0001.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0002.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("pand\\pand_idle.png"));
@@ -56,9 +57,10 @@ void Dialog::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("jus\\jus_curious.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("beel\\beel_fly.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("beel\\dummy.png"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0002_Group-2.png"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0003_Group-3-copy-2.png"));
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene_0004_Layer-273-copy.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0002.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0003.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0004.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscenebg_mask.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_swirl.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_idle.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_angry.png"));
@@ -69,15 +71,17 @@ void Dialog::Start()
 
 		if (false == ResourcesManager::GetInst().IsLoadTexture("BG_Fade"))
 		{
-			GameEngineWindowTexture* T = ResourcesManager::GetInst().TextureCreate("BG_Fade", { 1920, 1080 });
-			T->FillTexture(RGB(2, 2, 27));
+			GameEngineWindowTexture* Texture = ResourcesManager::GetInst().TextureCreate("BG_Fade", { 1920, 1080 });
+			Texture->FillTexture(RGB(2, 2, 27));
 		}
+		GameEngineWindowTexture* Texture = ResourcesManager::GetInst().TextureCreate("cutscenebg", { 1280, 652 });
+		Texture->FillTexture(RGB(116, 40, 54));
 	}
-		GameEngineRenderer* Render = CreateUIRenderer("BG_Fade", RenderOrder::Dialouge);
+		GameEngineRenderer* Render = CreateUIRenderer("BG_Fade", RenderOrder::DialougeBG);
 		float4 Scale = Render->GetRenderScale().Half();
 		Render->SetRenderPos(Scale);
 		
-		MainBGRenderer = CreateUIRenderer("dialogueBG_hell.bmp", RenderOrder::Dialouge);
+		MainBGRenderer = CreateUIRenderer("dialogueBG_hell.bmp", RenderOrder::DialougeBG);
 		Scale = MainBGRenderer->GetRenderScale().Half();
 		MainBGRenderer->SetRenderPos(Scale+ float4{0.0f,170.0f});
 
@@ -94,7 +98,7 @@ void Dialog::Start()
 		BadEndRenderer->Off();
 
 		BooperRenderer = CreateUIRenderer(RenderOrder::Dialouge);
-		BooperRenderer->CreateAnimation("booper", "booper", 0, 16, 0.07f, true);
+		BooperRenderer->CreateAnimation("booper", "booper", 0, 16, 0.04f, true);
 		BooperRenderer->ChangeAnimation("booper");
 		BooperRenderer->SetRenderPos({ 960, 950 });
 		BooperRenderer->Off();
@@ -325,6 +329,7 @@ void Dialog::ConversationUpdate(float _Delta)
 		{
 			ChangeState(DialogState::Answer);
 		}
+
 		// 둘다아니면 대화 이어서 진행
 		else if(Con.IsAnswer == false)
 		{
