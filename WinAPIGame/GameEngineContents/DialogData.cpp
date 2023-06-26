@@ -91,7 +91,7 @@ void Dialog::SetDialogData(int _StageLevel)
 		Con.EndOn();
 		ConversationList.push_back(Con);
 
-		BadEndConversation = { "쌍둥이들이 미친 개마냥 당신에게 달려들었다. 귀여운 강아지 소리와 함께 당신의 심장은 멈췄다." };
+		BadEndConversation = { "쌍둥이들이 미친 개마냥 당신에게 달려들었다. \n귀여운 강아지 소리와 함께 당신의 심장은 멈췄다." };
 		
 
 		break;
@@ -213,6 +213,7 @@ void Dialog::SetDialogData(int _StageLevel)
 		break;
 
 		case 8:
+		MainBGRenderer->SetTexture("dialogueBG_throne2.bmp");
 		NameTextRenderer->SetText("● 지옥의 CEO 루시퍼 ●", 45, "양재참숯체B", RGB(230, 77, 81));
 		
 		Con = { "이제야 만나네. 넌 시련들을 통과하며 가치를 증명했어.", "LH_swirl" };
