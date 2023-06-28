@@ -95,6 +95,7 @@ void VFX::Small_VFXOn(float4 _TilePos)
 
 void VFX::Hit_VFXOn(float4 _TilePos)
 {
+	
 	static int VFXCycle = 1;
 
 	HitRenderer->On();
