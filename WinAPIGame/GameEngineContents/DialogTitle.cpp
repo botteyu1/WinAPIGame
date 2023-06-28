@@ -306,9 +306,9 @@ void DialogTitle::OnUpdate(float _Delta)
 	}
 	IntroRenderer->SetAlpha(static_cast<unsigned char>(AlphaValue));
 	float4 Scale = IntroRenderer->GetCopyScale();
-	IntroRenderer->AddRenderScale(Scale * _Delta * 0.03f);
+	IntroRenderer->AddRenderScale(Scale * _Delta * 0.04f);
 
-	if (400.0f <= Time)
+	if (300.0f <= Time)
 	{
 		IntroRenderer->Off();
 		MainTextRenderer->On();

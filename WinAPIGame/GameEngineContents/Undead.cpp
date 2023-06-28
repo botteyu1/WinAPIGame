@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "Player.h"
 #include "TileMap.h"
+#include "VFX.h"
 
 
 
@@ -106,7 +107,8 @@ void Undead::MoveStart()
 
 void Undead::DeathStart()
 {
-	
+	VFX* PlayerVFX = Player::GetMainPlayer()->GetPlayerVFX();
+	PlayerVFX->Hit_VFXOn(TilePos);
 }
 
 void Undead::IdleUpdate(float _Delta)

@@ -38,6 +38,7 @@ void Dialog::Start()
 
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_hell.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_abyss.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("dialogueBG_throne2.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("introTexture.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0001.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("button0002.png"));
@@ -246,6 +247,8 @@ void Dialog::AnswerStart()
 	AnswerTextRenderer1->On();
 	AnswerTextRenderer2->On();
 	BooperRenderer->Off();
+
+	
 	
 }
 
@@ -300,7 +303,7 @@ void Dialog::OffStart()
 
 void Dialog::ConversationUpdate(float _Delta)
 {
-
+	
 	
 	if (true == GameEngineInput::IsDown('K'))
 	{
@@ -348,6 +351,8 @@ void Dialog::ConversationUpdate(float _Delta)
 
 void Dialog::AnswerUpdate(float _Delta)
 {
+
+	
 	if(true == GameEngineInput::IsDown('W'))
 	{
 		AnswerRenderer1On->On();
@@ -355,7 +360,6 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2On->Off();
 		AnswerRenderer2Off->On();
 		CurAnswer = 1;
-		
 	}
 	
 	if(true == GameEngineInput::IsDown('S'))

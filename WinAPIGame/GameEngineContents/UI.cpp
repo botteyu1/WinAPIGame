@@ -23,7 +23,8 @@ void UI::Start()
 		FilePath.MoveParentToExistsChild("ContentsResources");
 		FilePath.MoveChild("ContentsResources\\Texture\\playUI\\");
 
-		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI001.png"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI000.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI001.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI002.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("mainUI003.bmp"));
 	}
@@ -44,17 +45,17 @@ void UI::Start()
 	UIRendererRT->SetRenderPos({ windowScale.X - Scale .X, Scale.Y});
 	
 
-	UIRendererLB->SetTexture("mainUI001.png");
+	UIRendererLB->SetTexture("mainUI001.bmp");
 	Scale = UIRendererLB->GetRenderScale().Half();
 
 	UIRendererLB->SetRenderPos({ Scale.X,windowScale.Y - Scale.Y });
 
 
-	UIRendererRB->SetTexture("mainUI001.png");
+	UIRendererRB->SetTexture("mainUI000.bmp");
 	Scale = UIRendererRB->GetRenderScale().Half();
 
 	UIRendererRB->SetRenderPos({ windowScale.X - Scale.X,  windowScale.Y - Scale.Y });
-	UIRendererRB->FlipON();
+	//UIRendererRB->FlipON();
 
 	GameEngineRenderer* Ptr = CreateUIRenderer(RenderOrder::UI);
 	Ptr->SetRenderPos({ 200, 900 });
