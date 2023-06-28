@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <vector>
 // Ό³Έν :
 class VFX : public GameEngineActor
 {
@@ -16,11 +17,14 @@ public:
 
 	void Start() override;
 
+	void Update(float _Delta) override;
+
 	void Small_VFXOn(float4 _TilePos);
 	void Hit_VFXOn(float4 _TilePos);
 	void Blood_VFXOn(float4 _TilePos);
 	void Huge_VFXOn(float4 _TilePos);
 	void LovePlosion_VFXOn(float4 _TilePos);
+	void UndeadDie_VFXOn(float4 _TilePos);
 protected:
 
 private:
@@ -29,6 +33,7 @@ private:
 	GameEngineRenderer* BloodRenderer = nullptr;
 	GameEngineRenderer* HugeRenderer = nullptr;
 	GameEngineRenderer* LovePlosionRenderer = nullptr;
+	std::vector<GameEngineRenderer*> vecBoneRenderer ;
 
 };
 

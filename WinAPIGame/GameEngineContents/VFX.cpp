@@ -34,7 +34,13 @@ void VFX::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("huge_vfx", FolderPath.PlusFilePath("huge_vfx"));
 		ResourcesManager::GetInst().CreateSpriteFolder("lovePlosion_vfx", FolderPath.PlusFilePath("lovePlosion_vfx"));
 		
-
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0001.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0002.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0003.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0004.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0005.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0006.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0007.png"));
 	}
 
 	SmallRenderer = CreateRenderer(RenderOrder::VFX);
@@ -72,8 +78,47 @@ void VFX::Start()
 	LovePlosionRenderer->ChangeAnimation("lovePlosion_vfx");
 	LovePlosionRenderer->AnimationEndOff();
 	LovePlosionRenderer->Off();
+
+	vecBoneRenderer.reserve(16);
+
+
+	GameEngineRenderer* Renderer = CreateRenderer("bone0001.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0001.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	 Renderer = CreateRenderer("bone0002.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0002.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	 Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0004.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0004.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0005.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0005.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0006.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+	Renderer = CreateRenderer("bone0007.png", RenderOrder::VFX2);
+	vecBoneRenderer.push_back(Renderer);
+
+	for (size_t i = 0; i < vecBoneRenderer.size(); i++)
+	{
+		vecBoneRenderer[i]->Off();
+	}
 	
 }
+
+
 
 void VFX::Small_VFXOn(float4 _TilePos)
 {
@@ -141,6 +186,25 @@ void VFX::LovePlosion_VFXOn(float4 _TilePos)
 	float4 Pos = TileMap::GetLevelTileMap()->GetTilePos(_TilePos);
 	LovePlosionRenderer->SetRenderPos(Pos + float4{ 0.0f,40.0f });
 	LovePlosionRenderer->ChangeAnimation("lovePlosion_vfx");
+}
+
+void VFX::UndeadDie_VFXOn(float4 _TilePos)
+{
+	// 랜덤 받아야하는 것 위쪽 힘 오른쪽 힘, 시작 각도
+	//
+	// 뼈 bmp 처리 
+	//위치는 타일포스 위치
+	
+
+}
+
+void VFX::Update(float _Delta)
+{	
+	// 중력작용으로 힘이 밑으로 받음 
+	// x축이동이 점점 줄어듬 xxx
+	// 화면벗어나면 off
+
+	// 델타에 맞게 각도 돌림 시계방향
 }
 
 
