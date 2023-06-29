@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "VFX.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 
 
@@ -80,7 +81,7 @@ void Undead::TryMove(float4 _Dir)
 
 void Undead::IdleStart()
 {
-
+	MainRenderer->On();
 }
 
 void Undead::MoveStart()
@@ -102,13 +103,15 @@ void Undead::MoveStart()
 	// 위치 업데이트
 	TilePos = nextTilePos;
 	
-	
+	GameEngineSound::SoundPlay("enemy_kick_01.wav");
 }
 
 void Undead::DeathStart()
 {
 	VFX* PlayerVFX = Player::GetMainPlayer()->GetPlayerVFX();
 	PlayerVFX->Hit_VFXOn(TilePos);
+	UndeadVFX->UndeadDie_VFXOn(TilePos);
+	GameEngineSound::SoundPlay("enemy_die_03.wav");
 }
 
 void Undead::IdleUpdate(float _Delta)
@@ -154,6 +157,6 @@ void Undead::MoveUpdate(float _Delta)
 void Undead::DeathUpdate(float _Delta)
 {
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
-	Off();
+	MainRenderer->Off();
 }
 

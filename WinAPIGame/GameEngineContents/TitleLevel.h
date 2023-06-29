@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 
 
@@ -29,12 +30,19 @@ public:
 
 	void Start() override;
 
+	GameEngineSoundPlayer* GetBgm()
+	{
+		return &Bgm;
+	}
+
 protected:
 	void Update(float _DeltaTime) override;
 
 private:
 	DialogTitle* TitleDialog = nullptr;
 	LevelChange* TitleLevelChange = nullptr;
+	GameEngineSoundPlayer Bgm;
+	bool BgmOn = false;
 	
 };
 

@@ -117,6 +117,7 @@ protected:
 
 	bool CameraFoucus = false; // 카메라 포커스
 	
+	//float EndPauseTime = 0;
 
 private:
 	void LevelStart() override;

@@ -4,7 +4,7 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include "GameEngineLevel.h"
 #include <GameEnginePlatform/GameEngineInput.h>
-//#include <GameEnginePlatform/GameEngineSound.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 std::string GameEngineCore::WindowTitle = "";
 std::map<std::string, class GameEngineLevel*> GameEngineCore::AllLevel;
@@ -51,7 +51,7 @@ void GameEngineCore::CoreUpdate()
 	}
 
 	// 업데이트를 
-	//GameEngineSound::Update();
+	GameEngineSound::Update();
 	GameEngineTime::MainTimer.Update();
 	float Delta = GameEngineTime::MainTimer.GetDeltaTime();
 
@@ -84,7 +84,7 @@ void GameEngineCore::CoreUpdate()
 
 void GameEngineCore::CoreEnd()
 {
-	//GameEngineSound::Release();
+	GameEngineSound::Release();
 
 	Process->Release();
 

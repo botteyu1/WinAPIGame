@@ -33,6 +33,11 @@ public:
 	void Init(int _StageLevel);
 	void ChangeState(DialogState _State);
 
+	DialogState GetDialogState()
+	{
+		return State;
+	}
+
 protected:
 	void Update(float _Delta) override;
 
@@ -106,7 +111,7 @@ protected:
 	void SetDialogData(int _StageLevel);
 
 	virtual void ConversationUpdate(float _Delta);
-	void AnswerUpdate(float _Delta);
+	virtual void AnswerUpdate(float _Delta);
 	virtual void SuccessUpdate(float _Delta);
 	void BadEndUpdate(float _Delta);
 

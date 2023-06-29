@@ -5,6 +5,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "VFX.h"
+#include <GameEnginePlatform/GameEngineSound.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 LockBox::LockBox() 
 {
 }
@@ -45,5 +47,6 @@ void LockBox::DeathStart()
 	Player::GetMainPlayer()->GetPlayerVFX()->Huge_VFXOn(GetTilePos()); 
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
 	Off();
+	GameEngineSound::SoundPlay("door_opening_01.wav");
 }
 

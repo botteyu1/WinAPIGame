@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "VFX.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 Key::Key() 
 {
 }
@@ -43,6 +44,8 @@ void Key::DeathStart()
 	Player::GetMainPlayer()->GetPlayerVFX()->Huge_VFXOn(GetTilePos());
 	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
 	Off();
+
+	GameEngineSound::SoundPlay("key_pick_up_01.wav");
 }
 
 void Key::DeathUpdate(float _Delta)

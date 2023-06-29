@@ -26,6 +26,7 @@ private:
 	void ConversationUpdate(float _Delta) override;
 	void SuccessUpdate(float _Delta) override;
 	void OnUpdate(float _Delta) override;
+	void AnswerUpdate(float _Delta) override;
 
 	void ConversationStart() override;
 	void SuccessStart() override;

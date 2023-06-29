@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "Player.h"
 #include "TileMap.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 Rock::Rock() 
 {
@@ -60,6 +61,7 @@ void Rock::TryMove(float4 _Dir)
 	switch (NextTile)
 	{
 	case TTYPE::NO:
+		GameEngineSound::SoundPlay("stone_move_01.wav");
 		ChangeState(ObstacleState::Move);
 		break;
 	case TTYPE::WA:
@@ -68,9 +70,9 @@ void Rock::TryMove(float4 _Dir)
 	case TTYPE::UN:
 	case TTYPE::RO:
 	case TTYPE::LO:
-	
-		break;
 	case TTYPE::EN:
+		GameEngineSound::SoundPlay("stone_kick_01.wav");
+		
 		break;
 	default:
 		break;
@@ -95,6 +97,7 @@ void Rock::MoveStart()
 
 	// 위치 업데이트
 	TilePos = nextTilePos;
+	
 }
 
 

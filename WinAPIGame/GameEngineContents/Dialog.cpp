@@ -7,6 +7,7 @@
 #include "PlayLevel.h"
 #include "LevelChange.h"
 #include "Player.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 Dialog::Dialog() 
 {
 }
@@ -20,7 +21,6 @@ void Dialog::Start()
 
 	if (false == ResourcesManager::GetInst().IsLoadTexture("dialogueBG_hell.bmp"))
 	{
-		// 무조건 자동으로 현재 실행중인 위치가 된다.
 		// 경로
 		// 시작위치 D:\Project\AR47\Winapi\AR47WinApi\Bin\x64\Debug
 		// 
@@ -77,6 +77,22 @@ void Dialog::Start()
 		}
 		GameEngineWindowTexture* Texture = ResourcesManager::GetInst().TextureCreate("cutscenebg", { 1280, 652 });
 		Texture->FillTexture(RGB(116, 40, 54));
+
+		// 사운드
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\Audio\\");
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("dialogue_text_end_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("dialogue_success_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("dialogue_start_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("button_chapter_confirm_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("button_chapter_highlight_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("button_dialogue_confirm_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("button_dialogue_highlight_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("button_menu_confirm_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("button_menu_highlight_01.wav"));
+	
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("bad_end_screen_01.wav"));
+		
 	}
 		GameEngineRenderer* Render = CreateUIRenderer("BG_Fade", RenderOrder::DialougeBG);
 		float4 Scale = Render->GetRenderScale().Half();
@@ -222,6 +238,7 @@ void Dialog::StateUpdate(float _Delta)
 void Dialog::ConversationStart()
 {
 	
+
 	Conversation Con = ConversationList[CurConversationIndex];
 	MainTextRenderer->SetText(Con.Text, 35, "양재참숯체B", RGB(255,255, 255));
 	MainNPCRenderer->On();
@@ -266,6 +283,8 @@ void Dialog::SuccessStart()
 	{
 		MainNPCRenderer->SetTexture(Con.NPCStanding + ".PNG");
 	}
+	//GameEngineSound::SoundPlay("dialogue_success_01.wav");
+	
 }
 
 void Dialog::BadEndStart()
@@ -278,6 +297,7 @@ void Dialog::BadEndStart()
 	BadEndRenderer->On();
 	BooperRenderer->Off();
 	BadEndRenderer->ChangeAnimation("BadEnd");
+	GameEngineSound::SoundPlay("bad_end_screen_01.wav");
 }
 
 void Dialog::OnStart()
@@ -291,6 +311,7 @@ void Dialog::OnStart()
 	BadEndRenderer->Off();
 	MainBGRenderer->On();
 	MainNPCRenderer->On();
+	GameEngineSound::SoundPlay("dialogue_start_01.wav");
 }
 
 void Dialog::OffStart()
@@ -319,17 +340,21 @@ void Dialog::ConversationUpdate(float _Delta)
 		{
 			if (CurAnswer == CorrectAnswer)
 			{
+				
 				ChangeState(DialogState::Success);
 			}
 			else
 			{
+				
 				//CurConversationIndex = Con.Right;
+				
 				ChangeState(DialogState::BadEnd);
 			}
 		}
 		//대답하는 상황인지 
 		else if (Con.IsAnswer == true)
 		{
+			GameEngineSound::SoundPlay("dialogue_text_end_01.wav");
 			ChangeState(DialogState::Answer);
 		}
 
@@ -344,6 +369,7 @@ void Dialog::ConversationUpdate(float _Delta)
 			{
 				CurConversationIndex = Con.Left;
 			}
+			GameEngineSound::SoundPlay("dialogue_text_end_01.wav");
 			ChangeState(DialogState::Conversation);
 		}
 	}
@@ -360,6 +386,7 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2On->Off();
 		AnswerRenderer2Off->On();
 		CurAnswer = 1;
+		GameEngineSound::SoundPlay("button_menu_highlight_01.wav");
 	}
 	
 	if(true == GameEngineInput::IsDown('S'))
@@ -369,6 +396,7 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2On->On();
 		AnswerRenderer2Off->Off();
 		CurAnswer = 2;
+		GameEngineSound::SoundPlay("button_chapter_highlight_01.wav");
 	}
 
 	if (true == GameEngineInput::IsDown(VK_RETURN))
@@ -386,11 +414,13 @@ void Dialog::AnswerUpdate(float _Delta)
 		if (CurAnswer == CorrectAnswer)
 		{
 			CurConversationIndex = Con.Left;
-			
+			GameEngineSound::SoundPlay("dialogue_success_01.wav");
 		}
 		else
 		{
+			
 			CurConversationIndex = Con.Right;
+			GameEngineSound::SoundPlay("button_dialogue_confirm_01.wav");
 		}
 		ChangeState(DialogState::Conversation);
 	}

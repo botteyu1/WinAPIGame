@@ -377,6 +377,10 @@ void GameEngineRenderer::AddAlpha(unsigned char _Alpha)
 {
 	Alpha += _Alpha;
 }
+void GameEngineRenderer::AddAngle(float _Angle)
+{
+	Angle += _Angle;
+}
 
 void GameEngineRenderer::SetOrder(int _Order)
 {

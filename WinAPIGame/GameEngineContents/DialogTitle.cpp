@@ -8,6 +8,7 @@
 #include "TitleLevel.h"
 #include "LevelChange.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
+
 DialogTitle::DialogTitle() 
 {
 }
@@ -129,6 +130,7 @@ void DialogTitle::Update(float _Delta)
 
 void DialogTitle::ConversationStart()
 {
+	
 	Conversation Con = ConversationList[CurConversationIndex];
 	MainTextRenderer->SetText(Con.Text, 35, "양재참숯체B", RGB(255, 255, 255));
 	MainNPCRenderer->On();
@@ -260,6 +262,7 @@ void DialogTitle::ConversationUpdate(float _Delta)
 		//대답하는 상황인지 
 		else if (Con.IsAnswer == true)
 		{
+			GameEngineSound::SoundPlay("dialogue_text_end_01.wav");
 			ChangeState(DialogState::Answer);
 		}
 		// 둘다아니면 대화 이어서 진행
@@ -279,7 +282,7 @@ void DialogTitle::ConversationUpdate(float _Delta)
 				CurConversationIndex = Con.Left;
 			}
 
-			
+			GameEngineSound::SoundPlay("dialogue_text_end_01.wav");
 			ChangeState(DialogState::Conversation);
 		}
 	}
@@ -314,6 +317,55 @@ void DialogTitle::OnUpdate(float _Delta)
 		MainTextRenderer->On();
 		MainNPCRenderer->On();
 		MainBGRenderer->On();
+		
+		ChangeState(DialogState::Conversation);
+	}
+}
+
+void DialogTitle::AnswerUpdate(float _Delta)
+{
+	if (true == GameEngineInput::IsDown('W'))
+	{
+		AnswerRenderer1On->On();
+		AnswerRenderer1Off->Off();
+		AnswerRenderer2On->Off();
+		AnswerRenderer2Off->On();
+		CurAnswer = 1;
+		GameEngineSound::SoundPlay("button_menu_highlight_01.wav");
+	}
+
+	if (true == GameEngineInput::IsDown('S'))
+	{
+		AnswerRenderer1On->Off();
+		AnswerRenderer1Off->On();
+		AnswerRenderer2On->On();
+		AnswerRenderer2Off->Off();
+		CurAnswer = 2;
+		GameEngineSound::SoundPlay("button_chapter_highlight_01.wav");
+	}
+
+	if (true == GameEngineInput::IsDown(VK_RETURN))
+	{
+		AnswerRenderer1On->Off();
+		AnswerRenderer1Off->Off();
+		AnswerRenderer2On->Off();
+		AnswerRenderer2Off->Off();
+		AnswerTextRenderer1->Off();
+		AnswerTextRenderer2->Off();
+
+		Conversation Con = ConversationList[CurConversationIndex];
+
+		if (CurAnswer == CorrectAnswer)
+		{
+			CurConversationIndex = Con.Left;
+			GameEngineSound::SoundPlay("button_menu_confirm_01.wav");
+		}
+		else
+		{
+
+			CurConversationIndex = Con.Right;
+			GameEngineSound::SoundPlay("button_menu_confirm_01.wav");
+		}
 		ChangeState(DialogState::Conversation);
 	}
 }

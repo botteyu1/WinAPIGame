@@ -24,6 +24,7 @@ void Obstacle::Init(float4 _TilePos, int _Custom)
 	SetTilePos(X, Y);
 
 	ChangeState(ObstacleState::Idle);
+	
 }
 
 void Obstacle::Update(float _Delta)

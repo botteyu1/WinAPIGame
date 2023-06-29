@@ -14,6 +14,7 @@
 #include "Dialog.h"
 #include "NPC.h"
 #include "LevelChange.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 
 
 
@@ -26,6 +27,7 @@ void Player::IdleStart()
 
 void Player::RunStart()
 {
+	GameEngineSound::SoundPlay("character_move_01.wav");
 	MotionTime = 0.0f;
 	MainRenderer->ChangeAnimation("player_run");
 
@@ -77,6 +79,7 @@ void Player::AttackStart()
 		static_cast<Undead*>(Obstacle)->TryMove(Dir);
 		break;
 	case TTYPE::RO:
+		
 		static_cast<Rock*>(Obstacle)->TryMove(Dir);
 		break;
 	default:
@@ -196,6 +199,7 @@ void Player::AttackUpdate(float _Delta)
 void Player::SuccessUpdate(float _Delta)
 {
 	
+	
 
 	if (MainRenderer->GetCurFrame() == 6)
 	{
@@ -205,12 +209,18 @@ void Player::SuccessUpdate(float _Delta)
 		GameEngineActor* Obstacle = TileMap::GetLevelTileMap()->GetTileActor(NPCPos.iX(), NPCPos.iY());
 
 		static_cast<NPC*>(Obstacle)->ChangeState(ObstacleState::Death);
+		
 	}
 
 	if (true == MainRenderer->IsAnimationEnd())
 	{
+		//EndPauseTime += _Delta;
 		PlayLevelPtr->GetLevelChange()->ChangeState(LevelState::Transition);
 		PlayLevelPtr->AddNextStageLevel(1);
 		ChangeState(PlayerState::Idle);
 	}
+	/*if (EndPauseTime >= 1.0f)
+	{
+		
+	}*/
 }

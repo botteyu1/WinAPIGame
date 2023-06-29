@@ -5,6 +5,7 @@
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineLevel.h>
@@ -47,7 +48,7 @@ void Player::Start()
 			
 		MainRenderer->CreateAnimation("player_run", "player_run", 0, 5, 0.06f, false);
 		MainRenderer->CreateAnimation("player_attack", "player_attack", 0, 12, 0.06f, false);
-		MainRenderer->CreateAnimation("player_success", "player_success", 0, 18, 0.1f, false);
+		MainRenderer->CreateAnimation("player_success", "player_success", 0, 18, 0.12f, false);
 
 		MainRenderer->ChangeAnimation("player_idle");
 		//MainRenderer->Flip();
@@ -131,6 +132,7 @@ void Player::TrapChek(float4 _ObsTilePos)
 	{
 		PlayerVFX->Blood_VFXOn(TilePos);
 		HP--;
+		GameEngineSound::SoundPlay("spikes_damage_01.wav");
 	}
 }
 

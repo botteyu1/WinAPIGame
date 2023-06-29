@@ -38,6 +38,8 @@ public:
 
 	void AddAlpha(unsigned char _Alpha);
 
+	void AddAngle(float _Angle);
+
 
 	void SetSprite(const std::string& _Name, size_t _Index = 0);
 

@@ -6,6 +6,7 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include "VFX.h"
 #include "Player.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 NPC::NPC() 
 {
 }
@@ -148,6 +149,7 @@ void NPC::DeathStart()
 	{
 		Player::GetMainPlayer()->GetPlayerVFX()->LovePlosion_VFXOn(GetTilePos());
 	}
+	GameEngineSound::SoundPlay("succub_capture_01.wav");
 	
 	Off();
 	//TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);

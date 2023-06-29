@@ -15,10 +15,12 @@
 #include "Player.h"
 #include "BackGround.h"
 #include "UI.h"
-#include <GameEnginePlatform/GameEngineSound.h>
+
 #include "ContentsEnum.h"
 #include "VFX.h"
 #include "Dialog.h"
+
+GameEngineSoundPlayer PlayLevel::PlayBgm;
 
 PlayLevel::PlayLevel()
 {
@@ -32,17 +34,36 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start()
 {
-	/*GameEngineSound::SetGlobalVolume(0.05f);
-	if (nullptr == GameEngineSound::FindSound("BGMTest.mp3"))
+	if (nullptr == GameEngineSound::FindSound("character_move_01.wav"))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\Sound\\");
+		FilePath.MoveChild("ContentsResources\\Audio\\");
 
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("BGMTest.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("character_move_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("door_closed_kick_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("door_closed_kick_02.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("door_closed_kick_03.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("door_opening_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("enemy_die_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("enemy_die_02.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("enemy_die_03.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("enemy_kick_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("enemy_kick_02.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("enemy_kick_03.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("succub_capture_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("succub_capture_01v2.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("stone_move_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("stone_kick_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("key_pick_up_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("spikes_damage_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("player_death_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Vitality.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("screen_changer_part1_01.wav"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("screen_changer_part2_01.wav"));
+
 	}
-	GameEngineSound::SoundPlay("BGMTest.mp3");*/
 
 
 	PlayLevelChange = CreateActor<LevelChange>();
@@ -185,6 +206,7 @@ void PlayLevel::ResetActor()
 				static_cast<Obstacle*>(TilePair.second)->Init(Pos);
 				TilePair.second->On();
 				
+				
 				break;
 			default:
 				break;
@@ -304,6 +326,11 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	TileMap::SetLevelTileMap(&TileMapStartData);
 	ResetActor();
 	NextStageLevel = StageLevel;
+	if (BgmOn == false)
+	{
+		PlayLevel::PlayBgm = GameEngineSound::SoundPlay("Vitality.wav");
+		BgmOn = true;
+	}
 	//저장한 시작위치 불러오기
 }
 

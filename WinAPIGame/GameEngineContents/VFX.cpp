@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineBase/GameEngineRandom.h>
 #include "TileMap.h"
 
 VFX::VFX() 
@@ -34,13 +35,20 @@ void VFX::Start()
 		ResourcesManager::GetInst().CreateSpriteFolder("huge_vfx", FolderPath.PlusFilePath("huge_vfx"));
 		ResourcesManager::GetInst().CreateSpriteFolder("lovePlosion_vfx", FolderPath.PlusFilePath("lovePlosion_vfx"));
 		
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0001.png"));
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0002.png"));
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0003.png"));
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0004.png"));
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0005.png"));
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0006.png"));
-		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0007.png"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0001.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0002.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0003.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0004.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0005.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0006.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0007.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0001_mask.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0002_mask.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0003_mask.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0004_mask.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0005_mask.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0006_mask.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FolderPath.PlusFilePath("bone\\bone0007_mask.bmp"));
 	}
 
 	SmallRenderer = CreateRenderer(RenderOrder::VFX);
@@ -82,38 +90,53 @@ void VFX::Start()
 	vecBoneRenderer.reserve(16);
 
 
-	GameEngineRenderer* Renderer = CreateRenderer("bone0001.png", RenderOrder::VFX2);
+	BoneRenderer Renderer;
+	Renderer.Renderer = CreateRenderer("bone0001.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0001_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0001.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0001.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0001_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	 Renderer = CreateRenderer("bone0002.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0002.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0002_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0002.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0002.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0002_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	 Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0003.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0003_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0003.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0003_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0003.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0003_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0003.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0003.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0003_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0004.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0004.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0004_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0004.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0004.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0004_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0005.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0005.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0005_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0005.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0005.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0005_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0006.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0006.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0006_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
-	Renderer = CreateRenderer("bone0007.png", RenderOrder::VFX2);
+	Renderer.Renderer = CreateRenderer("bone0007.bmp", RenderOrder::VFX3);
+	Renderer.Renderer->SetMaskTexture("bone0007_mask.bmp");
 	vecBoneRenderer.push_back(Renderer);
 
 	for (size_t i = 0; i < vecBoneRenderer.size(); i++)
 	{
-		vecBoneRenderer[i]->Off();
+		vecBoneRenderer[i].Renderer->Off();
 	}
 	
 }
@@ -191,6 +214,20 @@ void VFX::LovePlosion_VFXOn(float4 _TilePos)
 
 void VFX::UndeadDie_VFXOn(float4 _TilePos)
 {
+	for (size_t i = 0; i < vecBoneRenderer.size(); i++)
+	{
+		vecBoneRenderer[i].Renderer->On();
+		float4 Pos = TileMap::GetLevelTileMap()->GetTilePos(_TilePos);
+		vecBoneRenderer[i].Renderer->SetRenderPos(Pos);
+		vecBoneRenderer[i].Renderer->SetAngle(GameEngineRandom::MainRandom.RandomFloat(0.0f, 360.0f));
+		float Y= GameEngineRandom::MainRandom.RandomFloat(-2500.0f, -1000.0f);
+		float X = GameEngineRandom::MainRandom.RandomFloat(-700.0f, 700.0f);
+		
+		vecBoneRenderer[i].vec = float4{X , Y };
+
+		
+	}
+	
 	// 랜덤 받아야하는 것 위쪽 힘 오른쪽 힘, 시작 각도
 	//
 	// 뼈 bmp 처리 
@@ -201,11 +238,18 @@ void VFX::UndeadDie_VFXOn(float4 _TilePos)
 
 void VFX::Update(float _Delta)
 {	
+	for (size_t i = 0; i < vecBoneRenderer.size(); i++)
+	{
+		vecBoneRenderer[i].vec += {0.0f, 6000.0f * _Delta};
+		vecBoneRenderer[i].Renderer->AddRenderPos(vecBoneRenderer[i].vec * _Delta);
+		vecBoneRenderer[i].Renderer->AddAngle(60.0f * _Delta);
+	}
+
 	// 중력작용으로 힘이 밑으로 받음 
-	// x축이동이 점점 줄어듬 xxx
 	// 화면벗어나면 off
 
 	// 델타에 맞게 각도 돌림 시계방향
 }
 
 
+	// x축이동이 점점 줄어듬 xxx

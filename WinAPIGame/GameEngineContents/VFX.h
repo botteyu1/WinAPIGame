@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 #include <vector>
+
 // Ό³Έν :
 class VFX : public GameEngineActor
 {
@@ -28,12 +29,18 @@ public:
 protected:
 
 private:
+	class BoneRenderer
+	{
+	public:
+		GameEngineRenderer* Renderer = nullptr;
+		float4 vec = float4::ZERO;
+	};
 	GameEngineRenderer* SmallRenderer = nullptr;
 	GameEngineRenderer* HitRenderer = nullptr;
 	GameEngineRenderer* BloodRenderer = nullptr;
 	GameEngineRenderer* HugeRenderer = nullptr;
 	GameEngineRenderer* LovePlosionRenderer = nullptr;
-	std::vector<GameEngineRenderer*> vecBoneRenderer ;
+	std::vector<BoneRenderer> vecBoneRenderer ;
 
 };
 

@@ -3,6 +3,7 @@
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 
 
@@ -133,7 +134,7 @@ void LevelChange::TransitionStart()
 	MainRenderer->SetCurFrame(0);
 	On();
 	MainRenderer->On();
-
+	GameEngineSound::SoundPlay("screen_changer_part1_01.wav");
 }
 
 void LevelChange::DeathStart()
@@ -143,6 +144,7 @@ void LevelChange::DeathStart()
 	On();
 	DeathBGRenderer->On();
 	DeathRenderer->On();
+	GameEngineSound::SoundPlay("player_death_01.wav");
 }
 
 void LevelChange::IdleUpdate(float _Delta)
@@ -157,7 +159,10 @@ void LevelChange::TransitionUpdate(float _Delta)
 		DeathRenderer->Off();
 		DeathBGRenderer->Off();
 	}
-
+	if (MainRenderer->GetCurFrame() == 22)
+	{
+		GameEngineSound::SoundPlay("screen_changer_part2_01.wav");
+	}
 	if (MainRenderer->IsAnimationEnd())
 	{
 		MainRenderer->Off();
