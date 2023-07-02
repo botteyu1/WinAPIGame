@@ -19,6 +19,7 @@ enum class RenderOrder
 	Obstaclefly,
 	VFX2,
 	UI,
+	UI2,
 	VFX3,
 	DialougeBG,
 	Dialouge,

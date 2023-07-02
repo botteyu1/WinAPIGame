@@ -80,7 +80,7 @@ void UI::Start()
 
 void UI::Init(int _Stage)
 {
-	GameEngineRenderer* Ptr = CreateRenderer(RenderOrder::UI);
+	GameEngineRenderer* Ptr = CreateUIRenderer(RenderOrder::UI);
 	Ptr->SetRenderPos({ 1717, 900 });
 	
 	std::string str = "¥°" ;

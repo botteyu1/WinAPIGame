@@ -112,6 +112,8 @@ void Undead::DeathStart()
 	PlayerVFX->Hit_VFXOn(TilePos);
 	UndeadVFX->UndeadDie_VFXOn(TilePos);
 	GameEngineSound::SoundPlay("enemy_die_03.wav");
+	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
+	MainRenderer->Off();
 }
 
 void Undead::IdleUpdate(float _Delta)
@@ -156,7 +158,6 @@ void Undead::MoveUpdate(float _Delta)
 
 void Undead::DeathUpdate(float _Delta)
 {
-	TileMap::GetLevelTileMap()->SetTilePair(TTYPE::NO, nullptr, TilePos);
-	MainRenderer->Off();
+	
 }
 

@@ -56,7 +56,7 @@ private:
 	float4 NPCPos = float4::ZERO; // NPC위치
 	int StartHP = 0; // 시작 HP
 	bool PlayerCameraFocus = false; // 카메라 포커스
-	bool BgmOn = false;
+	//bool BgmOn = false;
 
 	void BatchActor(); // 액터 생성밎 배치
 	void ResetActor(); // 액터 위치 초기화 및 업데이트 온

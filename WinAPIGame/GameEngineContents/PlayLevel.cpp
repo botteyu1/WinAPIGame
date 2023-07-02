@@ -246,7 +246,15 @@ void PlayLevel::Update(float _Delta)
 		std::string ResetLevel = "PlayLevel" + std::to_string(NextStageLevel);
 		PlayLevelChange->CoverFullScreen = false;
 		PlayDialog->ChangeState(DialogState::Off); // 다이얼로그가 켜져있으면 꺼줌
-		GameEngineCore::ChangeLevel(ResetLevel);
+		if (ResetLevel == "PlayLevel9")
+		{
+			GameEngineCore::ChangeLevel("EndingLevel");
+			PlayLevel::PlayBgm.Stop();
+		}
+		else
+		{
+			GameEngineCore::ChangeLevel(ResetLevel);
+		}
 	}
 	//다이얼로그 화면일떄 조작 중지.
 	if (PlayDialog->IsUpdate() == true)
@@ -326,10 +334,12 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	TileMap::SetLevelTileMap(&TileMapStartData);
 	ResetActor();
 	NextStageLevel = StageLevel;
-	if (BgmOn == false)
+	static bool On = false;
+
+	if (On == false)
 	{
-		PlayLevel::PlayBgm = GameEngineSound::SoundPlay("Vitality.wav");
-		BgmOn = true;
+		PlayLevel::PlayBgm = GameEngineSound::SoundPlay("Vitality.wav",100);
+		On = true;
 	}
 	//저장한 시작위치 불러오기
 }

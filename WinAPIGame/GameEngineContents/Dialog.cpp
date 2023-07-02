@@ -61,6 +61,10 @@ void Dialog::Start()
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0002.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0003.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0004.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0005.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0006.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0007.bmp"));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscene0008.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("cutscene\\cutscenebg_mask.bmp"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_swirl.png"));
 		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath("LH\\LH_idle.png"));
