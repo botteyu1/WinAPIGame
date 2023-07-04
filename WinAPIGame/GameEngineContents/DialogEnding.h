@@ -23,7 +23,7 @@ private:
 	GameEngineRenderer* MainCutSceneBGRenderer = nullptr;
 
 	void ConversationStart() override;
-
+	void OnStart() override;
 	void ConversationUpdate(float _Delta) override;
 };
 

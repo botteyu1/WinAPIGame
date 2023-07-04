@@ -102,6 +102,22 @@ void DialogEnding::ConversationStart()
 	}
 }
 
+void DialogEnding::OnStart()
+{
+	On();
+	CurAnswer = 1;
+	CurConversationIndex = 0;
+	CurAnswerIndex = 0;
+	NameTextRenderer->On();
+	MainNPCRenderer->On();
+	BadEndRenderer->Off();
+
+
+	MainBGRenderer->On();
+	MainNPCRenderer->On();
+	
+}
+
 void DialogEnding::ConversationUpdate(float _Delta)
 {
 	if (MainCutSceneBGRenderer->GetCopyScale().X > MainCutSceneBGRenderer->GetRenderScale().X)

@@ -89,6 +89,10 @@ public:
 	{
 		CameraFoucus = true;
 	}
+	void SwitchGodMode()
+	{
+		GodMode = !GodMode;
+	}
 
 protected:
 
@@ -115,7 +119,8 @@ protected:
 	
 	float MotionTime = 0.0f; // 100 = 0.1초 모션이동시간 연속키입력딜레이
 
-	bool CameraFoucus = false; // 카메라 포커스
+	bool CameraFoucus = false; // 카메라 포커스 
+	bool GodMode = false;
 	
 	//float EndPauseTime = 0;
 

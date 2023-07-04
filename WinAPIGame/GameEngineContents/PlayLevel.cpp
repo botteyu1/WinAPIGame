@@ -315,6 +315,11 @@ void PlayLevel::Update(float _Delta)
 	{
 		PlayDialog->ChangeState(DialogState::On);
 	}
+	if (true == GameEngineInput::IsDown('G'))
+	{
+		LevelPlayer->SwitchGodMode();
+	}
+	
 	
 }
 void PlayLevel::Render(float _Delta)

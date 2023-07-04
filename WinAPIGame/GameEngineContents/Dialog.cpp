@@ -253,6 +253,7 @@ void Dialog::ConversationStart()
 	{
 		
 		MainNPCRenderer->SetTexture(Con.NPCStanding + ".PNG");
+
 	}
 
 }
@@ -263,13 +264,17 @@ void Dialog::AnswerStart()
 	AnswerTextRenderer1->SetText(Con.Text, 30, "양재참숯체B", RGB(255, 255, 255));
 	 Con = AnswerList[CurAnswerIndex++];
 	AnswerTextRenderer2->SetText(Con.Text, 30, "양재참숯체B", RGB(255, 255, 255));
-	AnswerRenderer1On->On();
+	AnswerRenderer1Off->On();
 	AnswerRenderer2Off->On();
 	AnswerTextRenderer1->On();
 	AnswerTextRenderer2->On();
 	BooperRenderer->Off();
 
-	
+	AnswerTextRenderer1->AddRenderPos(float4{ 0.0f,200.0f });
+	AnswerTextRenderer2->AddRenderPos(float4{ 0.0f,200.0f });
+	AnswerRenderer1Off->AddRenderPos(float4{ 0.0f,200.0f });
+	AnswerRenderer2Off->AddRenderPos(float4{ 0.0f,200.0f });
+	//AnswerAnimationTime = 0.0f;
 	
 }
 
@@ -287,6 +292,7 @@ void Dialog::SuccessStart()
 	{
 		MainNPCRenderer->SetTexture(Con.NPCStanding + ".PNG");
 	}
+	GameEngineSound::SoundPlay("dialogue_success_01.wav");
 	//GameEngineSound::SoundPlay("dialogue_success_01.wav");
 	
 }
@@ -382,7 +388,49 @@ void Dialog::ConversationUpdate(float _Delta)
 void Dialog::AnswerUpdate(float _Delta)
 {
 
-	
+
+	// 대답창 올라오는 애니메이션
+	if (AnswerTextRenderer1->GetRenderPos().Y > 936.0f)
+	{
+		AnswerTextRenderer1->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		AnswerTextRenderer2->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		AnswerRenderer1Off->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		AnswerRenderer2Off->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		return;
+	}
+	else if (AnswerTextRenderer1->GetRenderPos().Y < 936.0f)
+	{
+		AnswerTextRenderer1->SetRenderPos({ 960, 936 });
+		AnswerTextRenderer2->SetRenderPos({ 960, 1026 });
+		AnswerRenderer1Off->SetRenderPos({ 960, 920 });
+		AnswerRenderer1Off->Off();
+		AnswerRenderer1On->On();
+		AnswerRenderer2Off->SetRenderPos({ 960, 1010 });
+
+	}
+
+	//if (AnswerAnimationTime < 0.3f)
+	//{
+	//	AnswerAnimationTime += _Delta;
+	//	
+	//}
+	//if (AnswerAnimationTime > 0.3f)
+	//{
+	//	AnswerAnimationTime = 0.3f;
+	//}
+	//if (AnswerRenderer1On->IsUpdate())
+	//{
+	//	float4 Scale = AnswerRenderer1On->GetCopyScale();
+	//	AnswerRenderer1On->SetRenderScale(Scale * (1 + (AnswerAnimationTime * 0.2f)));
+	//	AnswerRenderer2Off->SetRenderScale(Scale * (1.06f - (AnswerAnimationTime * 0.2f)));
+	//}
+	//if (AnswerRenderer2On->IsUpdate())
+	//{
+	//	float4 Scale = AnswerRenderer1On->GetCopyScale();
+	//	AnswerRenderer2On->SetRenderScale(Scale * (1 + (AnswerAnimationTime * 0.2f)));
+	//	AnswerRenderer1Off->SetRenderScale(Scale * (1.06f - (AnswerAnimationTime * 0.2f)));
+	//}
+
 	if(true == GameEngineInput::IsDown('W'))
 	{
 		AnswerRenderer1On->On();
@@ -391,6 +439,7 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2Off->On();
 		CurAnswer = 1;
 		GameEngineSound::SoundPlay("button_menu_highlight_01.wav");
+		//AnswerAnimationTime = 0.0f;
 	}
 	
 	if(true == GameEngineInput::IsDown('S'))
@@ -401,6 +450,7 @@ void Dialog::AnswerUpdate(float _Delta)
 		AnswerRenderer2Off->Off();
 		CurAnswer = 2;
 		GameEngineSound::SoundPlay("button_chapter_highlight_01.wav");
+		//AnswerAnimationTime = 0.0f;
 	}
 
 	if (true == GameEngineInput::IsDown(VK_RETURN))
@@ -418,7 +468,7 @@ void Dialog::AnswerUpdate(float _Delta)
 		if (CurAnswer == CorrectAnswer)
 		{
 			CurConversationIndex = Con.Left;
-			GameEngineSound::SoundPlay("dialogue_success_01.wav");
+			GameEngineSound::SoundPlay("dialogue_text_end_01.wav");
 		}
 		else
 		{

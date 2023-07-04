@@ -13,6 +13,10 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include "Obstacle.h"
 #include "TileMap.h"
+#include "PlayLevel.h"
+#include "LevelChange.h"
+
+
 Player* Player::MainPlayer = nullptr;
 
 Player::Player()
@@ -66,10 +70,7 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	/*if (HP == 0)
-	{
-		int a = 0;
-	}*/
+	
 	Moved = false; // 이동 초기화
 	StateUpdate(_Delta);
 	//카메라 포커스가 온이면 카메라를 따라가게 한다
@@ -183,6 +184,10 @@ void Player::Move()
 {
 	HP--;
 	Moved = true;
+	if (HP == -1 and GodMode == false)
+	{
+		PlayLevelPtr->GetLevelChange()->ChangeState(LevelState::Death);
+	}
 }
 
 void Player::Render(float _Delta)

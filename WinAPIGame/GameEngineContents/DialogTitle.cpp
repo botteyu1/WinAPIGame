@@ -324,6 +324,24 @@ void DialogTitle::OnUpdate(float _Delta)
 
 void DialogTitle::AnswerUpdate(float _Delta)
 {
+	if (AnswerTextRenderer1->GetRenderPos().Y > 936.0f)
+	{
+		AnswerTextRenderer1->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		AnswerTextRenderer2->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		AnswerRenderer1Off->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		AnswerRenderer2Off->AddRenderPos(float4{ 0.0f,-1000.0f * _Delta });
+		return;
+	}
+	else if (AnswerTextRenderer1->GetRenderPos().Y < 936.0f)
+	{
+		AnswerTextRenderer1->SetRenderPos({ 960, 936 });
+		AnswerTextRenderer2->SetRenderPos({ 960, 1026 });
+		AnswerRenderer1Off->SetRenderPos({ 960, 920 });
+		AnswerRenderer1Off->Off();
+		AnswerRenderer1On->On();
+		AnswerRenderer2Off->SetRenderPos({ 960, 1010 });
+
+	}
 	if (true == GameEngineInput::IsDown('W'))
 	{
 		AnswerRenderer1On->On();

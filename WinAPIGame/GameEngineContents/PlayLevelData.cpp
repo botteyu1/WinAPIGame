@@ -345,6 +345,7 @@ void PlayLevel::SetLevelData()
 		};
 		TileMapStartData.Init(TileStartData, TrapStartData, { 5.0f,15.0f }, { 710.0f,470.0f });
 		PlayerCameraFocus = true;
+		StartHP = 13;
 		break;
 	default:
 		break;

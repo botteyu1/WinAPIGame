@@ -105,7 +105,7 @@ protected:
 	GameEngineRenderer* BooperRenderer = nullptr;
 	//GameEngineRenderer* BooperTabRenderer = nullptr;
 
-	//float AnswerAnimationPixel = 0.0f;
+	//float AnswerAnimationTime = 0.0f;
 
 
 	void SetDialogData(int _StageLevel);
